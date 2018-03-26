@@ -1,6 +1,6 @@
 package ua.com.foxminded.domain;
 
-public class Human extends Model {
+public class Human {
 
     private String name;
     private String surName;

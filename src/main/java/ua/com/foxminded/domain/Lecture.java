@@ -2,8 +2,7 @@ package ua.com.foxminded.domain;
 
 import java.time.LocalDateTime;
 
-public class Lecture extends Model{
-    private static final long serialVersionUID = -5272574051292750329L;
+public class Lecture {
 
     private LocalDateTime date;
     private String subject;

@@ -2,8 +2,7 @@ package ua.com.foxminded.domain;
 
 import java.util.Set;
 
-public class University extends Model{
-    private static final long serialVersionUID = 585873164846446845L;
+public class University {
 
     private Set<Student> students;
     private Set<Teacher> teachers;

@@ -1,7 +1,6 @@
 package ua.com.foxminded.domain;
 
-public class Group extends Model {
-    private static final long serialVersionUID = 5093824429299325045L;
+public class Group {
 
     private String title;
     private String description;

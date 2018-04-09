@@ -24,4 +24,9 @@ public class Group {
     public Group() {
 
     }
+
+    public Group(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

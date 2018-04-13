@@ -3,7 +3,7 @@ package ua.com.foxminded.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Group {
+public class Group implements Comparable{
 
     private String title;
     private String description;
@@ -57,5 +57,9 @@ public class Group {
 
     public Group() {
 
+    }
+///////////////////////////////////////TO DO//////////////////////
+    public int compareTo(Object o) {
+        return 0;
     }
 }

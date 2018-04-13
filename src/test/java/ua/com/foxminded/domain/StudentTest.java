@@ -6,10 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class StudentTest
-{
+public class StudentTest {
     public Student VALID_STUDENT = new Student("Petro", "Kolhozin", "male", 19);
-    public Group VALID_GROUP = new Group("Group01","Spring math group");
+    public Group VALID_GROUP = new Group("Group01", "Spring math group");
 
     @Test
     public void shouldCreateStudent() {
@@ -34,7 +33,8 @@ public class StudentTest
         actualStudent.setSurName("Kolhozin");
         actualStudent.setGender("male");
         actualStudent.setAge(19);
+        Student expectedStudent = VALID_STUDENT;
 
-        assertEquals(actualStudent,VALID_STUDENT);
+        assertEquals(actualStudent, expectedStudent);
     }
 }

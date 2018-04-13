@@ -25,8 +25,9 @@ public class GroupTest {
         Group actualGroup = new Group();
         actualGroup.setTitle("Group01");
         actualGroup.setDescription("Math");
+        Group expectedGroup = VALID_GROUP;
 
-        assertEquals(actualGroup, VALID_GROUP);
+        assertEquals(actualGroup, expectedGroup);
     }
 
 }

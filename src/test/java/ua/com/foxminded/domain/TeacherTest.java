@@ -34,8 +34,8 @@ public class TeacherTest {
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");
         actualTeacher.setAge(65);
+        Teacher expectedTeacher = VALID_TEACHER;
 
-
-        assertEquals(actualTeacher,VALID_TEACHER);
+        assertEquals(actualTeacher, expectedTeacher);
     }
 }

@@ -11,6 +11,16 @@ public class Student extends Human {
         super(name, surName, gender, age);
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Student) {
+            Student s = (Student) o;
+            return (this.getSurName().compareTo(((Student) o).getSurName()));
+        } else
+            return -1;
+
+    }
+
     public Group getGroup() {
         return group;
     }

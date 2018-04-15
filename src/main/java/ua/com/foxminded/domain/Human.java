@@ -82,8 +82,6 @@ public class Human implements Comparable {
         this.age = age;
     }
 
-    //////////////////////////////////////////////////DO THIS
-
     public int compareTo(Object o) {
         return 0;
     }

@@ -1,11 +1,12 @@
 package ua.com.foxminded.domain;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
 
-public class Lecture implements Comparable{
+public class Lecture implements Comparable {
 
     private LocalDateTime date;
     private String subject;
@@ -57,6 +58,23 @@ public class Lecture implements Comparable{
                 .isEquals();
     }
 
+    //Used different approaches to make compareTo method for study aims :)
+    public int compareTo(Object o) {
+        if(o instanceof Group)
+        {
+            Lecture l = (Lecture) o;
+            return new CompareToBuilder()
+                    .append(this.date,((Lecture) o).date)
+                    .append(this.subject, ((Lecture) o).subject)
+                    .append(this.teacher, ((Lecture) o).teacher)
+                    .append(this.group, ((Lecture) o).group)
+                    .append(this.classroom, ((Lecture) o).classroom)
+                    .toComparison();
+        }
+        else
+            return -1;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }
@@ -95,10 +113,5 @@ public class Lecture implements Comparable{
 
     public void setClassroom(Integer classroom) {
         this.classroom = classroom;
-    }
-
-////////////////////////////TO DO/////////////////////////
-    public int compareTo(Object o) {
-        return 0;
     }
 }

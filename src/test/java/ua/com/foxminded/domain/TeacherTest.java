@@ -3,7 +3,7 @@ package ua.com.foxminded.domain;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anySet;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -18,13 +18,13 @@ public class TeacherTest {
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");
         actualTeacher.setAge(65);
-        actualTeacher.setSubject(anySet());
+        actualTeacher.setSubject(anyString());///////////
 
         verify(actualTeacher).setName("Ivan");
         verify(actualTeacher).setSurName("Ivanovich");
         verify(actualTeacher).setGender("male");
         verify(actualTeacher).setAge(65);
-        verify(actualTeacher).setSubject(anySet());
+        verify(actualTeacher).setSubject(anyString());/////
     }
 
     @Test

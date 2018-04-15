@@ -58,8 +58,14 @@ public class Group implements Comparable{
     public Group() {
 
     }
-///////////////////////////////////////TO DO//////////////////////
+
     public int compareTo(Object o) {
-        return 0;
+        if(o instanceof Group)
+        {
+           Group g = (Group) o;
+            return (this.title.compareTo(((Group) o).title));
+        }
+        else
+            return -1;
     }
 }

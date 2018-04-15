@@ -18,9 +18,6 @@ public class ScheduleTest {
     public Teacher VALID_TEACHER1 = new Teacher("Ivan", "Ivanovich", "male", 65);
     public Teacher VALID_TEACHER2 = new Teacher("Nikolai", "Petrovich", "male", 50);
 
-    public Set<String> VALID_SUBJECT_SET1 = new TreeSet<String>();
-    public Set<String> VALID_SUBJECT_SET2 = new TreeSet<String>();
-
     public String VALID_SUBJECT1 = "Math";
     public String VALID_SUBJECT2 = "Biology";
     public String VALID_SUBJECT3 = "Chemistry";
@@ -29,9 +26,8 @@ public class ScheduleTest {
     public LocalDateTime VALID_DATE1 = LocalDateTime.of(2018, 01, 01, 12, 00);
     public LocalDateTime VALID_DATE2 = LocalDateTime.of(2018, 01, 01, 13, 00);
 
-    public String VALID_SUBJECT = VALID_SUBJECT1;
     public Integer VALID_CLASSROM1 = 10;
-    public Integer VALID_CLASSROM2 = 10;
+    public Integer VALID_CLASSROM2 = 11;
 
     public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROM1);
     public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROM2);
@@ -49,12 +45,11 @@ public class ScheduleTest {
        VALID_STUDENT_SET.add(VALID_STUDENT1);
        VALID_STUDENT_SET.add(VALID_STUDENT2);
 
-       VALID_SUBJECT_SET1.add(VALID_SUBJECT1);
-       VALID_SUBJECT_SET1.add(VALID_SUBJECT2);
-       VALID_SUBJECT_SET2.add(VALID_SUBJECT3);
-       VALID_SUBJECT_SET2.add(VALID_SUBJECT4);
-       VALID_TEACHER1.setSubject(VALID_SUBJECT_SET1);
-       VALID_TEACHER2.setSubject(VALID_SUBJECT_SET2);
+       VALID_TEACHER1.setSubject(VALID_SUBJECT1);
+       VALID_TEACHER1.setSubject(VALID_SUBJECT2);
+
+       VALID_TEACHER2.setSubject(VALID_SUBJECT3);
+       VALID_TEACHER2.setSubject(VALID_SUBJECT4);
        VALID_TEACHERS_SET.add(VALID_TEACHER1);
        VALID_TEACHERS_SET.add(VALID_TEACHER2);
 
@@ -64,6 +59,14 @@ public class ScheduleTest {
        VALID_LECTURES_SET.add(VALID_LECTURE1);
        VALID_LECTURES_SET.add(VALID_LECTURE2);
 
+       VALID_UNIVERSITY = new University();
+       VALID_UNIVERSITY.setStudents(VALID_STUDENT_SET);
+       VALID_UNIVERSITY.setTeachers(VALID_TEACHERS_SET);
+       VALID_UNIVERSITY.setGroups(VALID_GROUPS_SET);
+       VALID_UNIVERSITY.setLectures(VALID_LECTURES_SET);
 
+       Schedule actualSchedule = new Schedule();
+
+       actualSchedule.setUniversity(VALID_UNIVERSITY);
    }
 }

@@ -1,13 +1,14 @@
 package ua.com.foxminded.domain;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 public class University {
 
-    private Set<Student> students;
-    private Set<Teacher> teachers;
-    private Set<Group> groups;
-    private Set<Lecture> lectures;
+    private Set<Student> students = new TreeSet<Student>();
+    private Set<Teacher> teachers = new TreeSet<Teacher>();
+    private Set<Group> groups = new TreeSet<Group>();
+    private Set<Lecture> lectures = new TreeSet<Lecture>();
 
     public Set<Student> getStudents() {
         return students;

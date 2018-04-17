@@ -60,20 +60,30 @@ public class Lecture implements Comparable {
 
     //Used different approaches to make compareTo method for study aims :)
     public int compareTo(Object o) {
-        if(o instanceof Group)
-        {
+        if (o instanceof Group) {
             Lecture l = (Lecture) o;
             return new CompareToBuilder()
-                    .append(this.date,((Lecture) o).date)
+                    .append(this.date, ((Lecture) o).date)
                     .append(this.subject, ((Lecture) o).subject)
                     .append(this.teacher, ((Lecture) o).teacher)
                     .append(this.group, ((Lecture) o).group)
                     .append(this.classroom, ((Lecture) o).classroom)
                     .toComparison();
-        }
-        else
+        } else
             return -1;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        //result.append(this.date + "\n");
+        //result.append(this.subject + "\n");
+        //result.append(this.teacher + "\n");
+       // result.append(this.group + "\n");
+       // result.append(this.classroom + "\n");
+        return result.toString();
+    }
+
 
     public LocalDateTime getDate() {
         return date;

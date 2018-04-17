@@ -1,5 +1,7 @@
 package ua.com.foxminded.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -26,6 +28,11 @@ public class University {
         this.teachers = teachers;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
     public Set<Group> getGroups() {
         return groups;
     }
@@ -42,7 +49,7 @@ public class University {
         this.lectures = lectures;
     }
 
-    public University(){
+    public University() {
 
     }
 }

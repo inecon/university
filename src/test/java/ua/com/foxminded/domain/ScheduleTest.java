@@ -1,14 +1,18 @@
 package ua.com.foxminded.domain;
 
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+
 public class ScheduleTest {
-    public University VALID_UNIVERSITY;
 
     public Student VALID_STUDENT1 = new Student("Petro", "Kolhozin", "male", 19);
     public Group VALID_GROUP1 = new Group("Group01", "Spring math group");
@@ -38,35 +42,50 @@ public class ScheduleTest {
     Set<Group> VALID_GROUPS_SET = new TreeSet<Group>();
     Set<Lecture> VALID_LECTURES_SET = new TreeSet<Lecture>();
 
-   @Test
-    public void ShouldCreateSchedule(){
-       VALID_STUDENT1.setGroup(VALID_GROUP1);
-       VALID_STUDENT2.setGroup(VALID_GROUP2);
-       VALID_STUDENT_SET.add(VALID_STUDENT1);
-       VALID_STUDENT_SET.add(VALID_STUDENT2);
+    public University VALID_UNIVERSITY = new University();
 
-       VALID_TEACHER1.setSubject(VALID_SUBJECT1);
-       VALID_TEACHER1.setSubject(VALID_SUBJECT2);
+    @Before
+    public void initializationUniversity() {
+        VALID_STUDENT1.setGroup(VALID_GROUP1);
+        VALID_STUDENT2.setGroup(VALID_GROUP2);
+        VALID_STUDENT_SET.add(VALID_STUDENT1);
+        VALID_STUDENT_SET.add(VALID_STUDENT2);
 
-       VALID_TEACHER2.setSubject(VALID_SUBJECT3);
-       VALID_TEACHER2.setSubject(VALID_SUBJECT4);
-       VALID_TEACHERS_SET.add(VALID_TEACHER1);
-       VALID_TEACHERS_SET.add(VALID_TEACHER2);
+        VALID_TEACHER1.setSubject(VALID_SUBJECT1);
+        VALID_TEACHER1.setSubject(VALID_SUBJECT2);
 
-       VALID_GROUPS_SET.add(VALID_GROUP1);
-       VALID_GROUPS_SET.add(VALID_GROUP2);
+        VALID_TEACHER2.setSubject(VALID_SUBJECT3);
+        VALID_TEACHER2.setSubject(VALID_SUBJECT4);
+        VALID_TEACHERS_SET.add(VALID_TEACHER1);
+        VALID_TEACHERS_SET.add(VALID_TEACHER2);
 
-       VALID_LECTURES_SET.add(VALID_LECTURE1);
-       VALID_LECTURES_SET.add(VALID_LECTURE2);
+        VALID_GROUPS_SET.add(VALID_GROUP1);
+        VALID_GROUPS_SET.add(VALID_GROUP2);
 
-       VALID_UNIVERSITY = new University();
-       VALID_UNIVERSITY.setStudents(VALID_STUDENT_SET);
-       VALID_UNIVERSITY.setTeachers(VALID_TEACHERS_SET);
-       VALID_UNIVERSITY.setGroups(VALID_GROUPS_SET);
-       VALID_UNIVERSITY.setLectures(VALID_LECTURES_SET);
+        VALID_LECTURES_SET.add(VALID_LECTURE1);
+        VALID_LECTURES_SET.add(VALID_LECTURE2);
 
-       Schedule actualSchedule = new Schedule();
+        VALID_UNIVERSITY.setStudents(VALID_STUDENT_SET);
+        VALID_UNIVERSITY.setTeachers(VALID_TEACHERS_SET);
+        VALID_UNIVERSITY.setGroups(VALID_GROUPS_SET);
+        VALID_UNIVERSITY.setLectures(VALID_LECTURES_SET);
+    }
 
-       actualSchedule.setUniversity(VALID_UNIVERSITY);
-   }
+    @Test
+    public void ShouldSetUniversity() {
+        Schedule actualSchedule = Mockito.mock(Schedule.class);
+        actualSchedule.setUniversity(VALID_UNIVERSITY);
+        verify(actualSchedule).setUniversity(VALID_UNIVERSITY);
+    }
+
+    @Test
+    public void shouldGetScheduledLectures() {
+        Schedule actualSchedule = new Schedule();
+        actualSchedule.setUniversity(VALID_UNIVERSITY);
+        Set<Lecture> expectedLectures = new TreeSet<Lecture>();
+        expectedLectures.add(VALID_LECTURE1);
+        System.out.println(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1).toString());
+        assertEquals(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1),expectedLectures);
+
+    }
 }

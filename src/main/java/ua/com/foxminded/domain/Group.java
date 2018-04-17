@@ -2,6 +2,7 @@ package ua.com.foxminded.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Group implements Comparable{
 
@@ -38,6 +39,13 @@ public class Group implements Comparable{
                 .append(description, rhs.getDescription())
                 .isEquals();
     }
+
+    @Override
+    public String toString() {
+
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 
     public String getTitle() {
         return title;

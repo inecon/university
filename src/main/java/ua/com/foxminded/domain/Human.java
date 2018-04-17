@@ -3,6 +3,7 @@ package ua.com.foxminded.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Human implements Comparable {
 
@@ -49,6 +50,13 @@ public class Human implements Comparable {
                 .append(age, rhs.getAge())
                 .isEquals();
     }
+
+    @Override
+    public String toString() {
+
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 
     public String getName() {
         return name;

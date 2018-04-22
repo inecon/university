@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Group implements Comparable{
+public class Group implements Comparable {
 
     private String title;
     private String description;
@@ -42,10 +42,8 @@ public class Group implements Comparable{
 
     @Override
     public String toString() {
-
         return ToStringBuilder.reflectionToString(this);
     }
-
 
     public String getTitle() {
         return title;
@@ -63,17 +61,13 @@ public class Group implements Comparable{
         this.description = description;
     }
 
-    public Group() {
-
-    }
+    public Group() {}
 
     public int compareTo(Object o) {
-        if(o instanceof Group)
-        {
-           Group g = (Group) o;
+        if (o instanceof Group) {
+            Group g = (Group) o;
             return (this.title.compareTo(((Group) o).title));
-        }
-        else
+        } else
             return -1;
     }
 }

@@ -14,7 +14,6 @@ public class LectureTest {
     public Teacher VALID_TEACHER = new Teacher("Ivan", "Ivanovich", "male", 65);
     public Group VALID_GROUP = new Group("Group01", "Spring math group");
     public Integer VALID_CLASSROM = 10;
-
     public Lecture VALID_LECTURE = new Lecture(VALID_DATE, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROM);
 
     @Test
@@ -25,7 +24,6 @@ public class LectureTest {
         actualLecture.setTeacher(VALID_TEACHER);
         actualLecture.setGroup(VALID_GROUP);
         actualLecture.setClassroom(VALID_CLASSROM);
-
         verify(actualLecture).setDate(VALID_DATE);
         verify(actualLecture).setSubject(VALID_SUBJECT);
         verify(actualLecture).setTeacher(VALID_TEACHER);
@@ -35,15 +33,14 @@ public class LectureTest {
 
     @Test
     public void shouldCreateValidLecture() {
-
         Lecture actualLecture = new Lecture();
         actualLecture.setDate(VALID_DATE);
         actualLecture.setSubject(VALID_SUBJECT);
         actualLecture.setTeacher(VALID_TEACHER);
         actualLecture.setGroup(VALID_GROUP);
         actualLecture.setClassroom(VALID_CLASSROM);
-
         Lecture expectedLecture = VALID_LECTURE;
+        System.out.println(actualLecture.toString());
         assertEquals(actualLecture, expectedLecture);
     }
 }

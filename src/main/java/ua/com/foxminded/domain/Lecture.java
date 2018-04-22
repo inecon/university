@@ -7,16 +7,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.time.LocalDateTime;
 
 public class Lecture implements Comparable {
-
     private LocalDateTime date;
     private String subject;
     private Teacher teacher;
     private Group group;
     private Integer classroom;
 
-    public Lecture() {
-
-    }
+    public Lecture() {}
 
     public Lecture(LocalDateTime date, String subject, Teacher teacher, Group group, Integer classrom) {
         this.date = date;
@@ -76,14 +73,13 @@ public class Lecture implements Comparable {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        //result.append(this.date + "\n");
-        //result.append(this.subject + "\n");
-        //result.append(this.teacher + "\n");
-       // result.append(this.group + "\n");
-       // result.append(this.classroom + "\n");
+        result.append(this.date + "\n");
+        result.append(this.subject + "\n");
+        result.append(this.teacher + "\n");
+        result.append(this.group + "\n");
+        result.append(this.classroom + "\n");
         return result.toString();
     }
-
 
     public LocalDateTime getDate() {
         return date;

@@ -6,15 +6,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Human implements Comparable {
-
     private String name;
     private String surName;
     private String gender;
     private Integer age;
 
-    public Human() {
-
-    }
+    public Human() {}
 
     public Human(String name, String surName, String gender, Integer age) {
         this.name = name;
@@ -53,10 +50,8 @@ public class Human implements Comparable {
 
     @Override
     public String toString() {
-
         return ToStringBuilder.reflectionToString(this);
     }
-
 
     public String getName() {
         return name;

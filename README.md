@@ -1,4 +1,3 @@
-
 ![Иллюстрация к проекту](http://git.foxminded.com.ua/evgeny.perekhodchenko/university/blob/dev/docs/university-class-diagram.png)
 
 Декомпозиция университета: преподаватели, студенты, группы, аудитории, 

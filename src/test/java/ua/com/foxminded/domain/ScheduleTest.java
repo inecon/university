@@ -78,10 +78,16 @@ public class ScheduleTest {
 
     @Test
     public void shouldGetScheduledLectures() {
-        Schedule actualSchedule = new Schedule();
-        actualSchedule.setUniversity(VALID_UNIVERSITY);
+        // arrange
         Set<Lecture> expectedLectures = new TreeSet<Lecture>();
         expectedLectures.add(VALID_LECTURE1);
-        assertEquals(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1), expectedLectures);
+        Schedule schedule = new Schedule();
+        schedule.setUniversity(VALID_UNIVERSITY);
+
+        // act
+        Set<Lecture> actualLectures = schedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
+
+        // assert
+        assertEquals(actualLectures, expectedLectures);
     }
 }

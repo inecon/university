@@ -64,12 +64,12 @@ public class University implements Comparable{
 
     public int compareTo(Object o) {
         if (o instanceof University) {
-            //University university = (University) o;
+            University u = (University) o;
             return new CompareToBuilder()
-                    .append(this.students, ((University) o).students)
-                    .append(this.teachers, ((University) o).teachers)
-                    .append(this.groups, ((University) o).groups)
-                    .append(this.lectures, ((University) o).lectures)
+                    .append(this.students, u.students)
+                    .append(this.teachers, u.teachers)
+                    .append(this.groups, u.groups)
+                    .append(this.lectures, u.lectures)
                     .toComparison();
         } else
             return -1;

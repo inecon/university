@@ -13,7 +13,7 @@ public class Student extends Human {
     public int compareTo(Object o) {
         if (o instanceof Student) {
             Student s = (Student) o;
-            return (this.getSurName().compareTo(((Student) o).getSurName()));
+            return (this.getSurName().compareTo(s.getSurName()));
         } else
             return -1;
     }

@@ -67,7 +67,7 @@ public class Group implements Comparable {
     public int compareTo(Object o) {
         if (o instanceof Group) {
             Group g = (Group) o;
-            return (this.title.compareTo(((Group) o).title));
+            return (this.title.compareTo(g.title));
         } else
             return -1;
     }

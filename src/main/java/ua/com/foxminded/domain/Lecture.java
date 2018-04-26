@@ -58,13 +58,13 @@ public class Lecture implements Comparable {
     //Used different approaches to make compareTo method for study aims :)
     public int compareTo(Object o) {
         if (o instanceof Group) {
-            //Lecture l = (Lecture) o;
+            Lecture l = (Lecture) o;
             return new CompareToBuilder()
-                    .append(this.date, ((Lecture) o).date)
-                    .append(this.subject, ((Lecture) o).subject)
-                    .append(this.teacher, ((Lecture) o).teacher)
-                    .append(this.group, ((Lecture) o).group)
-                    .append(this.classroom, ((Lecture) o).classroom)
+                    .append(this.date, l.date)
+                    .append(this.subject, l.subject)
+                    .append(this.teacher, l.teacher)
+                    .append(this.group, l.group)
+                    .append(this.classroom, l.classroom)
                     .toComparison();
         } else
             return -1;

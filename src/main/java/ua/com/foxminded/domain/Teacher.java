@@ -17,7 +17,7 @@ public class Teacher extends Human {
     public int compareTo(Object o) {
         if (o instanceof Teacher) {
             Teacher t = (Teacher) o;
-            return (this.getSurName().compareTo(((Teacher) o).getSurName()));
+            return (this.getSurName().compareTo(t.getSurName()));
         } else
             return -1;
     }

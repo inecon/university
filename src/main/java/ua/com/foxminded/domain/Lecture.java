@@ -15,12 +15,12 @@ public class Lecture implements Comparable {
 
     public Lecture() {}
 
-    public Lecture(LocalDateTime date, String subject, Teacher teacher, Group group, Integer classrom) {
+    public Lecture(LocalDateTime date, String subject, Teacher teacher, Group group, Integer classroom) {
         this.date = date;
         this.subject = subject;
         this.teacher = teacher;
         this.group = group;
-        this.classroom = classrom;
+        this.classroom = classroom;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Lecture implements Comparable {
     //Used different approaches to make compareTo method for study aims :)
     public int compareTo(Object o) {
         if (o instanceof Group) {
-            Lecture l = (Lecture) o;
+            //Lecture l = (Lecture) o;
             return new CompareToBuilder()
                     .append(this.date, ((Lecture) o).date)
                     .append(this.subject, ((Lecture) o).subject)

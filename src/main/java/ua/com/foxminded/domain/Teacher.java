@@ -7,9 +7,7 @@ public class Teacher extends Human {
 
     private Set<String> subject = new TreeSet<String>();
 
-    public Teacher() {
-
-    }
+    public Teacher() {}
 
     public Teacher(String name, String surName, String gender, Integer age) {
         super(name, surName, gender, age);
@@ -22,7 +20,14 @@ public class Teacher extends Human {
             return (this.getSurName().compareTo(((Teacher) o).getSurName()));
         } else
             return -1;
+    }
 
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder();
+        result.append(super.toString());
+        result.append("subject - " + this.subject + "\n");
+        return result.toString();
     }
 
     public Set<String> getSubject() {
@@ -30,6 +35,6 @@ public class Teacher extends Human {
     }
 
     public void setSubject(String subject) {
-        this.subject.add(subject) ;
+        this.subject.add(subject);
     }
 }

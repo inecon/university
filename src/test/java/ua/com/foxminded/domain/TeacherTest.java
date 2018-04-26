@@ -18,13 +18,13 @@ public class TeacherTest {
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");
         actualTeacher.setAge(65);
-        actualTeacher.setSubject(anyString());///////////
+        actualTeacher.setSubject(anyString());
 
         verify(actualTeacher).setName("Ivan");
         verify(actualTeacher).setSurName("Ivanovich");
         verify(actualTeacher).setGender("male");
         verify(actualTeacher).setAge(65);
-        verify(actualTeacher).setSubject(anyString());/////
+        verify(actualTeacher).setSubject(anyString());
     }
 
     @Test
@@ -34,6 +34,11 @@ public class TeacherTest {
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");
         actualTeacher.setAge(65);
+        actualTeacher.setSubject("Math");
+        actualTeacher.setSubject("Biology");
+        System.out.println(actualTeacher.toString());
+        VALID_TEACHER.setSubject("Math");
+        VALID_TEACHER.setSubject("Biology");
         Teacher expectedTeacher = VALID_TEACHER;
 
         assertEquals(actualTeacher, expectedTeacher);

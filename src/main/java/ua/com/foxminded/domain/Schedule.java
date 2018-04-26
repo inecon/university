@@ -1,7 +1,5 @@
 package ua.com.foxminded.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,8 +12,8 @@ public class Schedule {
         Group groupToFindSchedule = student.getGroup();
 
         Set<Lecture> allScheduleLectures = university.getLectures();
-        for (Lecture lecture:allScheduleLectures) {
-            if(lecture.getGroup().equals(groupToFindSchedule)){
+        for (Lecture lecture : allScheduleLectures) {
+            if (lecture.getGroup().equals(groupToFindSchedule)) {
                 result.add(lecture);
             }
         }
@@ -24,8 +22,9 @@ public class Schedule {
 
     @Override
     public String toString() {
-
-        return ToStringBuilder.reflectionToString(this);
+        StringBuilder result = new StringBuilder();
+        result.append(this.university + "\n");
+        return result.toString();
     }
 
     public University getUniversity() {

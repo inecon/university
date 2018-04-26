@@ -13,7 +13,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
 public class ScheduleTest {
-
     public Student VALID_STUDENT1 = new Student("Petro", "Kolhozin", "male", 19);
     public Group VALID_GROUP1 = new Group("Group01", "Spring math group");
     public Student VALID_STUDENT2 = new Student("Tanya", "Pupkina", "female", 18);
@@ -35,7 +34,6 @@ public class ScheduleTest {
 
     public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROM1);
     public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROM2);
-
 
     Set<Student> VALID_STUDENT_SET = new TreeSet<Student>();
     Set<Teacher> VALID_TEACHERS_SET = new TreeSet<Teacher>();
@@ -84,8 +82,6 @@ public class ScheduleTest {
         actualSchedule.setUniversity(VALID_UNIVERSITY);
         Set<Lecture> expectedLectures = new TreeSet<Lecture>();
         expectedLectures.add(VALID_LECTURE1);
-        System.out.println(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1).toString());
-        assertEquals(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1),expectedLectures);
-
+        assertEquals(actualSchedule.getScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1), expectedLectures);
     }
 }

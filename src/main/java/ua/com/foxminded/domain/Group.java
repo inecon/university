@@ -2,12 +2,12 @@ package ua.com.foxminded.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Group implements Comparable {
 
     private String title;
     private String description;
+    public Group() {}
 
     public Group(String title, String description) {
         this.title = title;
@@ -42,7 +42,10 @@ public class Group implements Comparable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        StringBuilder result = new StringBuilder();
+        result.append(this.title + " ");
+        result.append(" - \"" + this.description + "\"" + "\n");
+        return result.toString();
     }
 
     public String getTitle() {
@@ -60,8 +63,6 @@ public class Group implements Comparable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Group() {}
 
     public int compareTo(Object o) {
         if (o instanceof Group) {

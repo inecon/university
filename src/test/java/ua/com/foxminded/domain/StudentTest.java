@@ -33,6 +33,9 @@ public class StudentTest {
         actualStudent.setSurName("Kolhozin");
         actualStudent.setGender("male");
         actualStudent.setAge(19);
+        actualStudent.setGroup(VALID_GROUP);
+        VALID_STUDENT.setGroup(VALID_GROUP);
+        System.out.println(actualStudent.toString());
         Student expectedStudent = VALID_STUDENT;
 
         assertEquals(actualStudent, expectedStudent);

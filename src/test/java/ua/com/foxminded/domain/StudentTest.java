@@ -35,9 +35,8 @@ public class StudentTest {
         actualStudent.setAge(19);
         actualStudent.setGroup(VALID_GROUP);
         VALID_STUDENT.setGroup(VALID_GROUP);
-        System.out.println(actualStudent.toString());
-        Student expectedStudent = VALID_STUDENT;
 
+        Student expectedStudent = VALID_STUDENT;
         assertEquals(actualStudent, expectedStudent);
     }
 }

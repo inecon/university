@@ -36,11 +36,9 @@ public class TeacherTest {
         actualTeacher.setAge(65);
         actualTeacher.setSubject("Math");
         actualTeacher.setSubject("Biology");
-        System.out.println(actualTeacher.toString());
         VALID_TEACHER.setSubject("Math");
         VALID_TEACHER.setSubject("Biology");
         Teacher expectedTeacher = VALID_TEACHER;
-
         assertEquals(actualTeacher, expectedTeacher);
     }
 }

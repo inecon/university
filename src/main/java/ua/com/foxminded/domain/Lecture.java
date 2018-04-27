@@ -57,7 +57,7 @@ public class Lecture implements Comparable {
 
     //Used different approaches to make compareTo method for study aims :)
     public int compareTo(Object o) {
-        if (o instanceof Group) {
+        if (o instanceof Lecture) {
             Lecture l = (Lecture) o;
             return new CompareToBuilder()
                     .append(this.date, l.date)

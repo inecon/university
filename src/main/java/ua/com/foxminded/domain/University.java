@@ -1,6 +1,8 @@
 package ua.com.foxminded.domain;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,6 +62,35 @@ public class University implements Comparable{
 
     public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        University rhs = (University) obj;
+        return new EqualsBuilder()
+                .append(students, rhs.students)
+                .append(teachers, rhs.teachers)
+                .append(groups, rhs.groups)
+                .append(lectures, rhs.lectures)
+                .isEquals();
+    }
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.students)
+                .append(this.teachers)
+                .append(this.groups)
+                .append(this.lectures)
+                .toHashCode();
     }
 
     public int compareTo(Object o) {

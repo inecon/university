@@ -40,7 +40,6 @@ public class LectureTest {
         actualLecture.setGroup(VALID_GROUP);
         actualLecture.setClassroom(VALID_CLASSROM);
         Lecture expectedLecture = VALID_LECTURE;
-        System.out.println(actualLecture.toString());
         assertEquals(actualLecture, expectedLecture);
     }
 }

@@ -64,11 +64,12 @@ public class Group implements Comparable {
         this.description = description;
     }
 
-    public int compareTo(Object o) {
-        if (o instanceof Group) {
-            Group g = (Group) o;
-            return (this.title.compareTo(g.title));
-        } else
+    public int compareTo(Object another) {
+        if (another instanceof Group) {
+            Group anotherGroup = (Group) another;
+            return (this.title.compareTo(anotherGroup.title));
+        } else {
             return -1;
+        }
     }
 }

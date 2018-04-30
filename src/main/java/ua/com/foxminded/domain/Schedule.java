@@ -7,14 +7,29 @@ import java.util.TreeSet;
 public class Schedule {
     private University university;
 
-    public Set<Lecture> getScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        Set<Lecture> result = new TreeSet<Lecture>();
+    public Set<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        Set<Lecture> result = new TreeSet<>();
         Group groupToFindSchedule = student.getGroup();
 
         Set<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
             if (lecture.getGroup().equals(groupToFindSchedule)) {
                 result.add(lecture);
+            }
+        }
+        return result;
+    }
+
+    public Set<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        Set<Lecture> result = new TreeSet<>();
+        Set<String> subjectToFindSchedule = teacher.getSubject();
+
+        Set<Lecture> allScheduleLectures = university.getLectures();
+        for (Lecture lecture : allScheduleLectures) {
+            for (String subject : subjectToFindSchedule) {
+                if (lecture.getSubject().equals(subject)) {
+                    result.add(lecture);
+                }
             }
         }
         return result;

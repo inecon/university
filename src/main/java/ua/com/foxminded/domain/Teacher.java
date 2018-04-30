@@ -14,12 +14,13 @@ public class Teacher extends Human {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (o instanceof Teacher) {
-            Teacher t = (Teacher) o;
-            return (this.getSurName().compareTo(t.getSurName()));
-        } else
+    public int compareTo(Object another) {
+        if (another instanceof Teacher) {
+            Teacher anotherTeacher = (Teacher) another;
+            return (this.getSurName().compareTo(anotherTeacher.getSurName()));
+        } else {
             return -1;
+        }
     }
 
     @Override

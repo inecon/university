@@ -93,16 +93,17 @@ public class University implements Comparable{
                 .toHashCode();
     }
 
-    public int compareTo(Object o) {
-        if (o instanceof University) {
-            University u = (University) o;
+    public int compareTo(Object another) {
+        if (another instanceof University) {
+            University anotherUniversity = (University) another;
             return new CompareToBuilder()
-                    .append(this.students, u.students)
-                    .append(this.teachers, u.teachers)
-                    .append(this.groups, u.groups)
-                    .append(this.lectures, u.lectures)
+                    .append(this.students, anotherUniversity.students)
+                    .append(this.teachers, anotherUniversity.teachers)
+                    .append(this.groups, anotherUniversity.groups)
+                    .append(this.lectures, anotherUniversity.lectures)
                     .toComparison();
-        } else
+        } else {
             return -1;
+        }
     }
 }

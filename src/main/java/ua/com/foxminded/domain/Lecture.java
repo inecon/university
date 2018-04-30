@@ -55,19 +55,19 @@ public class Lecture implements Comparable {
                 .isEquals();
     }
 
-    //Used different approaches to make compareTo method for study aims :)
-    public int compareTo(Object o) {
-        if (o instanceof Lecture) {
-            Lecture l = (Lecture) o;
+    public int compareTo(Object another) {
+        if (another instanceof Lecture) {
+            Lecture anotherLecture = (Lecture) another;
             return new CompareToBuilder()
-                    .append(this.date, l.date)
-                    .append(this.subject, l.subject)
-                    .append(this.teacher, l.teacher)
-                    .append(this.group, l.group)
-                    .append(this.classroom, l.classroom)
+                    .append(this.date, anotherLecture.date)
+                    .append(this.subject, anotherLecture.subject)
+                    .append(this.teacher, anotherLecture.teacher)
+                    .append(this.group, anotherLecture.group)
+                    .append(this.classroom, anotherLecture.classroom)
                     .toComparison();
-        } else
+        } else {
             return -1;
+        }
     }
 
     @Override

@@ -10,13 +10,8 @@ public class Student extends Human {
     }
 
     @Override
-    public int compareTo(Object another) {
-        if (another instanceof Student) {
-            Student anotherStudent = (Student) another;
-            return (this.getSurName().compareTo(anotherStudent.getSurName()));
-        } else {
-            return -1;
-        }
+    public int compareTo(Human anotherStudent) {
+        return (this.getSurName().compareTo(anotherStudent.getSurName()));
     }
 
     @Override

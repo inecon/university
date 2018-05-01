@@ -3,7 +3,7 @@ package ua.com.foxminded.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Group implements Comparable {
+public class Group implements Comparable<Group> {
 
     private String title;
     private String description;
@@ -64,12 +64,8 @@ public class Group implements Comparable {
         this.description = description;
     }
 
-    public int compareTo(Object another) {
-        if (another instanceof Group) {
-            Group anotherGroup = (Group) another;
-            return (this.title.compareTo(anotherGroup.title));
-        } else {
-            return -1;
-        }
+    @Override
+    public int compareTo(Group anotherGroup) {
+        return (this.title.compareTo(anotherGroup.title));
     }
 }

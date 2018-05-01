@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
 
-public class Lecture implements Comparable {
+public class Lecture implements Comparable<Lecture> {
     private LocalDateTime date;
     private String subject;
     private Teacher teacher;
@@ -55,9 +55,7 @@ public class Lecture implements Comparable {
                 .isEquals();
     }
 
-    public int compareTo(Object another) {
-        if (another instanceof Lecture) {
-            Lecture anotherLecture = (Lecture) another;
+    public int compareTo(Lecture anotherLecture) {
             return new CompareToBuilder()
                     .append(this.date, anotherLecture.date)
                     .append(this.subject, anotherLecture.subject)
@@ -65,9 +63,6 @@ public class Lecture implements Comparable {
                     .append(this.group, anotherLecture.group)
                     .append(this.classroom, anotherLecture.classroom)
                     .toComparison();
-        } else {
-            return -1;
-        }
     }
 
     @Override

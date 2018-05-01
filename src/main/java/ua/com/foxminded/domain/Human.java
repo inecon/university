@@ -4,7 +4,7 @@ package ua.com.foxminded.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Human implements Comparable {
+public class Human implements Comparable <Human> {
     private String name;
     private String surName;
     private String gender;
@@ -89,7 +89,8 @@ public class Human implements Comparable {
         this.age = age;
     }
 
-    public int compareTo(Object another) {
+    @Override
+    public int compareTo(Human o) {
         return 0;
     }
 }

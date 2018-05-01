@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class University implements Comparable{
+public class University implements Comparable<University> {
     private Set<Student> students = new TreeSet<Student>();
     private Set<Teacher> teachers = new TreeSet<Teacher>();
     private Set<Group> groups = new TreeSet<Group>();
@@ -83,6 +83,7 @@ public class University implements Comparable{
                 .append(lectures, rhs.lectures)
                 .isEquals();
     }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
@@ -93,17 +94,12 @@ public class University implements Comparable{
                 .toHashCode();
     }
 
-    public int compareTo(Object another) {
-        if (another instanceof University) {
-            University anotherUniversity = (University) another;
-            return new CompareToBuilder()
-                    .append(this.students, anotherUniversity.students)
-                    .append(this.teachers, anotherUniversity.teachers)
-                    .append(this.groups, anotherUniversity.groups)
-                    .append(this.lectures, anotherUniversity.lectures)
-                    .toComparison();
-        } else {
-            return -1;
-        }
+    public int compareTo(University anotherUniversity) {
+        return new CompareToBuilder()
+                .append(this.students, anotherUniversity.students)
+                .append(this.teachers, anotherUniversity.teachers)
+                .append(this.groups, anotherUniversity.groups)
+                .append(this.lectures, anotherUniversity.lectures)
+                .toComparison();
     }
 }

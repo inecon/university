@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class GroupDaoImplTest {
     String VALID_TITLE = "GroupForTest";
     String VALID_DESCRIPTION = "Group01_description";
-    Group VALID_GROUP = new Group(VALID_TITLE,VALID_DESCRIPTION);
+    Group VALID_GROUP = new Group(VALID_TITLE, VALID_DESCRIPTION);
     ArrayList<Group> VALID_GROUP_LIST = new ArrayList<>();
     @Mock
     private DaoFactory daoFactory;
@@ -33,8 +34,8 @@ public class GroupDaoImplTest {
     private PreparedStatement statement;
     @Mock
     private ResultSet resultSet;
-
-    //private Group group;
+    @Mock
+    GroupDaoImpl mockedGroupDao;
 
     GroupDaoImpl groupDao;
 
@@ -61,21 +62,33 @@ public class GroupDaoImplTest {
 
     @Test
     public void shouldGetAll() throws SQLException {
-        ArrayList<Group> allGroups = new ArrayList<>();
-        allGroups.add(VALID_GROUP);
-
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(daoFactory.getConnection()).thenReturn(connection);
-
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(resultSet.getString("title")).thenReturn(VALID_GROUP.getTitle());
         when(resultSet.getString("description")).thenReturn(VALID_GROUP.getDescription());
 
-        assertEquals(VALID_GROUP_LIST,groupDao.getAll());
-
+        assertEquals(VALID_GROUP_LIST, groupDao.getAll());
     }
+
+    @Test
+    public void shouldInvokeDeleteAll() throws SQLException {
+        mockedGroupDao.deleteAll();
+        verify(mockedGroupDao).deleteAll();
+    }
+
+    @Test
+    public void shouldInvokeUpdate() throws SQLException {
+        mockedGroupDao.update(anyString(), anyString());
+        verify(mockedGroupDao).update(anyString(), anyString());
+    }
+
+    //*
+    //will be deleted soon
+    //
+    //
     @Test
     public void shouGetAll() {
         DaoFactory daoFactory1 = new DaoFactory();
@@ -89,9 +102,25 @@ public class GroupDaoImplTest {
 
         ArrayList<Group> allGroups = new ArrayList<>();
         allGroups = groupDao1.getAll();
-        for (Group group: allGroups) {
+        for (Group group : allGroups) {
             System.out.println(group.toString());
         }
 
+    }
+
+    @Test
+    public void shouldDelAll() {
+        DaoFactory daoFactory1 = new DaoFactory();
+        GroupDaoImpl groupDao1;
+        groupDao1 = new GroupDaoImpl(daoFactory1);
+        groupDao1.deleteAll();
+    }
+
+    @Test
+    public void shouldUpdateTitle() {
+        DaoFactory daoFactory2 = new DaoFactory();
+        GroupDaoImpl groupDao2;
+        groupDao2 = new GroupDaoImpl(daoFactory2);
+        groupDao2.update("GroupForTest", "Update ok");
     }
 }

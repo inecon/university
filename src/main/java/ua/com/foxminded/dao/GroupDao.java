@@ -10,7 +10,7 @@ public interface GroupDao {
 
     public void addGroup(String title, String description);
 
-    public void update(Group group);
+    public void update(String title, String description);
 
-    public void deleteByTitle(String title);
+    public void deleteAll();
 }

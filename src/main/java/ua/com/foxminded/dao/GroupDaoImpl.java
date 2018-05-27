@@ -35,9 +35,15 @@ public class GroupDaoImpl implements GroupDao {
             e.printStackTrace();
         } finally {
             try {
-                resultSet.close();
-                statement.close();
-                connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -59,19 +65,23 @@ public class GroupDaoImpl implements GroupDao {
             statement.setString(1, title);
             statement.setString(2, description);
             statement.execute();
-
             resultSet = statement.getGeneratedKeys();
             resultSet.next();
-
             group = new Group(resultSet.getString("title"), resultSet.getString("description"));
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                resultSet.close();
-                statement.close();
-                connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -79,12 +89,68 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public void update(Group group) {
-
+    public void update(String title, String description) {
+        String sql = "update groups set title = ?, description = ? where title = ?";
+        Group group = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = daoFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.setString(2, description);
+            statement.setString(3, title);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public void deleteByTitle(String title) {
+    public void deleteAll() {
+        String sql = "delete from groups";
+        Group group = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = daoFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.execute();
+            //resultSet = statement.getGeneratedKeys();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Human implements Comparable <Human> {
+    private Integer id;
     private String name;
     private String surName;
     private String gender;
@@ -12,7 +13,8 @@ public class Human implements Comparable <Human> {
 
     public Human() {}
 
-    public Human(String name, String surName, String gender, Integer age) {
+    public Human(Integer id, String name, String surName, String gender, Integer age) {
+        this.id = id;
         this.name = name;
         this.surName = surName;
         this.gender = gender;
@@ -40,6 +42,7 @@ public class Human implements Comparable <Human> {
         }
         Human rhs = (Human) obj;
         return new EqualsBuilder()
+                .append(id, rhs.getId())
                 .append(name, rhs.getName())
                 .append(surName, rhs.getSurName())
                 .append(gender, rhs.getGender())
@@ -50,11 +53,20 @@ public class Human implements Comparable <Human> {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append(this.id + "\n");
         result.append(this.name + "\n");
         result.append(this.surName + "\n");
         result.append(this.gender + "\n");
         result.append(this.age + "\n");
         return result.toString();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

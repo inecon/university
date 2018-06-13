@@ -5,8 +5,8 @@ public class Student extends Human {
 
     public Student() {}
 
-    public Student(String name, String surName, String gender, Integer age) {
-        super(name, surName, gender, age);
+    public Student(Integer id, String name, String surName, String gender, Integer age) {
+        super(id, name, surName, gender, age);
     }
 
     @Override

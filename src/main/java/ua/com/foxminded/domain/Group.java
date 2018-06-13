@@ -4,12 +4,14 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Group implements Comparable<Group> {
-
+    private Integer id;
     private String title;
     private String description;
+
     public Group() {}
 
-    public Group(String title, String description) {
+    public Group(Integer id, String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }
@@ -35,6 +37,7 @@ public class Group implements Comparable<Group> {
         }
         Group rhs = (Group) obj;
         return new EqualsBuilder()
+                .append(id,rhs.getId())
                 .append(title, rhs.getTitle())
                 .append(description, rhs.getDescription())
                 .isEquals();
@@ -43,11 +46,19 @@ public class Group implements Comparable<Group> {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(this.title + " ");
+        result.append(this.id + " ");
+        result.append(this.title + "\n");
         result.append(" - \"" + this.description + "\"" + "\n");
         return result.toString();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public String getTitle() {
         return title;
     }
@@ -66,6 +77,6 @@ public class Group implements Comparable<Group> {
 
     @Override
     public int compareTo(Group anotherGroup) {
-        return (this.title.compareTo(anotherGroup.title));
+        return (this.id.compareTo(anotherGroup.id));
     }
 }

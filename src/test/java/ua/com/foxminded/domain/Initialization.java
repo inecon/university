@@ -5,14 +5,14 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Initialization {
-    public Student VALID_STUDENT1 = new Student("Petro", "Kolhozin", "male", 19);
-    public Group VALID_GROUP1 = new Group("Group01", "Spring math group");
+    public Student VALID_STUDENT1 = new Student(1,"Petro", "Kolhozin", "male", 19);
+    public Group VALID_GROUP1 = new Group(1,"Group01", "Spring math group");
 
-    public Student VALID_STUDENT2 = new Student("Tanya", "Pupkina", "female", 18);
-    public Group VALID_GROUP2 = new Group("Group02", "Winter linguist group");
+    public Student VALID_STUDENT2 = new Student(2,"Tanya", "Pupkina", "female", 18);
+    public Group VALID_GROUP2 = new Group(2,"Group02", "Winter linguist group");
 
-    public Teacher VALID_TEACHER1 = new Teacher("Ivan", "Ivanovich", "male", 65);
-    public Teacher VALID_TEACHER2 = new Teacher("Nikolai", "Petrovich", "male", 50);
+    public Teacher VALID_TEACHER1 = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
+    public Teacher VALID_TEACHER2 = new Teacher(2,"Nikolai", "Petrovich", "male", 50);
 
     public String VALID_SUBJECT1 = "Math";
     public String VALID_SUBJECT2 = "Biology";

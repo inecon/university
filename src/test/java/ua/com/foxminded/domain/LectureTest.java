@@ -11,8 +11,8 @@ import static org.mockito.Mockito.verify;
 public class LectureTest {
     public LocalDateTime VALID_DATE = LocalDateTime.of(2000, 01, 01, 12, 00);
     public String VALID_SUBJECT = "Math";
-    public Teacher VALID_TEACHER = new Teacher("Ivan", "Ivanovich", "male", 65);
-    public Group VALID_GROUP = new Group("Group01", "Spring math group");
+    public Teacher VALID_TEACHER = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
+    public Group VALID_GROUP = new Group(1,"Group01", "Spring math group");
     public Integer VALID_CLASSROM = 10;
     public Lecture VALID_LECTURE = new Lecture(VALID_DATE, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROM);
 

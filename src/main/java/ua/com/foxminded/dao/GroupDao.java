@@ -8,9 +8,11 @@ public interface GroupDao {
 
     public ArrayList<Group> getAll ();
 
-    public void addGroup(String title, String description);
+    public Group getById(Integer id);
 
-    public void update(String title, String description);
+    public void addGroup(Integer id, String title, String description);
+
+    public void update(Integer id, String title, String description);
 
     public void deleteAll();
 }

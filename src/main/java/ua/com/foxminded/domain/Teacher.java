@@ -9,8 +9,8 @@ public class Teacher extends Human {
 
     public Teacher() {}
 
-    public Teacher(String name, String surName, String gender, Integer age) {
-        super(name, surName, gender, age);
+    public Teacher(Integer id, String name, String surName, String gender, Integer age) {
+        super(id, name, surName, gender, age);
     }
 
     @Override

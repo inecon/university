@@ -9,7 +9,7 @@ public interface TeacherDao {
 
     public Teacher getById(Integer id);
 
-    public void add(Integer id, String name, String surName, String gender, Integer age);
+    public void addTeacher(Integer id, String name, String surName, String gender, Integer age);
 
     public void update(Integer id, String name, String surName, String gender, Integer age);
 

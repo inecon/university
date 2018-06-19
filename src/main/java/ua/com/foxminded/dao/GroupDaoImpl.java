@@ -104,9 +104,9 @@ public class GroupDaoImpl implements GroupDao {
             statement.setString(3, description);
             statement.execute();
             //i will think about next 3 rows
-            resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            group = new Group(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getString("description"));
+            //resultSet = statement.getGeneratedKeys();
+           // resultSet.next();
+            //group = new Group(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getString("description"));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -163,7 +163,6 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public void deleteAll() {
         String sql = "delete from groups";
-        Group group = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -172,7 +171,6 @@ public class GroupDaoImpl implements GroupDao {
             connection = daoFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.execute();
-            //resultSet = statement.getGeneratedKeys();
 
         } catch (SQLException e) {
             e.printStackTrace();

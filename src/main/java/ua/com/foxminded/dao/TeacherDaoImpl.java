@@ -1,5 +1,6 @@
 package ua.com.foxminded.dao;
 
+import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Teacher;
 
 import java.sql.Connection;
@@ -17,7 +18,45 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public ArrayList<Teacher> getAll() {
-        return null;
+        ArrayList<Teacher> result = new ArrayList<>();
+        String sql = "select * from teachers";
+        Group group = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.execute();
+            resultSet = statement.getResultSet();
+
+            while (resultSet.next()) {
+                result.add(new Teacher(resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("gender"),
+                        resultSet.getInt("age")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     @Override
@@ -37,7 +76,7 @@ public class TeacherDaoImpl implements TeacherDao {
             resultSet.next();
             teacher = new Teacher(resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getString("surName"),
+                    resultSet.getString("surname"),
                     resultSet.getString("gender"),
                     resultSet.getInt("age"));
 
@@ -62,8 +101,39 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void add(Integer id, String name, String surName, String gender, Integer age) {
+    public void addTeacher(Integer id, String name, String surName, String gender, Integer age) {
+        String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = daoFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.setString(2, name);
+            statement.setString(3, surName);
+            statement.setString(4, gender);
+            statement.setInt(5, age);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

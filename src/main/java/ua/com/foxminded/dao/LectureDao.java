@@ -11,7 +11,7 @@ public interface LectureDao {
 
     public void addLecture(Lecture lecture);
 
-    public void update(LocalDateTime date, String subject);
+    public void update(Lecture lecture);
 
-    public void deleteAll(LocalDateTime date, String subject);
+    public void deleteAll();
 }

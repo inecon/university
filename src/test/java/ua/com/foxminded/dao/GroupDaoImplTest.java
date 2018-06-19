@@ -27,6 +27,7 @@ public class GroupDaoImplTest {
     String VALID_DESCRIPTION = "Group01_description";
     Group VALID_GROUP = new Group(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
     ArrayList<Group> VALID_GROUP_LIST = new ArrayList<>();
+
     @Mock
     private DaoFactory daoFactory;
     @Mock

@@ -1,6 +1,6 @@
 package ua.com.foxminded.dao;
 
-import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.domain.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,17 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TeacherDaoImpl implements TeacherDao {
+public class StudentDaoImpl implements StudentDao {
     private DaoFactory daoFactory;
 
-    public TeacherDaoImpl(DaoFactory daoFactory) {
+    public StudentDaoImpl(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
     @Override
-    public ArrayList<Teacher> getAll() {
-        ArrayList<Teacher> result = new ArrayList<>();
-        String sql = "select * from teachers";
+    public ArrayList<Student> getAll() {
+        ArrayList<Student> result = new ArrayList<>();
+        String sql = "select * from students";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -30,7 +30,7 @@ public class TeacherDaoImpl implements TeacherDao {
             resultSet = statement.getResultSet();
 
             while (resultSet.next()) {
-                result.add(new Teacher(resultSet.getInt("id"),
+                result.add(new Student(resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
                         resultSet.getString("gender"),
@@ -58,9 +58,9 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Teacher getById(Integer id) {
-        String sql = "select * from teachers where id = ?";
-        Teacher teacher = null;
+    public Student getById(Integer id) {
+        String sql = "select * from students where id = ?";
+        Student student = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -72,7 +72,7 @@ public class TeacherDaoImpl implements TeacherDao {
             statement.execute();
             resultSet = statement.getResultSet();
             resultSet.next();
-            teacher = new Teacher(resultSet.getInt("id"),
+            student = new Student(resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("surname"),
                     resultSet.getString("gender"),
@@ -95,12 +95,12 @@ public class TeacherDaoImpl implements TeacherDao {
                 e.printStackTrace();
             }
         }
-        return teacher;
+        return student;
     }
 
     @Override
     public void create(Integer id, String name, String surName, String gender, Integer age) {
-        String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
+        String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -136,7 +136,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public void update(Integer id, String name, String surName, String gender, Integer age) {
-        String sql = "update teachers set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
+        String sql = "update students set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -172,7 +172,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public void deleteAll() {
-        String sql = "delete from teachers";
+        String sql = "delete from students";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;

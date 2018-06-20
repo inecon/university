@@ -78,8 +78,8 @@ public class TeacherDaoImplTest {
 
     @Test
     public void add() {
-        mockedTeacherDao.addTeacher(anyInt(),anyString(),anyString(),anyString(),anyInt());
-        verify(mockedTeacherDao).addTeacher(anyInt(),anyString(),anyString(),anyString(),anyInt());
+        mockedTeacherDao.create(anyInt(),anyString(),anyString(),anyString(),anyInt());
+        verify(mockedTeacherDao).create(anyInt(),anyString(),anyString(),anyString(),anyInt());
     }
 
     @Test

@@ -1,13 +1,13 @@
 package ua.com.foxminded.dao;
 
-import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.domain.Student;
 
 import java.util.ArrayList;
 
-public interface TeacherDao {
-    public ArrayList<Teacher> getAll ();
+public interface StudentDao {
+    public ArrayList<Student> getAll ();
 
-    public Teacher getById(Integer id);
+    public Student getById(Integer id);
 
     public void create(Integer id, String name, String surName, String gender, Integer age);
 
@@ -15,4 +15,3 @@ public interface TeacherDao {
 
     public void deleteAll();
 }
-

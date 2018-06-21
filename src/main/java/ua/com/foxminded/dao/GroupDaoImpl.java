@@ -89,9 +89,8 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public void addGroup(Integer id, String title, String description) {
+    public void create(Integer id, String title, String description) {
         String sql = "insert into groups (id, title, description) values (?,?,?)";
-        Group group = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -103,10 +102,6 @@ public class GroupDaoImpl implements GroupDao {
             statement.setString(2, title);
             statement.setString(3, description);
             statement.execute();
-            //i will think about next 3 rows
-            //resultSet = statement.getGeneratedKeys();
-           // resultSet.next();
-            //group = new Group(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getString("description"));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,7 +125,6 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public void update(Integer id, String title, String description) {
         String sql = "update groups set title = ?, description = ? where id = ?";
-        Group group = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;

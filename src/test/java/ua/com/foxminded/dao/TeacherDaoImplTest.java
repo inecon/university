@@ -77,19 +77,19 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void add() {
-        mockedTeacherDao.create(anyInt(),anyString(),anyString(),anyString(),anyInt());
-        verify(mockedTeacherDao).create(anyInt(),anyString(),anyString(),anyString(),anyInt());
+    public void shouldInvokeCreate() {
+        mockedTeacherDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        verify(mockedTeacherDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void update() {
-        mockedTeacherDao.update(anyInt(),anyString(),anyString(),anyString(),anyInt());
-        verify(mockedTeacherDao).update(anyInt(),anyString(),anyString(),anyString(),anyInt());
+    public void shouldInvokeUpdate() {
+        mockedTeacherDao.update(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        verify(mockedTeacherDao).update(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void deleteAll() {
+    public void shouldInvokeDeleteAll() {
         mockedTeacherDao.deleteAll();
         verify(mockedTeacherDao).deleteAll();
     }

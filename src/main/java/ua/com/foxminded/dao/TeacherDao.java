@@ -5,7 +5,7 @@ import ua.com.foxminded.domain.Teacher;
 import java.util.ArrayList;
 
 public interface TeacherDao {
-    public ArrayList<Teacher> getAll ();
+    public ArrayList<Teacher> getAll();
 
     public Teacher getById(Integer id);
 

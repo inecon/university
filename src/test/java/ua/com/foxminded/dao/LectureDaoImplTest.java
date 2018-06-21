@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class LectureDaoImplTest {
     LocalDateTime VALID_DATE_TIME = LocalDateTime.of(2018, Month.JANUARY, 1, 12, 00);
     String VALID_SUBJECT = "Test subject";
-    Teacher VALID_TEACHER = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
+    Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65);
     Group VALID_GROUP = new Group(1, "Group01", "Math");
     Integer VALID_CLASSROOM = 1;
     Lecture VALID_LECTURE = new Lecture(VALID_DATE_TIME, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
@@ -55,8 +55,9 @@ public class LectureDaoImplTest {
         lectureDao = new LectureDaoImpl(daoFactory);
         VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
+
     @Test
-    public void getAllByDate() throws SQLException {
+    public void shouldGetAllByDate() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(daoFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -76,19 +77,19 @@ public class LectureDaoImplTest {
 
 
     @Test
-    public void shouldInvokeAddLecture() {
-        mockedLectureDao.addLecture(any());
-        verify(mockedLectureDao).addLecture(any());
+    public void shouldInvokeCreate() {
+        mockedLectureDao.create(any());
+        verify(mockedLectureDao).create(any());
     }
 
     @Test
-    public void update() {
+    public void shouldInvokeUpdate() {
         mockedLectureDao.update(any());
         verify(mockedLectureDao).update(any());
     }
 
     @Test
-    public void deleteAll() {
+    public void shouldInvokeDeleteAll() {
         mockedLectureDao.deleteAll();
         verify(mockedLectureDao).deleteAll();
     }

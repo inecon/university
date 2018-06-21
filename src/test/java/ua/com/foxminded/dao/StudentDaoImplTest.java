@@ -77,19 +77,19 @@ public class StudentDaoImplTest {
     }
 
     @Test
-    public void create() {
-        mockedStudentDao.create(anyInt(),anyString(),anyString(),anyString(),anyInt());
-        verify(mockedStudentDao).create(anyInt(),anyString(),anyString(),anyString(),anyInt());
+    public void shouldInvokeCreate() {
+        mockedStudentDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        verify(mockedStudentDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void update() {
-        mockedStudentDao.update(anyInt(),anyString(),anyString(),anyString(),anyInt());
-        verify(mockedStudentDao).update(anyInt(),anyString(),anyString(),anyString(),anyInt());
+    public void shouldInvokeUpdate() {
+        mockedStudentDao.update(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        verify(mockedStudentDao).update(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void deleteAll() {
+    public void shouldInvokeDeleteAll() {
         mockedStudentDao.deleteAll();
         verify(mockedStudentDao).deleteAll();
     }

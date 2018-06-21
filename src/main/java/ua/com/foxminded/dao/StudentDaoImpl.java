@@ -148,7 +148,7 @@ public class StudentDaoImpl implements StudentDao {
             statement.setString(3, surName);
             statement.setString(4, gender);
             statement.setInt(5, age);
-            statement.setInt(6,id);
+            statement.setInt(6, id);
             statement.execute();
 
         } catch (SQLException e) {

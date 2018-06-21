@@ -48,7 +48,7 @@ public class GroupDaoImplTest {
     }
 
     @Test
-    public void shouldCreateGroup() throws Exception {
+    public void shouldCreate() throws Exception {
         when(connection.prepareStatement(any(String.class), anyInt())).thenReturn(statement);
         when(daoFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -57,7 +57,7 @@ public class GroupDaoImplTest {
         when(resultSet.getString(1)).thenReturn(VALID_GROUP.getTitle());
         when(resultSet.getString(2)).thenReturn(VALID_GROUP.getDescription());
         when(resultSet.getInt(3)).thenReturn(VALID_GROUP.getId());
-        groupDao.addGroup(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
+        groupDao.create(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
         verify(daoFactory).getConnection();
     }
 
@@ -85,43 +85,5 @@ public class GroupDaoImplTest {
     public void shouldInvokeUpdate() throws SQLException {
         mockedGroupDao.update(anyInt(), anyString(), anyString());
         verify(mockedGroupDao).update(anyInt(), anyString(), anyString());
-    }
-
-    //*
-    //will be deleted soon
-    //
-    //
-    @Test
-    public void shouGetAll() {
-        DaoFactory daoFactory1 = new DaoFactory();
-        GroupDaoImpl groupDao1;
-        groupDao1 = new GroupDaoImpl(daoFactory1);
-        int i = 5;
-        while (i > 0) {
-            groupDao1.addGroup(i, VALID_TITLE, VALID_DESCRIPTION);
-            i--;
-        }
-        ArrayList<Group> allGroups = new ArrayList<>();
-        allGroups = groupDao1.getAll();
-        for (Group group : allGroups) {
-            System.out.println(group.toString());
-        }
-
-    }
-
-    @Test
-    public void shouldDelAll() {
-        DaoFactory daoFactory1 = new DaoFactory();
-        GroupDaoImpl groupDao1;
-        groupDao1 = new GroupDaoImpl(daoFactory1);
-        groupDao1.deleteAll();
-    }
-
-    @Test
-    public void shouldUpdateTitle() {
-        DaoFactory daoFactory2 = new DaoFactory();
-        GroupDaoImpl groupDao2;
-        groupDao2 = new GroupDaoImpl(daoFactory2);
-        groupDao2.update(1,"GroupForTest", "Update ok");
     }
 }

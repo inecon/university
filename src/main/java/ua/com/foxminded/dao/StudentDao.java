@@ -5,7 +5,7 @@ import ua.com.foxminded.domain.Student;
 import java.util.ArrayList;
 
 public interface StudentDao {
-    public ArrayList<Student> getAll ();
+    public ArrayList<Student> getAll();
 
     public Student getById(Integer id);
 

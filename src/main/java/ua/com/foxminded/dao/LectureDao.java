@@ -9,7 +9,7 @@ public interface LectureDao {
 
     public List<Lecture> getAllByDate(LocalDateTime date);
 
-    public void addLecture(Lecture lecture);
+    public void create(Lecture lecture);
 
     public void update(Lecture lecture);
 

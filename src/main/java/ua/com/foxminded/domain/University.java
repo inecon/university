@@ -1,25 +1,26 @@
 package ua.com.foxminded.domain;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import ua.com.foxminded.dao.*;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
 
-public class University implements Comparable<University> {
-    private Set<Student> students = new TreeSet<Student>();
-    private Set<Teacher> teachers = new TreeSet<Teacher>();
-    private Set<Group> groups = new TreeSet<Group>();
-    private Set<Lecture> lectures = new TreeSet<Lecture>();
+public class University {
+    private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Teacher> teachers = new ArrayList<>();
+    private ArrayList<Group> groups = new ArrayList<>();
+    private ArrayList<Lecture> lectures = new ArrayList<>();
+    private DaoFactory daoFactory = new DaoFactory();
 
     public University() {}
 
-    public University(Set<Student> students, Set<Teacher> teachers, Set<Group> groups, Set<Lecture> lectures) {
+    public University(ArrayList<Student> students, ArrayList<Teacher> teachers, ArrayList<Group> groups, ArrayList<Lecture> lectures, DaoFactory daoFactory) {
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;
         this.lectures = lectures;
+        this.daoFactory = daoFactory;
     }
 
     @Override
@@ -32,36 +33,44 @@ public class University implements Comparable<University> {
         return result.toString();
     }
 
-    public Set<Student> getStudents() {
-        return students;
+    public ArrayList<Student> getStudents() {
+        return new StudentDaoImpl(daoFactory).getAll();
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(ArrayList<Student> students) {
         this.students = students;
     }
 
-    public Set<Teacher> getTeachers() {
-        return teachers;
+    public ArrayList<Teacher> getTeachers() {
+        return new TeacherDaoImpl(daoFactory).getAll();
     }
 
-    public void setTeachers(Set<Teacher> teachers) {
+    public void setTeachers(ArrayList<Teacher> teachers) {
         this.teachers = teachers;
     }
 
-    public Set<Group> getGroups() {
-        return groups;
+    public ArrayList<Group> getGroups() {
+        return new GroupDaoImpl(daoFactory).getAll();
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
     }
 
-    public Set<Lecture> getLectures() {
-        return lectures;
+    public ArrayList<Lecture> getLectures() {
+        return new LectureDaoImpl(daoFactory).getAll();
     }
 
-    public void setLectures(Set<Lecture> lectures) {
+    public void setLectures(ArrayList<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    public void setDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
+
+    public DaoFactory getDaoFactory() {
+        return daoFactory;
     }
 
     @Override
@@ -94,12 +103,5 @@ public class University implements Comparable<University> {
                 .toHashCode();
     }
 
-    public int compareTo(University anotherUniversity) {
-        return new CompareToBuilder()
-                .append(this.students, anotherUniversity.students)
-                .append(this.teachers, anotherUniversity.teachers)
-                .append(this.groups, anotherUniversity.groups)
-                .append(this.lectures, anotherUniversity.lectures)
-                .toComparison();
-    }
+
 }

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,22 +56,20 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldGetAllByDate() throws SQLException {
+    public void shouldGetAll() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(daoFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(resultSet.getInt("teacher_id")).thenReturn(VALID_TEACHER.getId());
 
-        when(resultSet.getInt("group_id")).thenReturn(VALID_GROUP.getId());
-        when(teacherDao.getById(anyInt())).thenReturn(VALID_TEACHER);
-        when(groupDao.getById(anyInt())).thenReturn(VALID_GROUP);
         when(resultSet.getString("date")).thenReturn(String.valueOf(VALID_DATE_TIME));
+        when(teacherDao.getById(any())).thenReturn(VALID_TEACHER);
+        when(groupDao.getById(any())).thenReturn(VALID_GROUP);
         when(resultSet.getString("subject")).thenReturn(VALID_SUBJECT);
         when(resultSet.getInt("classroom")).thenReturn(VALID_CLASSROOM);
 
-        assertEquals(VALID_LECTURE_LIST, lectureDao.getAllByDate(VALID_DATE_TIME));
+        assertEquals(VALID_LECTURE_LIST, lectureDao.getAll());
     }
 
 

@@ -1,17 +1,17 @@
 package ua.com.foxminded.domain;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Schedule {
     private University university;
 
-    public Set<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        Set<Lecture> result = new TreeSet<>();
+    public ArrayList<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        ArrayList<Lecture> result = new ArrayList<>();
         Group groupToFindSchedule = student.getGroup();
 
-        Set<Lecture> allScheduleLectures = university.getLectures();
+        List<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
             if (lecture.getGroup().equals(groupToFindSchedule)) {
                 result.add(lecture);
@@ -20,11 +20,11 @@ public class Schedule {
         return result;
     }
 
-    public Set<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        Set<Lecture> result = new TreeSet<>();
-        Set<String> subjectToFindSchedule = teacher.getSubject();
+    public ArrayList<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        ArrayList<Lecture> result = new ArrayList<>();
+        ArrayList<String> subjectToFindSchedule = teacher.getSubject();
 
-        Set<Lecture> allScheduleLectures = university.getLectures();
+        List<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
             for (String subject : subjectToFindSchedule) {
                 if (lecture.getSubject().equals(subject)) {

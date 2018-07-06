@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StudentDaoImpl implements StudentDao {
-    private DaoFactory daoFactory;
+    private ConnectionFactory connectionFactory;
 
-    public StudentDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    public StudentDaoImpl(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.execute();
             resultSet = statement.getResultSet();
@@ -66,7 +66,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.execute();
@@ -106,7 +106,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.setString(2, name);
@@ -141,7 +141,7 @@ public class StudentDaoImpl implements StudentDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.setString(2, name);
@@ -178,7 +178,7 @@ public class StudentDaoImpl implements StudentDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.execute();
 

@@ -6,10 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class GroupDaoImpl implements GroupDao {
-    private DaoFactory daoFactory;
+    private ConnectionFactory connectionFactory;
 
-    public GroupDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    public GroupDaoImpl(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class GroupDaoImpl implements GroupDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.execute();
             resultSet = statement.getResultSet();
@@ -60,7 +60,7 @@ public class GroupDaoImpl implements GroupDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.execute();
@@ -96,7 +96,7 @@ public class GroupDaoImpl implements GroupDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, id);
             statement.setString(2, title);
@@ -129,7 +129,7 @@ public class GroupDaoImpl implements GroupDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setString(1, title);
             statement.setString(2, description);
@@ -162,7 +162,7 @@ public class GroupDaoImpl implements GroupDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = connectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             statement.execute();
 

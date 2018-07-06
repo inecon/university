@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DaoFactory {
+public class ConnectionFactory {
     /****
      * This will be loaded later.....with Spring :)
      * please accept this implementation for now

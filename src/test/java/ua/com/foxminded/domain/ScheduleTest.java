@@ -34,7 +34,7 @@ public class ScheduleTest {
 
     @Before
     public void universityInitialization() {
-        initialization.initializationUniversity();
+        //initialization.initializationUniversity();
         VALID_STUDENTS_LECTURES.add(VALID_LECTURE1);
         VALID_TEACHERS_LECTURES.add(VALID_LECTURE1);
         VALID_TEACHERS_LECTURES.add(VALID_LECTURE2);

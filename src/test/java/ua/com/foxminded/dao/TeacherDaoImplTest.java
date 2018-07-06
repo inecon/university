@@ -26,7 +26,7 @@ public class TeacherDaoImplTest {
 
     Teacher VALID_TEACHER = new Teacher(1, "teacher", "testSurname", "male", 45);
     @Mock
-    private DaoFactory daoFactory;
+    private ConnectionFactory connectionFactory;
     @Mock
     private Connection connection;
     @Mock
@@ -40,14 +40,14 @@ public class TeacherDaoImplTest {
 
     @Before
     public void setUp() throws Exception {
-        teacherDao = new TeacherDaoImpl(daoFactory);
+        teacherDao = new TeacherDaoImpl(connectionFactory);
         VALID_TEACHER_LIST.add(VALID_TEACHER);
     }
 
     @Test
     public void getAll() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(daoFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
@@ -63,7 +63,7 @@ public class TeacherDaoImplTest {
     @Test
     public void getById() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(daoFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);

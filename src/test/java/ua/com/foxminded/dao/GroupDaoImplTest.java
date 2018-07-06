@@ -29,7 +29,7 @@ public class GroupDaoImplTest {
     ArrayList<Group> VALID_GROUP_LIST = new ArrayList<>();
 
     @Mock
-    private DaoFactory daoFactory;
+    private ConnectionFactory connectionFactory;
     @Mock
     private Connection connection;
     @Mock
@@ -43,14 +43,14 @@ public class GroupDaoImplTest {
 
     @Before
     public void setUp() throws Exception {
-        groupDao = new GroupDaoImpl(daoFactory);
+        groupDao = new GroupDaoImpl(connectionFactory);
         VALID_GROUP_LIST.add(VALID_GROUP);
     }
 
     @Test
     public void shouldCreate() throws Exception {
         when(connection.prepareStatement(any(String.class), anyInt())).thenReturn(statement);
-        when(daoFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getGeneratedKeys()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
@@ -58,13 +58,13 @@ public class GroupDaoImplTest {
         when(resultSet.getString(2)).thenReturn(VALID_GROUP.getDescription());
         when(resultSet.getInt(3)).thenReturn(VALID_GROUP.getId());
         groupDao.create(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
-        verify(daoFactory).getConnection();
+        verify(connectionFactory).getConnection();
     }
 
     @Test
     public void shouldGetAll() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(daoFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);

@@ -1,5 +1,6 @@
 package ua.com.foxminded.dao;
 
+import ua.com.foxminded.di.Context;
 import ua.com.foxminded.domain.Lecture;
 
 import java.sql.Connection;
@@ -10,24 +11,28 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class LectureDaoImpl implements LectureDao {
-    private DaoFactory daoFactory;
+    Context myContext;
+    //private ConnectionFactory connectionFactory = context.get(ConnectionFactory.class);
+    private ConnectionFactory connectionFactory = new ConnectionFactory();
 
-    public LectureDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+
+    public LectureDaoImpl(Context context) {
+     this.myContext = context;
     }
 
     @Override
     public ArrayList<Lecture> getAll() {
+       // connectionFactory = (ConnectionFactory) myContext.getBean().get("connectionFactory");//di package multimap
         ArrayList<Lecture> result = new ArrayList<>();
         String sql = "select * from lectures";
-        GroupDao groupDao = new GroupDaoImpl(daoFactory);
-        TeacherDao teacherDao = new TeacherDaoImpl(daoFactory);
+        GroupDao groupDao = new GroupDaoImpl(connectionFactory);//GroupDao) myContext.getBean().get("groupDao");
+        TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);//(TeacherDao) myContext.getBean().get("teacherDao");
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = new ConnectionFactory().getConnection();//             (Connection) myContext.getBean().get("connection");
             statement = connection.prepareStatement(sql);
             statement.execute();
             resultSet = statement.getResultSet();
@@ -66,7 +71,7 @@ public class LectureDaoImpl implements LectureDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = daoFactory.getConnection();
+            connection = (Connection) myContext.getBean().get("connection");
             statement = connection.prepareStatement(sql);
             statement.setString(1, lecture.getDate().toString());
             statement.setString(2, lecture.getSubject());
@@ -101,7 +106,7 @@ public class LectureDaoImpl implements LectureDao {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = daoFactory.getConnection();
+            connection = (Connection) myContext.getBean().get("connection");
             statement = connection.prepareStatement(sql);
             statement.setString(1, lecture.getDate().toString());
             statement.setString(2, lecture.getSubject());
@@ -138,7 +143,7 @@ public class LectureDaoImpl implements LectureDao {
         ResultSet resultSet = null;
 
         try {
-            connection = daoFactory.getConnection();
+            connection = (Connection) myContext.getBean().get("connection");
             statement = connection.prepareStatement(sql);
             statement.execute();
 

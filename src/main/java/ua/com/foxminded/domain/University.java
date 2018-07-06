@@ -3,6 +3,7 @@ package ua.com.foxminded.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import ua.com.foxminded.dao.*;
+import ua.com.foxminded.di.Context;
 
 import java.util.ArrayList;
 
@@ -11,16 +12,16 @@ public class University {
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
     private ArrayList<Lecture> lectures = new ArrayList<>();
-    private DaoFactory daoFactory = new DaoFactory();
+    private Context context = new Context();
 
     public University() {}
 
-    public University(ArrayList<Student> students, ArrayList<Teacher> teachers, ArrayList<Group> groups, ArrayList<Lecture> lectures, DaoFactory daoFactory) {
+    public University(ArrayList<Student> students, ArrayList<Teacher> teachers, ArrayList<Group> groups, ArrayList<Lecture> lectures, Context context) {
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;
         this.lectures = lectures;
-        this.daoFactory = daoFactory;
+        this.context = context;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class University {
     }
 
     public ArrayList<Student> getStudents() {
-        return new StudentDaoImpl(daoFactory).getAll();
+        return null;//new StudentDaoImpl(connectionFactory).getAll();
     }
 
     public void setStudents(ArrayList<Student> students) {
@@ -42,7 +43,7 @@ public class University {
     }
 
     public ArrayList<Teacher> getTeachers() {
-        return new TeacherDaoImpl(daoFactory).getAll();
+        return null;///new TeacherDaoImpl(connectionFactory).getAll();
     }
 
     public void setTeachers(ArrayList<Teacher> teachers) {
@@ -50,7 +51,7 @@ public class University {
     }
 
     public ArrayList<Group> getGroups() {
-        return new GroupDaoImpl(daoFactory).getAll();
+        return null ;//new GroupDaoImpl(connectionFactory).getAll();
     }
 
     public void setGroups(ArrayList<Group> groups) {
@@ -58,19 +59,19 @@ public class University {
     }
 
     public ArrayList<Lecture> getLectures() {
-        return new LectureDaoImpl(daoFactory).getAll();
+        return new LectureDaoImpl(context).getAll();
     }
 
     public void setLectures(ArrayList<Lecture> lectures) {
         this.lectures = lectures;
     }
 
-    public void setDaoFactory(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    public void setConnectionFactory(ConnectionFactory connectionFactory) {
+        //this.connectionFactory = connectionFactory;
     }
 
-    public DaoFactory getDaoFactory() {
-        return daoFactory;
+    public ConnectionFactory getConnectionFactory() {
+        return null;//connectionFactory;
     }
 
     @Override

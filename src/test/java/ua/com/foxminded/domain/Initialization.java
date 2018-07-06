@@ -1,11 +1,13 @@
 package ua.com.foxminded.domain;
 
-import ua.com.foxminded.dao.DaoFactory;
+import ua.com.foxminded.dao.ConnectionFactory;
+import ua.com.foxminded.di.Context;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Initialization {
+    private static final Object Student = new Student(1,"Petro", "Kolhozin", "male", 19);
     public Student VALID_STUDENT1 = new Student(1,"Petro", "Kolhozin", "male", 19);
     public Group VALID_GROUP1 = new Group(1,"Group01", "Spring math group");
 
@@ -35,9 +37,10 @@ public class Initialization {
     ArrayList<Lecture> VALID_LECTURES_LIST = new ArrayList<>();
     public University VALID_UNIVERSITY = new University();
 
-    DaoFactory VALID_DAO_FACTORY = new DaoFactory();
+    ConnectionFactory VALID_DAO_FACTORY = new ConnectionFactory();
+    public Context contextForTest = new Context();
 
-    public University initializationUniversity() {
+    public University initializationUniversity() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         VALID_STUDENT1.setGroup(VALID_GROUP1);
         VALID_STUDENT2.setGroup(VALID_GROUP2);
@@ -63,7 +66,18 @@ public class Initialization {
         VALID_UNIVERSITY.setTeachers(VALID_TEACHERS_LIST);
         VALID_UNIVERSITY.setGroups(VALID_GROUPS_LIST);
         VALID_UNIVERSITY.setLectures(VALID_LECTURES_LIST);
-        VALID_UNIVERSITY.setDaoFactory(VALID_DAO_FACTORY);
+        VALID_UNIVERSITY.setConnectionFactory(VALID_DAO_FACTORY);
+
+        contextForTest.registerBean("connectionFactory", VALID_UNIVERSITY.getConnectionFactory());
+        contextForTest.registerBean("VALID_DATE_1", VALID_DATE1);
+        contextForTest.registerBean("VALID_DATE_2", VALID_DATE2);
+        contextForTest.registerBean("VALID_TEACHER1", VALID_TEACHER1);
+        contextForTest.registerBean("VALID_GROUP1", VALID_GROUP1);
+        contextForTest.registerBean("VALID_CLASSROOM1", VALID_CLASSROM1);
+        contextForTest.registerBean("VALID_LECTURE_LIST", VALID_UNIVERSITY.getLectures());
+        contextForTest.registerBean("VALID_SUBJECT1", VALID_SUBJECT1);
+
+        //contextForTest.registerBean(Group.class, Context.Scope.singlton);
 
         return VALID_UNIVERSITY;
     }

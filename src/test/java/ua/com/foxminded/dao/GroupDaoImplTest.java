@@ -12,11 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +25,7 @@ public class GroupDaoImplTest {
     String VALID_TITLE = "GroupForTest";
     String VALID_DESCRIPTION = "Group01_description";
     Group VALID_GROUP = new Group(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
-    ArrayList<Group> VALID_GROUP_LIST = new ArrayList<>();
+    List<Group> VALID_GROUP_LIST = new ArrayList<>();
 
     @Mock
     private ConnectionFactory connectionFactory;

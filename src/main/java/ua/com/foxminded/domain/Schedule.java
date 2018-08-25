@@ -7,8 +7,8 @@ import java.util.List;
 public class Schedule {
     private University university;
 
-    public ArrayList<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        ArrayList<Lecture> result = new ArrayList<>();
+    public List<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        List<Lecture> result = new ArrayList<>();
         Group groupToFindSchedule = student.getGroup();
 
         List<Lecture> allScheduleLectures = university.getLectures();
@@ -20,9 +20,9 @@ public class Schedule {
         return result;
     }
 
-    public ArrayList<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        ArrayList<Lecture> result = new ArrayList<>();
-        ArrayList<String> subjectToFindSchedule = teacher.getSubject();
+    public List<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        List<Lecture> result = new ArrayList<>();
+        List<String> subjectToFindSchedule = teacher.getSubject();
 
         List<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {

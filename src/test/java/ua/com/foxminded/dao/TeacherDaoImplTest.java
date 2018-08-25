@@ -12,17 +12,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeacherDaoImplTest {
-    ArrayList<Teacher> VALID_TEACHER_LIST = new ArrayList<>();
+    List<Teacher> VALID_TEACHER_LIST = new ArrayList<>();
 
     Teacher VALID_TEACHER = new Teacher(1, "teacher", "testSurname", "male", 45);
     @Mock

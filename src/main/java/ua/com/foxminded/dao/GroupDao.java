@@ -2,11 +2,11 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Group;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface GroupDao {
 
-    public ArrayList<Group> getAll();
+    public List<Group> getAll();
 
     public Group getById(Integer id);
 

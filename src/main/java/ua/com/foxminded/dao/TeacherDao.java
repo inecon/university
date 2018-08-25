@@ -2,10 +2,10 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Teacher;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TeacherDao {
-    public ArrayList<Teacher> getAll();
+    public List<Teacher> getAll();
 
     public Teacher getById(Integer id);
 

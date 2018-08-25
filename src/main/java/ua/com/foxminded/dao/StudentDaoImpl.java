@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
     private ConnectionFactory connectionFactory;
@@ -16,8 +17,8 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public ArrayList<Student> getAll() {
-        ArrayList<Student> result = new ArrayList<>();
+    public List<Student> getAll() {
+       List<Student> result = new ArrayList<>();
         String sql = "select * from students";
         Connection connection = null;
         PreparedStatement statement = null;

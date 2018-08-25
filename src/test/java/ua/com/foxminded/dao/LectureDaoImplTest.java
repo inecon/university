@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.com.foxminded.di.Context;
 import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Initialization;
 import ua.com.foxminded.domain.Lecture;
@@ -18,7 +17,9 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ public class LectureDaoImplTest {
     Group VALID_GROUP = new Group(1, "Group01", "Math");
     Integer VALID_CLASSROOM = 1;
     Lecture VALID_LECTURE = new Lecture(VALID_DATE_TIME, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
-    ArrayList<Lecture> VALID_LECTURE_LIST = new ArrayList<>();
+    List<Lecture> VALID_LECTURE_LIST = new ArrayList<>();
     @Mock
     private ConnectionFactory connectionFactory;
     @Mock
@@ -45,42 +46,19 @@ public class LectureDaoImplTest {
     @Mock
     private TeacherDao teacherDao;
     @Mock
-    LectureDaoImpl mockedLectureDao;
+    private LectureDaoImpl mockedLectureDao;
 
-    Context contextForTest;
-
-    LectureDaoImpl lectureDao;// = new LectureDaoImpl(contextForTest) ;
+   // LectureDaoImpl lectureDao;
 
 
     @Before
     public void setUp() throws Exception {
-
         Initialization init = new Initialization();
         init.initializationUniversity();
-        contextForTest = init.contextForTest;
-
-        /*contextForTest.registerBean("connectionFactory", init.VALID_UNIVERSITY.getConnectionFactory());
-        contextForTest.registerBean("VALID_DATE_1", init.VALID_DATE1);
-        contextForTest.registerBean("VALID_DATE_2", init.VALID_DATE2);
-        contextForTest.registerBean("VALID_TEACHER1", init.VALID_TEACHER1);
-        contextForTest.registerBean("VALID_GROUP1", init.VALID_GROUP1);
-        contextForTest.registerBean("VALID_CLASSROOM1", init.VALID_CLASSROM1);
-        contextForTest.registerBean("VALID_LECTURE_LIST", init.VALID_UNIVERSITY.getLectures());
-        contextForTest.registerBean("VALID_SUBJECT1", init.VALID_SUBJECT1);
-        contextForTest.registerBean("connection", connection);
-        contextForTest.registerBean("resultSet", resultSet);
-        contextForTest.registerBean("statement", statement);
-        lectureDao = new LectureDaoImpl(contextForTest);
-        contextForTest.registerBean("teacherDao", teacherDao);
-        contextForTest.registerBean("groupDao", groupDao);
-        contextForTest.registerBean("lectureDao", lectureDao);*/
+       // lectureDao = new LectureDaoImpl(connectionFactory);
+        VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
 
-    @Test
-    public void contextInit(){
-        //System.out.println(contextForTest.getBeanWithScope().get(Student.class));
-
-    }
     @Test
     public void shouldGetAll() throws SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
@@ -89,14 +67,17 @@ public class LectureDaoImplTest {
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
 
-       /* when(resultSet.getString("date")).thenReturn(String.valueOf(contextForTest.getBean().get("VALID_DATE_1")));
-        when(teacherDao.getById(any())).thenReturn((Teacher) contextForTest.getBean().get("VALID_TEACHER1"));
-        when(groupDao.getById(any())).thenReturn((Group) contextForTest.getBean().get("VALID_GROUP1"));
-        when(resultSet.getString("subject")).thenReturn((String) contextForTest.getBean().get("VALID_SUBJECT1"));
-        when(resultSet.getInt("classroom")).thenReturn((Integer) contextForTest.getBean().get("VALID_CLASSROOM1"));
+        when(resultSet.getString("date")).thenReturn(String.valueOf(VALID_LECTURE.getDate()));
+        when(teacherDao.getById(any())).thenReturn(VALID_LECTURE.getTeacher());
+        when(groupDao.getById(any())).thenReturn(VALID_LECTURE.getGroup());
+        when(resultSet.getString("subject")).thenReturn(VALID_LECTURE.getSubject());
+        when(resultSet.getInt("classroom")).thenReturn(VALID_LECTURE.getClassroom());
+        when(mockedLectureDao.getAll()).thenReturn(VALID_LECTURE_LIST);
 
-        assertEquals(contextForTest.getBean().get("VALID_LECTURE_LIST"), ((LectureDaoImpl)contextForTest.getBean().get("lectureDao")).getAll());
-        */
+        List<Lecture> actualResult = VALID_LECTURE_LIST;
+        List<Lecture> expectedResult = mockedLectureDao.getAll();
+        assertEquals(expectedResult, actualResult);
+
     }
 
 

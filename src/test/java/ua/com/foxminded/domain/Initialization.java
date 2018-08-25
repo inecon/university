@@ -1,10 +1,10 @@
 package ua.com.foxminded.domain;
 
 import ua.com.foxminded.dao.ConnectionFactory;
-import ua.com.foxminded.di.Context;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Initialization {
     private static final Object Student = new Student(1,"Petro", "Kolhozin", "male", 19);
@@ -31,14 +31,13 @@ public class Initialization {
     public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROM1);
     public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROM2);
 
-    ArrayList<Student> VALID_STUDENT_LIST = new ArrayList<>();
-    ArrayList<Teacher> VALID_TEACHERS_LIST = new ArrayList<>();
-    ArrayList<Group> VALID_GROUPS_LIST = new ArrayList<>();
-    ArrayList<Lecture> VALID_LECTURES_LIST = new ArrayList<>();
+    List<Student> VALID_STUDENT_LIST = new ArrayList<>();
+    List<Teacher> VALID_TEACHERS_LIST = new ArrayList<>();
+    List<Group> VALID_GROUPS_LIST = new ArrayList<>();
+    List<Lecture> VALID_LECTURES_LIST = new ArrayList<>();
     public University VALID_UNIVERSITY = new University();
 
     ConnectionFactory VALID_DAO_FACTORY = new ConnectionFactory();
-    public Context contextForTest = new Context();
 
     public University initializationUniversity() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -61,23 +60,11 @@ public class Initialization {
         VALID_LECTURES_LIST.add(VALID_LECTURE1);
         VALID_LECTURES_LIST.add(VALID_LECTURE2);
 
-
         VALID_UNIVERSITY.setStudents(VALID_STUDENT_LIST);
         VALID_UNIVERSITY.setTeachers(VALID_TEACHERS_LIST);
         VALID_UNIVERSITY.setGroups(VALID_GROUPS_LIST);
         VALID_UNIVERSITY.setLectures(VALID_LECTURES_LIST);
         VALID_UNIVERSITY.setConnectionFactory(VALID_DAO_FACTORY);
-
-        contextForTest.registerBean("connectionFactory", VALID_UNIVERSITY.getConnectionFactory());
-        contextForTest.registerBean("VALID_DATE_1", VALID_DATE1);
-        contextForTest.registerBean("VALID_DATE_2", VALID_DATE2);
-        contextForTest.registerBean("VALID_TEACHER1", VALID_TEACHER1);
-        contextForTest.registerBean("VALID_GROUP1", VALID_GROUP1);
-        contextForTest.registerBean("VALID_CLASSROOM1", VALID_CLASSROM1);
-        contextForTest.registerBean("VALID_LECTURE_LIST", VALID_UNIVERSITY.getLectures());
-        contextForTest.registerBean("VALID_SUBJECT1", VALID_SUBJECT1);
-
-        //contextForTest.registerBean(Group.class, Context.Scope.singlton);
 
         return VALID_UNIVERSITY;
     }

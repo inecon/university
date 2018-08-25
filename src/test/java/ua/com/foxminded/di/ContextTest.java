@@ -18,7 +18,6 @@ public class ContextTest {
 
         Initialization init = new Initialization();
         init.initializationUniversity();
-        contextForTest = init.contextForTest;
     }
     @Test
     public void add() throws InstantiationException, IllegalAccessException, ClassNotFoundException {

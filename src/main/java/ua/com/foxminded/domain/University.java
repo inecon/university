@@ -2,26 +2,28 @@ package ua.com.foxminded.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import ua.com.foxminded.dao.*;
-import ua.com.foxminded.di.Context;
+import ua.com.foxminded.dao.ConnectionFactory;
+import ua.com.foxminded.dao.LectureDaoImpl;
+import ua.com.foxminded.dao.StudentDaoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class University {
-    private ArrayList<Student> students = new ArrayList<>();
-    private ArrayList<Teacher> teachers = new ArrayList<>();
-    private ArrayList<Group> groups = new ArrayList<>();
-    private ArrayList<Lecture> lectures = new ArrayList<>();
-    private Context context = new Context();
+    private List<Student> students = new ArrayList<>();
+    private List<Teacher> teachers = new ArrayList<>();
+    private List<Group> groups = new ArrayList<>();
+    private List<Lecture> lectures = new ArrayList<>();
+    private ConnectionFactory connectionFactory = new ConnectionFactory();
 
     public University() {}
 
-    public University(ArrayList<Student> students, ArrayList<Teacher> teachers, ArrayList<Group> groups, ArrayList<Lecture> lectures, Context context) {
+    public University(List<Student> students, List<Teacher> teachers, List<Group> groups, List<Lecture> lectures, ConnectionFactory connectionFactory) {
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;
         this.lectures = lectures;
-        this.context = context;
+        this.connectionFactory = connectionFactory;
     }
 
     @Override
@@ -34,40 +36,40 @@ public class University {
         return result.toString();
     }
 
-    public ArrayList<Student> getStudents() {
-        return null;//new StudentDaoImpl(connectionFactory).getAll();
+    public List<Student> getStudents() {
+        return new StudentDaoImpl(connectionFactory).getAll();
     }
 
-    public void setStudents(ArrayList<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
-    public ArrayList<Teacher> getTeachers() {
+    public List<Teacher> getTeachers() {
         return null;///new TeacherDaoImpl(connectionFactory).getAll();
     }
 
-    public void setTeachers(ArrayList<Teacher> teachers) {
+    public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
     }
 
-    public ArrayList<Group> getGroups() {
+    public List<Group> getGroups() {
         return null ;//new GroupDaoImpl(connectionFactory).getAll();
     }
 
-    public void setGroups(ArrayList<Group> groups) {
+    public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
 
-    public ArrayList<Lecture> getLectures() {
-        return new LectureDaoImpl(context).getAll();
+    public List<Lecture> getLectures() {
+        return new LectureDaoImpl(connectionFactory).getAll();
     }
 
-    public void setLectures(ArrayList<Lecture> lectures) {
+    public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
     }
 
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
-        //this.connectionFactory = connectionFactory;
+        this.connectionFactory = connectionFactory;
     }
 
     public ConnectionFactory getConnectionFactory() {

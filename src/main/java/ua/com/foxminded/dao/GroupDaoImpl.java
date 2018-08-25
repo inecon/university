@@ -4,6 +4,7 @@ import ua.com.foxminded.domain.Group;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GroupDaoImpl implements GroupDao {
     private ConnectionFactory connectionFactory;
@@ -13,8 +14,8 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public ArrayList<Group> getAll() {
-        ArrayList<Group> result = new ArrayList<>();
+    public List<Group> getAll() {
+        List<Group> result = new ArrayList<>();
         String sql = "select * from groups";
         Group group = null;
         Connection connection = null;

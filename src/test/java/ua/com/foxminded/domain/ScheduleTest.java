@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -26,8 +27,8 @@ public class ScheduleTest {
     LocalDateTime VALID_DATE2 = initialization.VALID_DATE2;
     LocalDateTime VALID_DATE1 = initialization.VALID_DATE1;
     Teacher VALID_TEACHER1 = initialization.VALID_TEACHER1;
-    ArrayList<Lecture> VALID_STUDENTS_LECTURES = new ArrayList<>();
-    ArrayList<Lecture> VALID_TEACHERS_LECTURES = new ArrayList<>();
+    List<Lecture> VALID_STUDENTS_LECTURES = new ArrayList<>();
+    List<Lecture> VALID_TEACHERS_LECTURES = new ArrayList<>();
 
     @Mock
     Schedule schedule;
@@ -50,11 +51,11 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidStudentScheduledLectures() {
         // arrange
-        ArrayList<Lecture> expectedLectures = new ArrayList<>();
+        List<Lecture> expectedLectures = new ArrayList<>();
         expectedLectures.add(VALID_LECTURE1);
         when(schedule.getStudentScheduledLectures(any(),any(),any())).thenReturn(VALID_STUDENTS_LECTURES);
         // act
-        ArrayList<Lecture> actualLectures = schedule.getStudentScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
+        List<Lecture> actualLectures = schedule.getStudentScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
         // assert
         assertEquals(actualLectures, expectedLectures);
     }
@@ -62,12 +63,12 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidTeacherScheduledLectures() {
         // arrange
-        ArrayList<Lecture> expectedLectures = new ArrayList<>();
+        List<Lecture> expectedLectures = new ArrayList<>();
         expectedLectures.add(VALID_LECTURE1);
         expectedLectures.add(VALID_LECTURE2);
         when(schedule.getTeacherScheduledLectures(any(),any(),any())).thenReturn(VALID_TEACHERS_LECTURES);
         // act
-        ArrayList<Lecture> actualLectures = schedule.getTeacherScheduledLectures(VALID_TEACHER1, VALID_DATE2, VALID_DATE1);
+        List<Lecture> actualLectures = schedule.getTeacherScheduledLectures(VALID_TEACHER1, VALID_DATE2, VALID_DATE1);
         // assert
         assertEquals(actualLectures, expectedLectures);
     }

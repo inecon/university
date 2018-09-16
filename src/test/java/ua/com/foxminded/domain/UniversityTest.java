@@ -4,7 +4,6 @@ package ua.com.foxminded.domain;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.com.foxminded.dao.ConnectionFactory;
 
@@ -12,14 +11,13 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UniversityTest {
     ConnectionFactory connectionFactory = new ConnectionFactory();
     University VALID_UNIVERSITY;
-    @Mock
-    University MOCKED_VALID_UNIVERSITY;
 
     @Before
     public void setUp() throws Exception {
@@ -45,12 +43,10 @@ public class UniversityTest {
     @Test
     public void shouldCreateValidUniversity() {
         List<Student> VALID_STUDENT_LIST = VALID_UNIVERSITY.getStudents();
-        when(MOCKED_VALID_UNIVERSITY.getTeachers()).thenReturn(VALID_UNIVERSITY.getTeachers());
-        List<Teacher> VALID_TEACHERS_LIST = MOCKED_VALID_UNIVERSITY.getTeachers();
-        when(MOCKED_VALID_UNIVERSITY.getGroups()).thenReturn(VALID_UNIVERSITY.getGroups());
-        List<Group> VALID_GROUPS_LIST = MOCKED_VALID_UNIVERSITY.getGroups();
-        when(MOCKED_VALID_UNIVERSITY.getLectures()).thenReturn(VALID_UNIVERSITY.getLectures());
-        List<Lecture> VALID_LECTURES_LIST = MOCKED_VALID_UNIVERSITY.getLectures();
+        List<Teacher> VALID_TEACHERS_LIST = VALID_UNIVERSITY.getTeachers();
+        List<Group> VALID_GROUPS_LIST = VALID_UNIVERSITY.getGroups();
+        List<Lecture> VALID_LECTURES_LIST = VALID_UNIVERSITY.getLectures();
+        connectionFactory = VALID_UNIVERSITY.getConnectionFactory();
 
         University actualUniversity = new University(VALID_STUDENT_LIST, VALID_TEACHERS_LIST, VALID_GROUPS_LIST, VALID_LECTURES_LIST, connectionFactory);
 

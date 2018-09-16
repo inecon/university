@@ -48,14 +48,10 @@ public class LectureDaoImplTest {
     @Mock
     private LectureDaoImpl mockedLectureDao;
 
-   // LectureDaoImpl lectureDao;
-
-
     @Before
     public void setUp() throws Exception {
         Initialization init = new Initialization();
         init.initializationUniversity();
-       // lectureDao = new LectureDaoImpl(connectionFactory);
         VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
 

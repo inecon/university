@@ -3,8 +3,6 @@ package ua.com.foxminded.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import ua.com.foxminded.dao.ConnectionFactory;
-import ua.com.foxminded.dao.LectureDaoImpl;
-import ua.com.foxminded.dao.StudentDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class University {
     }
 
     public List<Student> getStudents() {
-        return new StudentDaoImpl(connectionFactory).getAll();
+        return students;
     }
 
     public void setStudents(List<Student> students) {
@@ -45,7 +43,7 @@ public class University {
     }
 
     public List<Teacher> getTeachers() {
-        return null;///new TeacherDaoImpl(connectionFactory).getAll();
+        return teachers;
     }
 
     public void setTeachers(List<Teacher> teachers) {
@@ -53,7 +51,7 @@ public class University {
     }
 
     public List<Group> getGroups() {
-        return null ;//new GroupDaoImpl(connectionFactory).getAll();
+        return groups ;//new GroupDaoImpl(connectionFactory).getAll();
     }
 
     public void setGroups(List<Group> groups) {
@@ -61,7 +59,7 @@ public class University {
     }
 
     public List<Lecture> getLectures() {
-        return new LectureDaoImpl(connectionFactory).getAll();
+        return lectures;
     }
 
     public void setLectures(List<Lecture> lectures) {

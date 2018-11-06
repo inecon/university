@@ -47,17 +47,9 @@ public class GroupDaoImplTest {
     }
 
     @Test
-    public void shouldCreate() throws Exception {
-        when(connection.prepareStatement(any(String.class), anyInt())).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
-        when(statement.execute()).thenReturn(Boolean.TRUE);
-        when(statement.getGeneratedKeys()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(resultSet.getString(1)).thenReturn(VALID_GROUP.getTitle());
-        when(resultSet.getString(2)).thenReturn(VALID_GROUP.getDescription());
-        when(resultSet.getInt(3)).thenReturn(VALID_GROUP.getId());
-        groupDao.create(VALID_ID, VALID_TITLE, VALID_DESCRIPTION);
-        verify(connectionFactory).getConnection();
+    public void shouldInvokeCreate() throws SQLException {
+        mockedGroupDao.create(anyInt(), anyString(), anyString());
+        verify(mockedGroupDao).create(anyInt(), anyString(), anyString());
     }
 
     @Test

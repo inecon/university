@@ -2,203 +2,61 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Teacher;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDaoImpl implements TeacherDao {
-    private ConnectionFactory connectionFactory;
+    private Executor<Teacher> executor;
 
     public TeacherDaoImpl(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
+        this.executor = new Executor<Teacher>(connectionFactory);
     }
 
     @Override
-    public List<Teacher> getAll() {
-        List<Teacher> result = new ArrayList<>();
+    public List<Teacher> getAll() throws SQLException {
         String sql = "select * from teachers";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-            resultSet = statement.getResultSet();
-
-            while (resultSet.next()) {
-                result.add(new Teacher(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("surname"),
-                        resultSet.getString("gender"),
-                        resultSet.getInt("age")));
+        return executor.execQuery(sql, result -> {
+            List<Teacher> allTeachers = new ArrayList<>();
+            while (result.next()) {
+                allTeachers.add(new Teacher(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("surname"),
+                        result.getString("gender"),
+                        result.getInt("age")));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+            return allTeachers;
+        });
     }
 
     @Override
-    public Teacher getById(Integer id) {
+    public Teacher getById(Integer id) throws SQLException {
         String sql = "select * from teachers where id = ?";
-        Teacher teacher = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.execute();
-            resultSet = statement.getResultSet();
-            resultSet.next();
-            teacher = new Teacher(resultSet.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("surname"),
-                    resultSet.getString("gender"),
-                    resultSet.getInt("age"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return teacher;
+        return executor.execQuery(sql, result -> {
+            result.next();
+            return new Teacher(result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("surname"),
+                    result.getString("gender"),
+                    result.getInt("age"));
+        });
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) {
+    public void create(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setString(3, surName);
-            statement.setString(4, gender);
-            statement.setInt(5, age);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void update(Integer id, String name, String surName, String gender, Integer age) {
+    public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "update teachers set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setString(3, surName);
-            statement.setString(4, gender);
-            statement.setInt(5, age);
-            statement.setInt(6,id);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
         String sql = "delete from teachers";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql);
     }
 }

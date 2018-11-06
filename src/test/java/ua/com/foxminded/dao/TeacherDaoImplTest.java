@@ -76,19 +76,19 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() {
+    public void shouldInvokeCreate() throws SQLException {
         mockedTeacherDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedTeacherDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() {
+    public void shouldInvokeUpdate() throws SQLException {
         mockedTeacherDao.update(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedTeacherDao).update(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() {
+    public void shouldInvokeDeleteAll() throws SQLException {
         mockedTeacherDao.deleteAll();
         verify(mockedTeacherDao).deleteAll();
     }

@@ -2,203 +2,66 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Student;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
-    private ConnectionFactory connectionFactory;
+    private Executor<Student> executor;
 
-    public StudentDaoImpl(ConnectionFactory connectionFactory) {
+   /* public StudentDaoImpl(ConnectionFactory connectionFactory) throws SQLException {
         this.connectionFactory = connectionFactory;
+        this.executor = new Executor<Student>();
+    }*/
+
+    public StudentDaoImpl(ConnectionFactory connectionFactory) throws SQLException {
+        this.executor = new Executor<Student>(connectionFactory);
     }
 
     @Override
-    public List<Student> getAll() {
-       List<Student> result = new ArrayList<>();
+    public List<Student> getAll() throws SQLException {
         String sql = "select * from students";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-            resultSet = statement.getResultSet();
-
-            while (resultSet.next()) {
-                result.add(new Student(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("surname"),
-                        resultSet.getString("gender"),
-                        resultSet.getInt("age")));
+        return executor.execQuery(sql, result -> {
+            List<Student> allStudents = new ArrayList<>();
+            while (result.next()) {
+                allStudents.add(new Student(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("surname"),
+                        result.getString("gender"),
+                        result.getInt("age")));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+            return allStudents;
+        });
     }
 
     @Override
-    public Student getById(Integer id) {
+    public Student getById(Integer id) throws SQLException {
         String sql = "select * from students where id = ?";
-        Student student = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.execute();
-            resultSet = statement.getResultSet();
-            resultSet.next();
-            student = new Student(resultSet.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("surname"),
-                    resultSet.getString("gender"),
-                    resultSet.getInt("age"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return student;
+        return executor.execQuery(sql, result -> {
+            result.next();
+            return new Student(result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("surname"),
+                    result.getString("gender"),
+                    result.getInt("age"));
+        });
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) {
+    public void create(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setString(3, surName);
-            statement.setString(4, gender);
-            statement.setInt(5, age);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void update(Integer id, String name, String surName, String gender, Integer age) {
+    public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "update students set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setString(3, surName);
-            statement.setString(4, gender);
-            statement.setInt(5, age);
-            statement.setInt(6, id);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
         String sql = "delete from students";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql);
     }
 }

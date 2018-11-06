@@ -7,182 +7,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDaoImpl implements GroupDao {
-    private ConnectionFactory connectionFactory;
+    private Executor<Group> executor;
 
     public GroupDaoImpl(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
+        this.executor = new Executor<Group>(connectionFactory);
     }
 
     @Override
-    public List<Group> getAll() {
-        List<Group> result = new ArrayList<>();
+    public List<Group> getAll() throws SQLException {
         String sql = "select * from groups";
-        Group group = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-            resultSet = statement.getResultSet();
-
-            while (resultSet.next()) {
-                result.add(new Group(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getString("description")));
+        return executor.execQuery(sql, result -> {
+            List<Group> allGroups = new ArrayList<>();
+            while (result.next()) {
+                allGroups.add(new Group(result.getInt("id"),
+                        result.getString("title"),
+                        result.getString("description")));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+            return allGroups;
+        });
     }
 
     @Override
-    public Group getById(Integer id) {
+    public Group getById(Integer id) throws SQLException {
         String sql = "select * from groups where id = ?";
-        Group group = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.execute();
-            resultSet = statement.getResultSet();
-            resultSet.next();
-            group = new Group(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getString("description"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return group;
+        return executor.execQuery(sql, result -> {
+            result.next();
+            return new Group(result.getInt("id"),
+                    result.getString("title"),
+                    result.getString("description"));
+        });
     }
 
     @Override
-    public void create(Integer id, String title, String description) {
+    public void create(Integer id, String title, String description) throws SQLException {
         String sql = "insert into groups (id, title, description) values (?,?,?)";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, id);
-            statement.setString(2, title);
-            statement.setString(3, description);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, title, description);
     }
 
     @Override
-    public void update(Integer id, String title, String description) {
+    public void update(Integer id, String title, String description) throws SQLException {
         String sql = "update groups set title = ?, description = ? where id = ?";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, title);
-            statement.setString(2, description);
-            statement.setString(3, String.valueOf(id));
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, id, title, description);
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
         String sql = "delete from groups";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql);
     }
 }

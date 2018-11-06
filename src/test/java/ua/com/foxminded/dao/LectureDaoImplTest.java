@@ -78,19 +78,19 @@ public class LectureDaoImplTest {
 
 
     @Test
-    public void shouldInvokeCreate() {
+    public void shouldInvokeCreate() throws SQLException {
         mockedLectureDao.create(any());
         verify(mockedLectureDao).create(any());
     }
 
     @Test
-    public void shouldInvokeUpdate() {
+    public void shouldInvokeUpdate() throws SQLException {
         mockedLectureDao.update(any());
         verify(mockedLectureDao).update(any());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() {
+    public void shouldInvokeDeleteAll() throws SQLException {
         mockedLectureDao.deleteAll();
         verify(mockedLectureDao).deleteAll();
     }

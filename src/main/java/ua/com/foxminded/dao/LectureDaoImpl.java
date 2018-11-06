@@ -2,164 +2,55 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Lecture;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LectureDaoImpl implements LectureDao {
-    private ConnectionFactory connectionFactory;
-
+    ConnectionFactory connectionFactory;
+    private Executor<Lecture> executor;
 
     public LectureDaoImpl(ConnectionFactory connectionFactory) {
+        this.executor = new Executor<Lecture>(connectionFactory);
         this.connectionFactory = connectionFactory;
     }
 
     @Override
-    public List<Lecture> getAll() {
-        List<Lecture> result = new ArrayList<>();
+    public List<Lecture> getAll() throws SQLException {
         String sql = "select * from lectures";
         GroupDao groupDao = new GroupDaoImpl(connectionFactory);
         TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = new ConnectionFactory().getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-            resultSet = statement.getResultSet();
-
-            while (resultSet.next()) {
-                result.add(new Lecture((LocalDateTime.parse(resultSet.getString("date"))),
-                        resultSet.getString("subject"),
-                        teacherDao.getById(resultSet.getInt("teacher_id")),
-                        groupDao.getById(resultSet.getInt("group_id")),
-                        resultSet.getInt("classroom")));
+        return executor.execQuery(sql, result -> {
+            List<Lecture> allLectures = new ArrayList<>();
+            while (result.next()) {
+                allLectures.add(new Lecture((LocalDateTime.parse(result.getString("date"))),
+                        result.getString("subject"),
+                        teacherDao.getById(result.getInt("teacher_id")),
+                        groupDao.getById(result.getInt("group_id")),
+                        result.getInt("classroom")));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+            return allLectures;
+        });
     }
 
     @Override
-    public void create(Lecture lecture) {
+    public void create(Lecture lecture) throws SQLException {
         String sql = "insert into lectures (date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?)";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, lecture.getDate().toString());
-            statement.setString(2, lecture.getSubject());
-            statement.setInt(3, lecture.getTeacher().getId());
-            statement.setInt(4, lecture.getGroup().getId());
-            statement.setInt(5, lecture.getClassroom());
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+                lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
-    public void update(Lecture lecture) {
+    public void update(Lecture lecture) throws SQLException {
         String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where date = ?";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, lecture.getDate().toString());
-            statement.setString(2, lecture.getSubject());
-            statement.setInt(3, lecture.getTeacher().getId());
-            statement.setInt(4, lecture.getGroup().getId());
-            statement.setInt(5, lecture.getClassroom());
-            statement.setString(6, lecture.getDate().toString());
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+                lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
         String sql = "delete from lectures";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        executor.execUpdate(sql);
     }
 }

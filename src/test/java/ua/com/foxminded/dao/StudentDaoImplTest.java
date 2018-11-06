@@ -27,9 +27,9 @@ public class StudentDaoImplTest {
     @Mock
     private ConnectionFactory connectionFactory;
     @Mock
-    private Connection connection;
-    @Mock
     private PreparedStatement statement;
+    @Mock
+    private Connection connection;
     @Mock
     private ResultSet resultSet;
     @Mock
@@ -39,15 +39,15 @@ public class StudentDaoImplTest {
 
     @Before
     public void setUp() throws Exception {
-        studentDao = new StudentDaoImpl(connectionFactory);
+       studentDao = new StudentDaoImpl(connectionFactory);
         VALID_STUDENT_LIST.add(VALID_STUDENT);
     }
 
     @Test
     public void getAll() throws SQLException {
-        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
-        when(statement.execute()).thenReturn(Boolean.TRUE);
+        when(connection.prepareStatement(anyString())).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(resultSet.getInt("id")).thenReturn(VALID_STUDENT.getId());
@@ -76,19 +76,19 @@ public class StudentDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() {
+    public void shouldInvokeCreate() throws SQLException {
         mockedStudentDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedStudentDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() {
+    public void shouldInvokeUpdate() throws SQLException {
         mockedStudentDao.update(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedStudentDao).update(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() {
+    public void shouldInvokeDeleteAll() throws SQLException {
         mockedStudentDao.deleteAll();
         verify(mockedStudentDao).deleteAll();
     }

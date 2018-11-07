@@ -17,13 +17,5 @@ public class ConnectionFactory {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
-
-    public void MySqlDaoFactory() {
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 }
 

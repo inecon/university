@@ -9,11 +9,6 @@ import java.util.List;
 public class StudentDaoImpl implements StudentDao {
     private Executor<Student> executor;
 
-   /* public StudentDaoImpl(ConnectionFactory connectionFactory) throws SQLException {
-        this.connectionFactory = connectionFactory;
-        this.executor = new Executor<Student>();
-    }*/
-
     public StudentDaoImpl(ConnectionFactory connectionFactory) throws SQLException {
         this.executor = new Executor<Student>(connectionFactory);
     }

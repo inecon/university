@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Executor<T> {
+public class JdbcExecutor<T> {
     private ConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
-    public Executor(ConnectionFactory connectionFactory) {
+    public JdbcExecutor(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 

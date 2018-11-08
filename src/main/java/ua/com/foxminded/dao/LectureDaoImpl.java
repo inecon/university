@@ -9,10 +9,10 @@ import java.util.List;
 
 public class LectureDaoImpl implements LectureDao {
     ConnectionFactory connectionFactory;
-    private Executor<Lecture> executor;
+    private JdbcExecutor<Lecture> jdbcExecutor;
 
     public LectureDaoImpl(ConnectionFactory connectionFactory) {
-        this.executor = new Executor<Lecture>(connectionFactory);
+        this.jdbcExecutor = new JdbcExecutor<Lecture>(connectionFactory);
         this.connectionFactory = connectionFactory;
     }
 
@@ -21,7 +21,7 @@ public class LectureDaoImpl implements LectureDao {
         String sql = "select * from lectures";
         GroupDao groupDao = new GroupDaoImpl(connectionFactory);
         TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
-        return executor.execQuery(sql, result -> {
+        return jdbcExecutor.execQuery(sql, result -> {
             List<Lecture> allLectures = new ArrayList<>();
             while (result.next()) {
                 allLectures.add(new Lecture((LocalDateTime.parse(result.getString("date"))),
@@ -37,20 +37,20 @@ public class LectureDaoImpl implements LectureDao {
     @Override
     public void create(Lecture lecture) throws SQLException {
         String sql = "insert into lectures (date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?)";
-        executor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+        jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
                 lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
     public void update(Lecture lecture) throws SQLException {
         String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where date = ?";
-        executor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+        jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
                 lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
     public void deleteAll() throws SQLException {
         String sql = "delete from lectures";
-        executor.execUpdate(sql);
+        jdbcExecutor.execUpdate(sql);
     }
 }

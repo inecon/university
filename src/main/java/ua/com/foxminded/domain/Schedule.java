@@ -3,6 +3,7 @@ package ua.com.foxminded.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Schedule {
     private University university;
@@ -11,7 +12,7 @@ public class Schedule {
         List<Lecture> result = new ArrayList<>();
         Group groupToFindSchedule = student.getGroup();
 
-        List<Lecture> allScheduleLectures = university.getLectures();
+        Set<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
             if (lecture.getGroup().equals(groupToFindSchedule)) {
                 result.add(lecture);
@@ -24,7 +25,7 @@ public class Schedule {
         List<Lecture> result = new ArrayList<>();
         List<String> subjectToFindSchedule = teacher.getSubject();
 
-        List<Lecture> allScheduleLectures = university.getLectures();
+        Set<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
             for (String subject : subjectToFindSchedule) {
                 if (lecture.getSubject().equals(subject)) {

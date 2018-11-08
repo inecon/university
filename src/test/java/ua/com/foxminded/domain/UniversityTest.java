@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.com.foxminded.dao.ConnectionFactory;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -42,10 +42,10 @@ public class UniversityTest {
 
     @Test
     public void shouldCreateValidUniversity() {
-        List<Student> VALID_STUDENT_LIST = VALID_UNIVERSITY.getStudents();
-        List<Teacher> VALID_TEACHERS_LIST = VALID_UNIVERSITY.getTeachers();
-        List<Group> VALID_GROUPS_LIST = VALID_UNIVERSITY.getGroups();
-        List<Lecture> VALID_LECTURES_LIST = VALID_UNIVERSITY.getLectures();
+        Set<Student> VALID_STUDENT_LIST = VALID_UNIVERSITY.getStudents();
+        Set<Teacher> VALID_TEACHERS_LIST = VALID_UNIVERSITY.getTeachers();
+        Set<Group> VALID_GROUPS_LIST = VALID_UNIVERSITY.getGroups();
+        Set<Lecture> VALID_LECTURES_LIST = VALID_UNIVERSITY.getLectures();
         connectionFactory = VALID_UNIVERSITY.getConnectionFactory();
 
         University actualUniversity = new University(VALID_STUDENT_LIST, VALID_TEACHERS_LIST, VALID_GROUPS_LIST, VALID_LECTURES_LIST, connectionFactory);

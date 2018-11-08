@@ -4,19 +4,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import ua.com.foxminded.dao.ConnectionFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class University {
-    private List<Student> students = new ArrayList<>();
-    private List<Teacher> teachers = new ArrayList<>();
-    private List<Group> groups = new ArrayList<>();
-    private List<Lecture> lectures = new ArrayList<>();
+    private Set<Student> students = new HashSet<>();
+    private Set<Teacher> teachers = new HashSet<>();
+    private Set<Group> groups = new HashSet<>();
+    private Set<Lecture> lectures = new HashSet<>();
     private ConnectionFactory connectionFactory = new ConnectionFactory();
 
     public University() {}
 
-    public University(List<Student> students, List<Teacher> teachers, List<Group> groups, List<Lecture> lectures, ConnectionFactory connectionFactory) {
+    public University(Set<Student> students, Set<Teacher> teachers, Set<Group> groups,Set<Lecture> lectures, ConnectionFactory connectionFactory) {
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;
@@ -34,35 +34,35 @@ public class University {
         return result.toString();
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 
-    public List<Teacher> getTeachers() {
+    public Set<Teacher> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
+    public void setTeachers(Set<Teacher> teachers) {
         this.teachers = teachers;
     }
 
-    public List<Group> getGroups() {
-        return groups ;//new GroupDaoImpl(connectionFactory).getAll();
+    public Set<Group> getGroups() {
+        return groups ;
     }
 
-    public void setGroups(List<Group> groups) {
+    public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
 
-    public List<Lecture> getLectures() {
+    public Set<Lecture> getLectures() {
         return lectures;
     }
 
-    public void setLectures(List<Lecture> lectures) {
+    public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
     }
 

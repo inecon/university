@@ -1,16 +1,19 @@
 package ua.com.foxminded.dao;
 
+import org.apache.log4j.Logger;
 import ua.com.foxminded.domain.Group;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDaoImpl implements GroupDao {
     private Executor<Group> executor;
+    private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
     public GroupDaoImpl(ConnectionFactory connectionFactory) {
         this.executor = new Executor<Group>(connectionFactory);
+        log.info("Вызов конструктора");
     }
 
     @Override
@@ -23,6 +26,7 @@ public class GroupDaoImpl implements GroupDao {
                         result.getString("title"),
                         result.getString("description")));
             }
+            log.info("Метод отработал нормально");
             return allGroups;
         });
     }

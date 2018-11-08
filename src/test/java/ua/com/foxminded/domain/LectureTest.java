@@ -13,8 +13,8 @@ public class LectureTest {
     public String VALID_SUBJECT = "Math";
     public Teacher VALID_TEACHER = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
     public Group VALID_GROUP = new Group(1,"Group01", "Spring math group");
-    public Integer VALID_CLASSROM = 10;
-    public Lecture VALID_LECTURE = new Lecture(VALID_DATE, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROM);
+    public Integer VALID_CLASSROOM = 10;
+    public Lecture VALID_LECTURE = new Lecture(VALID_DATE, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
 
     @Test
     public void shouldCreateLecture() {
@@ -23,12 +23,12 @@ public class LectureTest {
         actualLecture.setSubject(VALID_SUBJECT);
         actualLecture.setTeacher(VALID_TEACHER);
         actualLecture.setGroup(VALID_GROUP);
-        actualLecture.setClassroom(VALID_CLASSROM);
+        actualLecture.setClassroom(VALID_CLASSROOM);
         verify(actualLecture).setDate(VALID_DATE);
         verify(actualLecture).setSubject(VALID_SUBJECT);
         verify(actualLecture).setTeacher(VALID_TEACHER);
         verify(actualLecture).setGroup(VALID_GROUP);
-        verify(actualLecture).setClassroom(VALID_CLASSROM);
+        verify(actualLecture).setClassroom(VALID_CLASSROOM);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class LectureTest {
         actualLecture.setSubject(VALID_SUBJECT);
         actualLecture.setTeacher(VALID_TEACHER);
         actualLecture.setGroup(VALID_GROUP);
-        actualLecture.setClassroom(VALID_CLASSROM);
+        actualLecture.setClassroom(VALID_CLASSROOM);
         Lecture expectedLecture = VALID_LECTURE;
         assertEquals(actualLecture, expectedLecture);
     }

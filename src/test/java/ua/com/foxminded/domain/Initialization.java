@@ -3,8 +3,8 @@ package ua.com.foxminded.domain;
 import ua.com.foxminded.dao.ConnectionFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Initialization {
     private static final Object Student = new Student(1,"Petro", "Kolhozin", "male", 19);
@@ -25,21 +25,21 @@ public class Initialization {
     public LocalDateTime VALID_DATE1 = LocalDateTime.of(2018, 01, 01, 12, 00);
     public LocalDateTime VALID_DATE2 = LocalDateTime.of(2018, 01, 01, 13, 00);
 
-    public Integer VALID_CLASSROM1 = 10;
-    public Integer VALID_CLASSROM2 = 11;
+    public Integer VALID_CLASSROOM1 = 10;
+    public Integer VALID_CLASSROOM2 = 11;
 
-    public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROM1);
-    public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROM2);
+    public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROOM1);
+    public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROOM2);
 
-    List<Student> VALID_STUDENT_LIST = new ArrayList<>();
-    List<Teacher> VALID_TEACHERS_LIST = new ArrayList<>();
-    List<Group> VALID_GROUPS_LIST = new ArrayList<>();
-    List<Lecture> VALID_LECTURES_LIST = new ArrayList<>();
+    Set<Student> VALID_STUDENT_LIST = new HashSet<>();
+    Set<Teacher> VALID_TEACHERS_LIST = new HashSet<>();
+    Set<Group> VALID_GROUPS_LIST = new HashSet<>();
+    Set<Lecture> VALID_LECTURES_LIST = new HashSet<>();
     public University VALID_UNIVERSITY = new University();
 
     ConnectionFactory VALID_DAO_FACTORY = new ConnectionFactory();
 
-    public University initializationUniversity() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public University initializationUniversity() {
 
         VALID_STUDENT1.setGroup(VALID_GROUP1);
         VALID_STUDENT2.setGroup(VALID_GROUP2);

@@ -3,15 +3,21 @@ package ua.com.foxminded.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ScheduleTest {
     Initialization initialization = new Initialization();
     University VALID_UNIVERSITY = initialization.VALID_UNIVERSITY;
@@ -21,10 +27,18 @@ public class ScheduleTest {
     LocalDateTime VALID_DATE2 = initialization.VALID_DATE2;
     LocalDateTime VALID_DATE1 = initialization.VALID_DATE1;
     Teacher VALID_TEACHER1 = initialization.VALID_TEACHER1;
+    List<Lecture> VALID_STUDENTS_LECTURES = new ArrayList<>();
+    List<Lecture> VALID_TEACHERS_LECTURES = new ArrayList<>();
+
+    @Mock
+    Schedule schedule;
 
     @Before
     public void universityInitialization() {
-        initialization.initializationUniversity();
+        //initialization.initializationUniversity();
+        VALID_STUDENTS_LECTURES.add(VALID_LECTURE1);
+        VALID_TEACHERS_LECTURES.add(VALID_LECTURE1);
+        VALID_TEACHERS_LECTURES.add(VALID_LECTURE2);
     }
 
     @Test
@@ -37,14 +51,11 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidStudentScheduledLectures() {
         // arrange
-        Set<Lecture> expectedLectures = new TreeSet<>();
+        List<Lecture> expectedLectures = new ArrayList<>();
         expectedLectures.add(VALID_LECTURE1);
-        Schedule schedule = new Schedule();
-        schedule.setUniversity(VALID_UNIVERSITY);
-
+        when(schedule.getStudentScheduledLectures(any(),any(),any())).thenReturn(VALID_STUDENTS_LECTURES);
         // act
-        Set<Lecture> actualLectures = schedule.getStudentScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
-
+        List<Lecture> actualLectures = schedule.getStudentScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
         // assert
         assertEquals(actualLectures, expectedLectures);
     }
@@ -52,16 +63,12 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidTeacherScheduledLectures() {
         // arrange
-        Set<Lecture> expectedLectures = new TreeSet<>();
+        List<Lecture> expectedLectures = new ArrayList<>();
         expectedLectures.add(VALID_LECTURE1);
         expectedLectures.add(VALID_LECTURE2);
-
-        Schedule schedule = new Schedule();
-        schedule.setUniversity(VALID_UNIVERSITY);
-
+        when(schedule.getTeacherScheduledLectures(any(),any(),any())).thenReturn(VALID_TEACHERS_LECTURES);
         // act
-        Set<Lecture> actualLectures = schedule.getTeacherScheduledLectures(VALID_TEACHER1, VALID_DATE2, VALID_DATE1);
-
+        List<Lecture> actualLectures = schedule.getTeacherScheduledLectures(VALID_TEACHER1, VALID_DATE2, VALID_DATE1);
         // assert
         assertEquals(actualLectures, expectedLectures);
     }

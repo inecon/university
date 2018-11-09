@@ -1,25 +1,27 @@
 package ua.com.foxminded.domain;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import ua.com.foxminded.dao.ConnectionFactory;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
-public class University implements Comparable<University> {
-    private Set<Student> students = new TreeSet<Student>();
-    private Set<Teacher> teachers = new TreeSet<Teacher>();
-    private Set<Group> groups = new TreeSet<Group>();
-    private Set<Lecture> lectures = new TreeSet<Lecture>();
+public class University {
+    private Set<Student> students = new HashSet<>();
+    private Set<Teacher> teachers = new HashSet<>();
+    private Set<Group> groups = new HashSet<>();
+    private Set<Lecture> lectures = new HashSet<>();
+    private ConnectionFactory connectionFactory = new ConnectionFactory();
 
     public University() {}
 
-    public University(Set<Student> students, Set<Teacher> teachers, Set<Group> groups, Set<Lecture> lectures) {
+    public University(Set<Student> students, Set<Teacher> teachers, Set<Group> groups,Set<Lecture> lectures, ConnectionFactory connectionFactory) {
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;
         this.lectures = lectures;
+        this.connectionFactory = connectionFactory;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class University implements Comparable<University> {
     }
 
     public Set<Group> getGroups() {
-        return groups;
+        return groups ;
     }
 
     public void setGroups(Set<Group> groups) {
@@ -62,6 +64,14 @@ public class University implements Comparable<University> {
 
     public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    public void setConnectionFactory(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    public ConnectionFactory getConnectionFactory() {
+        return null;//connectionFactory;
     }
 
     @Override
@@ -94,12 +104,5 @@ public class University implements Comparable<University> {
                 .toHashCode();
     }
 
-    public int compareTo(University anotherUniversity) {
-        return new CompareToBuilder()
-                .append(this.students, anotherUniversity.students)
-                .append(this.teachers, anotherUniversity.teachers)
-                .append(this.groups, anotherUniversity.groups)
-                .append(this.lectures, anotherUniversity.lectures)
-                .toComparison();
-    }
+
 }

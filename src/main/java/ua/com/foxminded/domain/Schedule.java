@@ -1,14 +1,15 @@
 package ua.com.foxminded.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Schedule {
     private University university;
 
-    public Set<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        Set<Lecture> result = new TreeSet<>();
+    public List<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        List<Lecture> result = new ArrayList<>();
         Group groupToFindSchedule = student.getGroup();
 
         Set<Lecture> allScheduleLectures = university.getLectures();
@@ -20,9 +21,9 @@ public class Schedule {
         return result;
     }
 
-    public Set<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        Set<Lecture> result = new TreeSet<>();
-        Set<String> subjectToFindSchedule = teacher.getSubject();
+    public List<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        List<Lecture> result = new ArrayList<>();
+        List<String> subjectToFindSchedule = teacher.getSubject();
 
         Set<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {

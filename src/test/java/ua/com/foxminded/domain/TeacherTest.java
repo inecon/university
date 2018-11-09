@@ -9,17 +9,19 @@ import static org.mockito.Mockito.verify;
 
 public class TeacherTest {
 
-    public Teacher VALID_TEACHER = new Teacher("Ivan", "Ivanovich", "male", 65);
+    public Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65);
 
     @Test
     public void shouldCreateTeacher() {
         Teacher actualTeacher = mock(Teacher.class);
+        actualTeacher.setId(1);
         actualTeacher.setName("Ivan");
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");
         actualTeacher.setAge(65);
         actualTeacher.setSubject(anyString());
 
+        verify(actualTeacher).setId(1);
         verify(actualTeacher).setName("Ivan");
         verify(actualTeacher).setSurName("Ivanovich");
         verify(actualTeacher).setGender("male");
@@ -30,6 +32,7 @@ public class TeacherTest {
     @Test
     public void shouldCreateValidTeacher() {
         Teacher actualTeacher = new Teacher();
+        actualTeacher.setId(1);
         actualTeacher.setName("Ivan");
         actualTeacher.setSurName("Ivanovich");
         actualTeacher.setGender("male");

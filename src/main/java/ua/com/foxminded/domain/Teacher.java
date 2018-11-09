@@ -1,16 +1,15 @@
 package ua.com.foxminded.domain;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
 
 public class Teacher extends Human {
 
-    private Set<String> subject = new TreeSet<String>();
+    private ArrayList<String> subject = new ArrayList<String>();
 
     public Teacher() {}
 
-    public Teacher(String name, String surName, String gender, Integer age) {
-        super(name, surName, gender, age);
+    public Teacher(Integer id, String name, String surName, String gender, Integer age) {
+        super(id, name, surName, gender, age);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class Teacher extends Human {
         return result.toString();
     }
 
-    public Set<String> getSubject() {
+    public ArrayList<String> getSubject() {
         return subject;
     }
 

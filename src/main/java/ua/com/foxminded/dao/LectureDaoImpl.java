@@ -2,7 +2,6 @@ package ua.com.foxminded.dao;
 
 import ua.com.foxminded.domain.Lecture;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public List<Lecture> getAll() throws SQLException {
+    public List<Lecture> getAll() {
         String sql = "select * from lectures";
         GroupDao groupDao = new GroupDaoImpl(connectionFactory);
         TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
@@ -35,21 +34,21 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public void create(Lecture lecture) throws SQLException {
+    public void create(Lecture lecture) {
         String sql = "insert into lectures (date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?)";
         jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
                 lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
-    public void update(Lecture lecture) throws SQLException {
+    public void update(Lecture lecture) {
         String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where date = ?";
         jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
                 lecture.getGroup().getId(), lecture.getClassroom());
     }
 
     @Override
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         String sql = "delete from lectures";
         jdbcExecutor.execUpdate(sql);
     }

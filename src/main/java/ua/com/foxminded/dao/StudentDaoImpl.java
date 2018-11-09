@@ -14,7 +14,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> getAll() throws SQLException {
+    public List<Student> getAll() {
         String sql = "select * from students";
         return jdbcExecutor.execQuery(sql, result -> {
             List<Student> allStudents = new ArrayList<>();
@@ -30,7 +30,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getById(Integer id) throws SQLException {
+    public Student getById(Integer id) {
         String sql = "select * from students where id = ?";
         return jdbcExecutor.execQuery(sql, result -> {
             result.next();
@@ -43,19 +43,19 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
+    public void create(Integer id, String name, String surName, String gender, Integer age) {
         String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
         jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
+    public void update(Integer id, String name, String surName, String gender, Integer age) {
         String sql = "update students set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
         jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         String sql = "delete from students";
         jdbcExecutor.execUpdate(sql);
     }

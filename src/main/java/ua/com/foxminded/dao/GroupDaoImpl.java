@@ -3,7 +3,6 @@ package ua.com.foxminded.dao;
 import org.apache.log4j.Logger;
 import ua.com.foxminded.domain.Group;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public List<Group> getAll() throws SQLException {
+    public List<Group> getAll() {
         String sql = "select * from groups";
         return jdbcExecutor.execQuery(sql, result -> {
             List<Group> allGroups = new ArrayList<>();
@@ -32,7 +31,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public Group getById(Integer id) throws SQLException {
+    public Group getById(Integer id) {
         String sql = "select * from groups where id = ?";
         return jdbcExecutor.execQuery(sql, result -> {
             result.next();
@@ -43,19 +42,19 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public void create(Integer id, String title, String description) throws SQLException {
+    public void create(Integer id, String title, String description) {
         String sql = "insert into groups (id, title, description) values (?,?,?)";
         jdbcExecutor.execUpdate(sql, id, title, description);
     }
 
     @Override
-    public void update(Integer id, String title, String description) throws SQLException {
+    public void update(Integer id, String title, String description) {
         String sql = "update groups set title = ?, description = ? where id = ?";
         jdbcExecutor.execUpdate(sql, id, title, description);
     }
 
     @Override
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         String sql = "delete from groups";
         jdbcExecutor.execUpdate(sql);
     }

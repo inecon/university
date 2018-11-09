@@ -45,13 +45,13 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void create(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
-        jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
+            jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override
     public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException {
         String sql = "update teachers set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
-        jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
+            jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
     }
 
     @Override

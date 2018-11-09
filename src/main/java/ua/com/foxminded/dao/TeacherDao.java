@@ -14,6 +14,6 @@ public interface TeacherDao {
 
     public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException;
 
-    public void deleteAll() throws SQLException;
+    public void deleteAll() throws Exception;
 }
 

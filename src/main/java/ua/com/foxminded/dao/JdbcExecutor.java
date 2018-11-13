@@ -24,7 +24,7 @@ public class JdbcExecutor<T> {
             }
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Exception in execUpdate", e);
+            log.error("Exception in execUpdate", e.getCause());
             throw new DaoException(e);
         }
     }
@@ -41,8 +41,8 @@ public class JdbcExecutor<T> {
             ResultSet result = statement.getResultSet();
             value = handler.handle(result);
 
-        } catch (SQLException e) {
-            log.error("Exception in execQuery", e);
+        } catch (Exception e) {
+            log.error("Exception in execQuery when query = " + query, e.getCause());
             throw new DaoException(e);
         }
         return value;

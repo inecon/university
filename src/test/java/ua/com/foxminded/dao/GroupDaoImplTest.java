@@ -65,7 +65,19 @@ public class GroupDaoImplTest {
 
         assertEquals(VALID_GROUP_LIST, groupDao.getAll());
     }
+    @Test
+    public void shouldGetById() throws SQLException {
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(statement.execute()).thenReturn(Boolean.TRUE);
+        when(statement.getResultSet()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+        when(resultSet.getInt("id")).thenReturn(VALID_GROUP.getId());
+        when(resultSet.getString("title")).thenReturn(VALID_GROUP.getTitle());
+        when(resultSet.getString("description")).thenReturn(VALID_GROUP.getDescription());
 
+        assertEquals(VALID_GROUP, groupDao.getById(VALID_ID));
+    }
     @Test
     public void shouldInvokeDeleteAll() throws SQLException {
         mockedGroupDao.deleteAll();
@@ -74,7 +86,7 @@ public class GroupDaoImplTest {
 
     @Test
     public void shouldInvokeUpdate() throws SQLException {
-        mockedGroupDao.update(anyInt(), anyString(), anyString());
-        verify(mockedGroupDao).update(anyInt(), anyString(), anyString());
+        mockedGroupDao.update( anyString(), anyString(), anyInt());
+        verify(mockedGroupDao).update(anyString(), anyString(), anyInt());
     }
 }

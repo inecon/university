@@ -73,7 +73,6 @@ public class LectureDaoImplTest {
         List<Lecture> actualResult = VALID_LECTURE_LIST;
         List<Lecture> expectedResult = mockedLectureDao.getAll();
         assertEquals(expectedResult, actualResult);
-
     }
 
 
@@ -93,5 +92,12 @@ public class LectureDaoImplTest {
     public void shouldInvokeDeleteAll() throws SQLException {
         mockedLectureDao.deleteAll();
         verify(mockedLectureDao).deleteAll();
+    }
+
+    @Test
+    public void shouldCreate() throws SQLException {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        LectureDao lectureDao = new LectureDaoImpl(connectionFactory);
+        lectureDao.create(VALID_LECTURE);
     }
 }

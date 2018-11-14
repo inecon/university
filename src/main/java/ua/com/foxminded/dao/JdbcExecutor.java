@@ -15,7 +15,7 @@ public class JdbcExecutor<T> {
         this.connectionFactory = connectionFactory;
     }
 
-    public void execUpdate(String update, Object... parameters) {
+    public void execUpdate(String update, Object... parameters) throws Exception {
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(update);) {
             int count = 1;
@@ -29,7 +29,7 @@ public class JdbcExecutor<T> {
         }
     }
 
-    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) {
+    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws Exception {
         T value = null;
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);) {

@@ -31,6 +31,7 @@ public class JdbcExecutor<T> {
 
     public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws Exception {
         T value = null;
+        ResultSet result = null;
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);) {
             int count = 1;
@@ -38,12 +39,21 @@ public class JdbcExecutor<T> {
                 statement.setObject(count++, parameterValue);
             }
             statement.executeQuery();
-            ResultSet result = statement.getResultSet();
+            result = statement.getResultSet();
             value = handler.handle(result);
 
         } catch (Exception e) {
             log.error("Exception in execQuery when query = " + query, e.getCause());
             throw new DaoException(e);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+            } catch (Exception e){
+                log.error("resultSet not closing correctly = ", e.getCause());
+                throw new DaoException(e);
+            }
         }
         return value;
     }

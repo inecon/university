@@ -15,38 +15,25 @@ public class JdbcExecutor<T> {
         this.connectionFactory = connectionFactory;
     }
 
-    public void execUpdate(String update, Object... parameters) throws SQLException {
-        Connection connection = connectionFactory.getConnection();
-        PreparedStatement statement = connection.prepareStatement(update);
-        try {
+    public void execUpdate(String update, Object... parameters) throws Exception {
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(update);) {
             int count = 1;
             for (Object parameterValue : parameters) {
                 statement.setObject(count++, parameterValue);
             }
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            log.error("Exception in execUpdate", e.getCause());
+            throw new DaoException(e);
         }
-
     }
 
-    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws SQLException {
-        Connection connection = connectionFactory.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
+    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws Exception {
         T value = null;
         ResultSet result = null;
-        try {
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);) {
             int count = 1;
             for (Object parameterValue : parameters) {
                 statement.setObject(count++, parameterValue);
@@ -55,21 +42,17 @@ public class JdbcExecutor<T> {
             result = statement.getResultSet();
             value = handler.handle(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("Exception in execQuery when query = " + query, e.getCause());
+            throw new DaoException(e);
         } finally {
             try {
                 if (result != null) {
                     result.close();
                 }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e){
+                log.error("resultSet not closing correctly = ", e.getCause());
+                throw new DaoException(e);
             }
         }
         return value;

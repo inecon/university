@@ -12,8 +12,8 @@ public interface TeacherDao {
 
     public void create(Integer id, String name, String surName, String gender, Integer age) throws SQLException;
 
-    public void update(Integer id, String name, String surName, String gender, Integer age) throws SQLException;
+    public void update(String name, String surName, String gender, Integer age, Integer id) throws SQLException;
 
-    public void deleteAll() throws SQLException;
+    public void deleteAll() throws Exception;
 }
 

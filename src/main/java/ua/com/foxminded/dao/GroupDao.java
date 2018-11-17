@@ -11,9 +11,9 @@ public interface GroupDao {
 
     public Group getById(Integer id) throws SQLException;
 
-    public void create(Integer id, String title, String description) throws SQLException;
+    public void create(Integer id, String title, String description) throws Exception;
 
-    public void update(Integer id, String title, String description) throws SQLException;
+    public void update(String title, String description, Integer id) throws SQLException;
 
     public void deleteAll() throws SQLException;
 }

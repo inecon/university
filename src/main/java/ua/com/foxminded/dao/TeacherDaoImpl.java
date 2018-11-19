@@ -15,7 +15,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> getAll() {
+    public List<Teacher> getAll() throws Exception {
         String sql = "select * from teachers";
         log.debug("Method getAll send sql request");
         return jdbcExecutor.execQuery(sql, result -> {
@@ -32,7 +32,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Teacher getById(Integer id) {
+    public Teacher getById(Integer id) throws Exception {
         String sql = "select * from teachers where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         return jdbcExecutor.execQuery(sql, result -> {
@@ -46,7 +46,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) {
+    public void create(Integer id, String name, String surName, String gender, Integer age) throws Exception {
         String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
         log.debug("Method create send sql request with - ID = " + id + ", NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age);
@@ -54,7 +54,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void update(String name, String surName, String gender, Integer age, Integer id) {
+    public void update(String name, String surName, String gender, Integer age, Integer id) throws Exception {
         String sql = "update teachers set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
         log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age +  ", ID = " + id);
@@ -62,7 +62,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws Exception {
         String sql = "delete from teachers";
         log.debug("Method deleteAll send sql request");
         jdbcExecutor.execUpdate(sql);

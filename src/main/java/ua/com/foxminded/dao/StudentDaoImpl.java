@@ -16,7 +16,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> getAll() {
+    public List<Student> getAll() throws Exception {
         String sql = "select * from students";
         log.debug("Method getAll send sql request");
         return jdbcExecutor.execQuery(sql, result -> {
@@ -33,7 +33,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getById(Integer id) {
+    public Student getById(Integer id) throws Exception {
         String sql = "select * from students where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         return jdbcExecutor.execQuery(sql, result -> {
@@ -47,7 +47,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) {
+    public void create(Integer id, String name, String surName, String gender, Integer age) throws Exception {
         String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
         log.debug("Method create send sql request with - ID = " + id + ", NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age);
@@ -55,7 +55,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void update( String name, String surName, String gender, Integer age, Integer id) {
+    public void update( String name, String surName, String gender, Integer age, Integer id) throws Exception {
         String sql = "update students set name = ?, surname = ?, gender = ?, age = ? where id = ?";
         log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age +  ", ID = " + id);
@@ -63,7 +63,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws Exception {
         String sql = "delete from students";
         log.debug("Method deleteAll send sql request");
         jdbcExecutor.execUpdate(sql);

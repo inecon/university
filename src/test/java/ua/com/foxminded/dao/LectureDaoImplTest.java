@@ -13,7 +13,6 @@ import ua.com.foxminded.domain.Teacher;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldGetAll() throws SQLException {
+    public void shouldGetAll() throws Exception {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -77,25 +76,25 @@ public class LectureDaoImplTest {
 
 
     @Test
-    public void shouldInvokeCreate() throws SQLException {
+    public void shouldInvokeCreate() throws Exception {
         mockedLectureDao.create(any());
         verify(mockedLectureDao).create(any());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws SQLException {
+    public void shouldInvokeUpdate() throws Exception {
         mockedLectureDao.update(any());
         verify(mockedLectureDao).update(any());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws SQLException {
+    public void shouldInvokeDeleteAll() throws Exception {
         mockedLectureDao.deleteAll();
         verify(mockedLectureDao).deleteAll();
     }
 
     @Test
-    public void shouldCreate() throws SQLException {
+    public void shouldCreate() throws Exception {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         LectureDao lectureDao = new LectureDaoImpl(connectionFactory);
         lectureDao.create(VALID_LECTURE);

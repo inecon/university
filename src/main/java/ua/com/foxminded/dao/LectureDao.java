@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface LectureDao {
 
-    public List<Lecture> getAll() throws SQLException;
+    public List<Lecture> getAll() throws Exception;
 
-    public void create(Lecture lecture) throws SQLException;
+    public void create(Lecture lecture) throws Exception;
 
-    public void update(Lecture lecture) throws SQLException;
+    public void update(Lecture lecture) throws Exception;
 
-    public void deleteAll() throws SQLException;
+    public void deleteAll() throws Exception;
 }

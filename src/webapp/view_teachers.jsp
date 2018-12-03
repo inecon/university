@@ -20,8 +20,10 @@
             <td> ${teachers.age} </td>
         </tr>
     </c:forEach>
-
-
 </table>
+<div id="button" align="right" style="font-weight: bolder; font-size: larger; background: yellow">
+    <button name="back" onclick='history.back()'>Back</button>
+</div>
+
 </body>
 </html>

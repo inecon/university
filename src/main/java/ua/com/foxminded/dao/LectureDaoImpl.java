@@ -18,7 +18,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public List<Lecture> getAll() {
+    public List<Lecture> getAll() throws Exception {
         String sql = "select * from lectures";
         log.info("Method getAll send sql request");
         GroupDao groupDao = new GroupDaoImpl(connectionFactory);
@@ -37,7 +37,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public void create(Lecture lecture) {
+    public void create(Lecture lecture) throws Exception {
         String sql = "insert into lectures (date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?)";
         log.info("Method create send sql request with DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
@@ -45,9 +45,8 @@ public class LectureDaoImpl implements LectureDao {
                 lecture.getGroup().getId(), lecture.getClassroom());
     }
 
-    //to do check this
     @Override
-    public void update(Lecture lecture) {
+    public void update(Lecture lecture) throws Exception {
         String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where date = ?";
         log.info("Method update send sql request with - DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
@@ -56,7 +55,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws Exception {
         String sql = "delete from lectures";
         log.info("Method delete send sql request");
         jdbcExecutor.execUpdate(sql);

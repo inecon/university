@@ -1,11 +1,8 @@
-package ua.com.foxminded.web;
+package ua.com.foxminded.webapp;
 
-import org.apache.log4j.Logger;
-import ua.com.foxminded.dao.ConnectionFactory;
-import ua.com.foxminded.dao.GroupDaoImpl;
-import ua.com.foxminded.dao.StudentDaoImpl;
-import ua.com.foxminded.dao.TeacherDaoImpl;
+import ua.com.foxminded.dao.*;
 import ua.com.foxminded.domain.Group;
+import ua.com.foxminded.domain.Lecture;
 import ua.com.foxminded.domain.Student;
 import ua.com.foxminded.domain.Teacher;
 
@@ -16,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ServletDao extends HttpServlet {
-    private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,13 +54,12 @@ public class ServletDao extends HttpServlet {
                 dispatcher.forward(request, response);
 
             } catch (Exception e) {
-                log.error("Error in DaoServlet when request students data" + e);
                 throw new ServletException(e);
             }
         } else if (person.equals("teacher")) {
             try {
-                ConnectionFactory daoFaconnectionFactorytory = new ConnectionFactory();
-                TeacherDaoImpl teachers = new TeacherDaoImpl(daoFaconnectionFactorytory);
+                ConnectionFactory connectionFactory = new ConnectionFactory();
+                TeacherDaoImpl teachers = new TeacherDaoImpl(connectionFactory);
                 List<Teacher> teacherList = teachers.getAll();
                 for (Teacher teacher : teacherList) {
                     int id = teacher.getId();
@@ -87,7 +83,60 @@ public class ServletDao extends HttpServlet {
                 dispatcher.forward(request, response);
 
             } catch (Exception e) {
-                log.error("Error in DaoServlet when request teachers data" + e);
+                throw new ServletException(e);
+            }
+        }
+        else if (person.equals("group")) {
+            try {
+                ConnectionFactory connectionFactory = new ConnectionFactory();
+                GroupDaoImpl groups = new GroupDaoImpl(connectionFactory);
+                List<Group> groupsList = groups.getAll();
+                for (Group group : groupsList) {
+                    int id = group.getId();
+                    request.setAttribute("id", id);
+
+                    String title = group.getTitle();
+                    request.setAttribute("title", title);
+
+                    String description = group.getDescription();
+                    request.setAttribute("description", description);
+                }
+
+                request.setAttribute("groups", groupsList);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view_groups.jsp");
+                dispatcher.forward(request, response);
+
+            } catch (Exception e) {
+                throw new ServletException(e);
+            }
+        }
+        else if (person.equals("lecture")) {
+            try {
+                ConnectionFactory connectionFactory = new ConnectionFactory();
+                LectureDaoImpl lectures = new LectureDaoImpl(connectionFactory);
+                List<Lecture> lectureList = lectures.getAll();
+                for (Lecture lecture : lectureList) {
+                    LocalDateTime date = lecture.getDate();
+                    request.setAttribute("date", date);
+
+                    String subject = lecture.getSubject();
+                    request.setAttribute("subject", subject);
+
+                    Teacher teacher = lecture.getTeacher();
+                    request.setAttribute("teacher", teacher);
+
+                    Group group = lecture.getGroup();
+                    request.setAttribute("group", group);
+
+                    Integer classroom = lecture.getClassroom();
+                    request.setAttribute("classroom", classroom );
+                }
+
+                request.setAttribute("lectures", lectureList);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view_lectures.jsp");
+                dispatcher.forward(request, response);
+
+            } catch (Exception e) {
                 throw new ServletException(e);
             }
         }

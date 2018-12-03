@@ -10,7 +10,6 @@ import ua.com.foxminded.domain.Teacher;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void getAll() throws SQLException {
+    public void getAll() throws Exception {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -60,7 +59,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void getById() throws SQLException {
+    public void getById() throws Exception {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -76,19 +75,19 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() throws SQLException {
+    public void shouldInvokeCreate() throws Exception {
         mockedTeacherDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedTeacherDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws SQLException {
-        mockedTeacherDao.update(anyInt(), anyString(), anyString(), anyString(), anyInt());
-        verify(mockedTeacherDao).update(anyInt(), anyString(), anyString(), anyString(), anyInt());
+    public void shouldInvokeUpdate() throws Exception {
+        mockedTeacherDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
+        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(),anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws SQLException {
+    public void shouldInvokeDeleteAll() throws Exception {
         mockedTeacherDao.deleteAll();
         verify(mockedTeacherDao).deleteAll();
     }

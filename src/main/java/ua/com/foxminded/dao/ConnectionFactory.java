@@ -14,12 +14,13 @@ public class ConnectionFactory {
     private String user = "postgres";
     private String password = "postgres";
     private String url = "jdbc:postgresql://localhost:5433/test";
-    private String driver = "com.postgresql.jdbc.Driver";
+    private String driver = "org.postgresql.Driver";
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
         //what about writing passwords to log?
         log.debug("Connection returns with URL = " + url + ", USER = " + user + ", PASSWORD = " + password);
+        Class.forName(driver);
         return DriverManager.getConnection(url, user, password);
     }
 }

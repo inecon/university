@@ -23,17 +23,22 @@ public class LectureDaoImpl implements LectureDao {
         log.info("Method getAll send sql request");
         GroupDao groupDao = new GroupDaoImpl(connectionFactory);
         TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
-        return jdbcExecutor.execQuery(sql, result -> {
-            List<Lecture> allLectures = new ArrayList<>();
-            while (result.next()) {
-                allLectures.add(new Lecture((LocalDateTime.parse(result.getString("date"))),
-                        result.getString("subject"),
-                        teacherDao.getById(result.getInt("teacher_id")),
-                        groupDao.getById(result.getInt("group_id")),
-                        result.getInt("classroom")));
-            }
-            return allLectures;
-        });
+        try {
+            return jdbcExecutor.execQuery(sql, result -> {
+                List<Lecture> allLectures = new ArrayList<>();
+                while (result.next()) {
+                    allLectures.add(new Lecture((LocalDateTime.parse(result.getString("date"))),
+                            result.getString("subject"),
+                            teacherDao.getById(result.getInt("teacher_id")),
+                            groupDao.getById(result.getInt("group_id")),
+                            result.getInt("classroom")));
+                }
+                return allLectures;
+            });
+        } catch (Exception e) {
+            log.error("Exception in getAll method", e.getCause());
+            throw new DaoException(e);
+        }
     }
 
     @Override
@@ -41,8 +46,13 @@ public class LectureDaoImpl implements LectureDao {
         String sql = "insert into lectures (date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?)";
         log.info("Method create send sql request with DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
-        jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
-                lecture.getGroup().getId(), lecture.getClassroom());
+        try {
+            jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+                    lecture.getGroup().getId(), lecture.getClassroom());
+        } catch (Exception e) {
+            log.error("Exception in create method", e.getCause());
+            throw new DaoException(e);
+        }
     }
 
     @Override
@@ -50,14 +60,24 @@ public class LectureDaoImpl implements LectureDao {
         String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where date = ?";
         log.info("Method update send sql request with - DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
-        jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
-                lecture.getGroup().getId(), lecture.getClassroom());
+        try {
+            jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
+                    lecture.getGroup().getId(), lecture.getClassroom());
+        } catch (Exception e) {
+            log.error("Exception in update method", e.getCause());
+            throw new DaoException(e);
+        }
     }
 
     @Override
     public void deleteAll() throws Exception {
         String sql = "delete from lectures";
-        log.info("Method delete send sql request");
-        jdbcExecutor.execUpdate(sql);
+        log.info("Method deleteAll send sql request");
+        try {
+            jdbcExecutor.execUpdate(sql);
+        } catch (Exception e) {
+            log.error("Exception in deleteAll method", e.getCause());
+            throw new DaoException(e);
+        }
     }
 }

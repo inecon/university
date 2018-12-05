@@ -18,8 +18,7 @@ public class ConnectionFactory {
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
-        //what about writing passwords to log?
-        log.debug("Connection returns with URL = " + url + ", USER = " + user + ", PASSWORD = " + password);
+        log.debug("Connection returns with URL = " + url + ", USER = " + user);
         Class.forName(driver);
         return DriverManager.getConnection(url, user, password);
     }

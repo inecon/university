@@ -9,12 +9,38 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <servlet>
-        <servlet-name>ServletDao</servlet-name>
-        <servlet-class>ua.com.foxminded.webapp.ServletDao</servlet-class>
+        <servlet-name>ViewStudentsServlet</servlet-name>
+        <servlet-class>ua.com.foxminded.webapp.ViewStudentsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ServletDao</servlet-name>
-        <url-pattern>/view</url-pattern>
+        <servlet-name>ViewStudentsServlet</servlet-name>
+        <url-pattern>/students</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ViewTeachersServlet</servlet-name>
+        <servlet-class>ua.com.foxminded.webapp.ViewTeachersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewTeachersServlet</servlet-name>
+        <url-pattern>/teachers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ViewGroupsServlet</servlet-name>
+        <servlet-class>ua.com.foxminded.webapp.ViewGroupsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewGroupsServlet</servlet-name>
+        <url-pattern>/groups</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ViewLecturesServlet</servlet-name>
+        <servlet-class>ua.com.foxminded.webapp.ViewLecturesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewLecturesServlet</servlet-name>
+        <url-pattern>/lectures</url-pattern>
+    </servlet-mapping>
 </web-app>

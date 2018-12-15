@@ -3,6 +3,7 @@ package ua.com.foxminded.dao;
 import org.apache.log4j.Logger;
 import ua.com.foxminded.domain.Teacher;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> getAll() throws Exception {
+    public List<Teacher> getAll() throws DaoException {
         String sql = "select * from teachers";
         log.debug("Method getAll send sql request");
         try {
@@ -30,14 +31,14 @@ public class TeacherDaoImpl implements TeacherDao {
                 }
                 return allTeachers;
             });
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in getAll method", e.getCause());
-            throw new DaoException(e);
+            throw new DaoException((RuntimeException) e);
         }
     }
 
     @Override
-    public Teacher getById(Integer id) throws Exception {
+    public Teacher getById(Integer id) throws DaoException {
         String sql = "select * from teachers where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         try {
@@ -49,47 +50,47 @@ public class TeacherDaoImpl implements TeacherDao {
                         result.getString("gender"),
                         result.getInt("age"));
             }, id);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in getById method", e.getCause());
-            throw new DaoException(e);
+            throw new DaoException((RuntimeException) e);
         }
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) throws Exception {
+    public void create(Integer id, String name, String surName, String gender, Integer age) throws DaoException {
         String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
         log.debug("Method create send sql request with - ID = " + id + ", NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age);
         try {
             jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in create method", e.getCause());
-            throw new DaoException(e);
+            throw new DaoException((RuntimeException) e);
         }
     }
 
     @Override
-    public void update(String name, String surName, String gender, Integer age, Integer id) throws Exception {
+    public void update(String name, String surName, String gender, Integer age, Integer id) throws DaoException {
         String sql = "update teachers set  id = ?, name = ?, surname = ?, gender = ?, age = ? where id = ?";
         log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age + ", ID = " + id);
         try {
             jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in update method", e.getCause());
-            throw new DaoException(e);
+            throw new DaoException((RuntimeException) e);
         }
     }
 
     @Override
-    public void deleteAll() throws Exception {
+    public void deleteAll() throws DaoException {
         String sql = "delete from teachers";
         log.debug("Method deleteAll send sql request");
         try {
             jdbcExecutor.execUpdate(sql);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in deleteAll method", e.getCause());
-            throw new DaoException(e);
+            throw new DaoException((RuntimeException) e);
         }
     }
 }

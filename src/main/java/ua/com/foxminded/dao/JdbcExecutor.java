@@ -15,7 +15,7 @@ public class JdbcExecutor<T> {
         this.connectionFactory = connectionFactory;
     }
 
-    public void execUpdate(String update, Object... parameters) throws Exception {
+    public void execUpdate(String update, Object... parameters) throws DaoException, SQLException {
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(update);) {
             int count = 1;

@@ -46,7 +46,7 @@ public class GroupDaoImpl implements GroupDao {
                         result.getString("title"),
                         result.getString("description"));
             }, id);
-        } catch (DaoException|SQLException e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in getById method", e.getCause());
             throw new DaoException((RuntimeException) e);
         }

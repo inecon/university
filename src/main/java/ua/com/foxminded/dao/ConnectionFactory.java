@@ -17,9 +17,9 @@ public class ConnectionFactory {
     private String driver = "org.postgresql.Driver";
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
+    public Connection getConnection() throws SQLException{
         log.debug("Connection returns with URL = " + url + ", USER = " + user);
-        Class.forName(driver);
+        //Class.forName(driver);
         return DriverManager.getConnection(url, user, password);
     }
 }

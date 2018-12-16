@@ -6,7 +6,7 @@
 
     <groupId>ua.com.foxminded</groupId>
     <artifactId>university</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1</version>
     <build>
         <plugins>
             <plugin>
@@ -17,9 +17,17 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <webappDirectory>src/webapp/</webappDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>university</name>
     <url>git.foxminded.com.ua/evgeny.perekhodchenko/university/</url>
@@ -47,9 +55,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>9.4.1212</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -66,6 +74,17 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

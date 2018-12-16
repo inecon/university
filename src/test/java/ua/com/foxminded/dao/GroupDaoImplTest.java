@@ -10,7 +10,6 @@ import ua.com.foxminded.domain.Group;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +46,13 @@ public class GroupDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() throws SQLException {
+    public void shouldInvokeCreate() throws Exception {
         mockedGroupDao.create(anyInt(), anyString(), anyString());
         verify(mockedGroupDao).create(anyInt(), anyString(), anyString());
     }
 
     @Test
-    public void shouldGetAll() throws SQLException {
+    public void shouldGetAll() throws Exception {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -66,7 +65,7 @@ public class GroupDaoImplTest {
         assertEquals(VALID_GROUP_LIST, groupDao.getAll());
     }
     @Test
-    public void shouldGetById() throws SQLException {
+    public void shouldGetById() throws Exception {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -79,13 +78,13 @@ public class GroupDaoImplTest {
         assertEquals(VALID_GROUP, groupDao.getById(VALID_ID));
     }
     @Test
-    public void shouldInvokeDeleteAll() throws SQLException {
+    public void shouldInvokeDeleteAll() throws Exception {
         mockedGroupDao.deleteAll();
         verify(mockedGroupDao).deleteAll();
     }
 
     @Test
-    public void shouldInvokeUpdate() throws SQLException {
+    public void shouldInvokeUpdate() throws Exception {
         mockedGroupDao.update( anyString(), anyString(), anyInt());
         verify(mockedGroupDao).update(anyString(), anyString(), anyInt());
     }

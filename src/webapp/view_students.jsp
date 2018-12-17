@@ -6,10 +6,18 @@
     <title>Students list</title>
 </head>
 <body>
-<h3 align="center">Таблица</h3>
-<br>
 <table border="3" align="center">
-    <td align="center" colspan="5" style="font-size: large; font-weight: bold">Students list</td>
+    <thead>
+    <td align="center" colspan="7" style="font-size: large; font-weight: bold">Students list</td>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>gender</th>
+            <th>age</th>
+            <th colspan=2>Action</th>
+        </tr>
+    </thead>
     <c:forEach items="${students}" var="students">
         <br>
         <tr>
@@ -18,9 +26,12 @@
             <td> ${students.surName} </td>
             <td> ${students.gender} </td>
             <td> ${students.age} </td>
+            <td><a href="students?action=edit&student_id=<c:out value="${students.id}"/>">Update</a></td>
+            <td><a href="students?action=delete&userId=<c:out value="${students.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
+<p><a href="ViewStudentsServlet?action=insert">Add User</a></p>
 <div id="button" align="right" style="font-weight: bolder; font-size: larger; background: yellow">
     <button name="back" onclick='history.back()'>Back</button>
 </div>

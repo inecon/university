@@ -10,4 +10,7 @@ public class DaoException extends RuntimeException {
     public DaoException(SQLException e) throws SQLException {
         throw new SQLException(e);
     }
+
+    public DaoException(Exception e) {
+    }
 }

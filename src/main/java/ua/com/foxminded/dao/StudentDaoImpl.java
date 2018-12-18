@@ -32,8 +32,8 @@ public class StudentDaoImpl implements StudentDao {
                 return allStudents;
             });
         } catch (DaoException | SQLException e) {
-            log.error("Exception in getAll method", e.getCause());
-            throw new DaoException( e);
+            log.error("Exception in getAll method " + e);
+            throw new DaoException(e);
         }
     }
 
@@ -52,7 +52,7 @@ public class StudentDaoImpl implements StudentDao {
             }, id);
         } catch (DaoException | SQLException e) {
             log.error("Exception in getById method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
 
@@ -65,7 +65,7 @@ public class StudentDaoImpl implements StudentDao {
             jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
         } catch (DaoException | SQLException e) {
             log.error("Exception in create method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
 
@@ -75,7 +75,7 @@ public class StudentDaoImpl implements StudentDao {
         log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age + ", ID = " + id);
         try {
-            jdbcExecutor.execUpdate(sql, name, surName, gender,age, id);
+            jdbcExecutor.execUpdate(sql, name, surName, gender, age, id);
         } catch (DaoException | SQLException e) {
             log.error("Exception in update method", e.getCause());
             throw new DaoException(e);
@@ -90,18 +90,19 @@ public class StudentDaoImpl implements StudentDao {
             jdbcExecutor.execUpdate(sql);
         } catch (DaoException | SQLException e) {
             log.error("Exception in deleteAll method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
+
     @Override
     public void deleteById(Integer id) throws DaoException {
         String sql = "delete from students where id = ?";
         log.debug("Method deleteById send sql request with id = " + id);
         try {
-            jdbcExecutor.execUpdate(sql);
+            jdbcExecutor.execUpdate(sql, id);
         } catch (DaoException | SQLException e) {
             log.error("Exception in deleteById method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
 }

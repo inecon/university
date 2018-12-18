@@ -13,8 +13,8 @@
             <th>Id</th>
             <th>Name</th>
             <th>Surname</th>
-            <th>gender</th>
-            <th>age</th>
+            <th>Gender</th>
+            <th>Age</th>
             <th colspan=2>Action</th>
         </tr>
     </thead>
@@ -27,13 +27,13 @@
             <td> ${students.gender} </td>
             <td> ${students.age} </td>
             <td><a href="students?action=edit&student_id=<c:out value="${students.id}"/>">Update</a></td>
-            <td><a href="students?action=delete&userId=<c:out value="${students.id}"/>">Delete</a></td>
+            <td><a href="students?action=delete&student_id=<c:out value="${students.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="ViewStudentsServlet?action=insert">Add User</a></p>
+<p><a href="students?action=insert">Add User</a></p>
 <div id="button" align="right" style="font-weight: bolder; font-size: larger; background: yellow">
-    <button name="back" onclick='history.back()'>Back</button>
+    <button name="back" onclick="window.location = '/index.html'">Back</button>
 </div>
 </body>
 </html>

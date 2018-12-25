@@ -5,6 +5,7 @@ import ua.com.foxminded.domain.Student;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
@@ -17,6 +18,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> getAll() throws DaoException {
+        Comparator<Student> byId = Comparator.comparing(Student::getId);
         String sql = "select * from students";
         log.debug("Method getAll send sql request");
         try {
@@ -29,6 +31,7 @@ public class StudentDaoImpl implements StudentDao {
                             result.getString("gender"),
                             result.getInt("age")));
                 }
+                allStudents.sort(byId);
                 return allStudents;
             });
         } catch (DaoException | SQLException e) {

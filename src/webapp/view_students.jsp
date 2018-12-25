@@ -26,14 +26,21 @@
             <td> ${students.surName} </td>
             <td> ${students.gender} </td>
             <td> ${students.age} </td>
-            <td><a href="students?action=edit&student_id=<c:out value="${students.id}"/>">Update</a></td>
-            <td><a href="students?action=delete&student_id=<c:out value="${students.id}"/>">Delete</a></td>
+            <td><form id="edit" action="/students/edit/" method="get" >
+                <button type="submit"  name="student_id" value="${students.id}">Edit</button>
+            </form></td>
+            <td><form  method="post" id="delete" action="/students/delete/" >
+                <button type="submit"  name="student_id" value="${students.id}">Delete</button>
+            </form></td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="students?action=insert">Add User</a></p>
+<form id="insert" action="/students/insert/" method="get" style="margin-left: 10%">
+    <button type="submit">Add User</button>
+</form>
 <div id="button" align="right" style="font-weight: bolder; font-size: larger; background: yellow">
     <button name="back" onclick="window.location = '/index.html'">Back</button>
 </div>
 </body>
+
 </html>

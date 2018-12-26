@@ -19,7 +19,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> getAll() throws DaoException {
         Comparator<Student> byId = Comparator.comparing(Student::getId);
-        String sql = "select * from students";
+        final String sql = "select * from students";
         log.debug("Method getAll send sql request");
         try {
             return jdbcExecutor.execQuery(sql, result -> {
@@ -42,7 +42,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Student getById(Integer id) throws DaoException {
-        String sql = "select * from students where id = ?";
+        final String sql = "select * from students where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         try {
             return jdbcExecutor.execQuery(sql, result -> {
@@ -61,7 +61,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void create(Integer id, String name, String surName, String gender, Integer age) throws DaoException {
-        String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
+        final String sql = "insert into students (id, name, surname, gender, age) values (?,?,?,?,?)";
         log.debug("Method create send sql request with - ID = " + id + ", NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age);
         try {
@@ -74,7 +74,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void update(String name, String surName, String gender, Integer age, Integer id) throws DaoException {
-        String sql = "update students set name = ?, surname = ?, gender = ?, age = ? where id = ?";
+        final String sql = "update students set name = ?, surname = ?, gender = ?, age = ? where id = ?";
         log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
                 ", GENDER = " + gender + ", age = " + age + ", ID = " + id);
         try {
@@ -87,7 +87,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void deleteAll() throws DaoException {
-        String sql = "delete from students";
+        final String sql = "delete from students";
         log.debug("Method deleteAll send sql request");
         try {
             jdbcExecutor.execUpdate(sql);
@@ -99,7 +99,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void deleteById(Integer id) throws DaoException {
-        String sql = "delete from students where id = ?";
+        final String sql = "delete from students where id = ?";
         log.debug("Method deleteById send sql request with id = " + id);
         try {
             jdbcExecutor.execUpdate(sql, id);

@@ -18,6 +18,7 @@ public class ViewStudentsServlet extends HttpServlet {
     ConnectionFactory connectionFactory = new ConnectionFactory();
     StudentDaoImpl students = new StudentDaoImpl(connectionFactory);
     String forward = "";
+    private static final Integer START_ID = 1;
 
     private static String CREATE_OR_EDIT_STUDENT_PAGE = "/student.jsp";
     private static String VIEW_ALL_STUDENTS_PAGE = "/view_students.jsp";
@@ -45,6 +46,7 @@ public class ViewStudentsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("student_id");
+        //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
             String name = request.getParameter("name");
             String surName = request.getParameter("surName");
@@ -56,11 +58,11 @@ public class ViewStudentsServlet extends HttpServlet {
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (studentList.isEmpty()) {
-                    newId = 1;
+                    newId = START_ID;
                 } else {
                     newId = studentList.get(studentList.size() - 1).getId() + 1;
                 }
-                students.create(newId, name, surName, gender, age);//i think about this during refactoring
+                students.create(newId, name, surName, gender, age);
             } else {
                 students.update(name, surName, gender, age, Integer.parseInt(id));
             }

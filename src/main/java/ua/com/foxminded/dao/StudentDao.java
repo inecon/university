@@ -14,4 +14,6 @@ public interface StudentDao {
     public void update( String name, String surName, String gender, Integer age, Integer id) throws DaoException;
 
     public void deleteAll() throws DaoException;
+
+    public void deleteById(Integer id) throws DaoException;
 }

@@ -3,7 +3,6 @@ package ua.com.foxminded.webapp;
 import org.apache.log4j.Logger;
 import ua.com.foxminded.dao.ConnectionFactory;
 import ua.com.foxminded.dao.StudentDaoImpl;
-import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Student;
 
 import javax.servlet.RequestDispatcher;
@@ -16,42 +15,68 @@ import java.util.List;
 
 public class ViewStudentsServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
+    ConnectionFactory connectionFactory = new ConnectionFactory();
+    StudentDaoImpl students = new StudentDaoImpl(connectionFactory);
+    String forward = "";
+    private static final Integer START_ID = 1;
+
+    private static String CREATE_OR_EDIT_STUDENT_PAGE = "/student.jsp";
+    private static String VIEW_ALL_STUDENTS_PAGE = "/view_students.jsp";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
-        try {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            StudentDaoImpl students = new StudentDaoImpl(connectionFactory);
-            List<Student> studentList = students.getAll();
-            for (Student student : studentList) {
-                int id = student.getId();
-                request.setAttribute("id", id);
 
-                String name = student.getName();
-                request.setAttribute("name", name);
-
-                String surName = student.getSurName();
-                request.setAttribute("surName", surName);
-
-                String gender = student.getGender();
-                request.setAttribute("gender", gender);
-
-                Group group = student.getGroup();
-                request.setAttribute("group", group);
-
-                int age = student.getAge();
-                request.setAttribute("age", age);
-            }
-
-            request.setAttribute("students", studentList);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/view_students.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (Exception e) {
-            log.error("Exception when we try display students", e.getCause());
-            throw new ServletException(e);
+        if (request.getPathInfo() == null) {
+            request.setAttribute("students", students.getAll());
+            forward = VIEW_ALL_STUDENTS_PAGE;
+        } else if (request.getPathInfo().equals("/insert/")) {
+            forward = CREATE_OR_EDIT_STUDENT_PAGE;
+        } else if (request.getPathInfo().equals("/edit/")) {
+            forward = CREATE_OR_EDIT_STUDENT_PAGE;
+            Integer student_id = Integer.parseInt(request.getParameter("student_id"));
+            Student student = students.getById(student_id);
+            request.setAttribute("student", student);
         }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("student_id");
+        //if request.getPathInfo == null - adding new student
+        if (request.getPathInfo() == null) {
+            String name = request.getParameter("name");
+            String surName = request.getParameter("surName");
+            String gender = request.getParameter("gender");
+            Integer age = Integer.parseInt(request.getParameter("age"));
+            if (id == null || id.isEmpty()) {
+                //sort list to find max id
+                List<Student> studentList = students.getAll();
+                Integer newId;
+                //if no users, to first user set id = 1
+                if (studentList.isEmpty()) {
+                    newId = START_ID;
+                } else {
+                    newId = studentList.get(studentList.size() - 1).getId() + 1;
+                }
+                students.create(newId, name, surName, gender, age);
+            } else {
+                students.update(name, surName, gender, age, Integer.parseInt(id));
+            }
+            forward = VIEW_ALL_STUDENTS_PAGE;
+        } else if (request.getPathInfo().equals("/delete/")) {
+            forward = VIEW_ALL_STUDENTS_PAGE;
+            Integer studentId = Integer.parseInt(id);
+            students.deleteById(studentId);
+            request.setAttribute("students", students.getAll());
+        }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        request.setAttribute("students", students.getAll());
+        view.forward(request, response);
     }
 }
 

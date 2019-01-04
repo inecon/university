@@ -25,12 +25,13 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LectureDaoImplTest {
+    Integer  VALID_ID = 1;
     LocalDateTime VALID_DATE_TIME = LocalDateTime.of(2018, Month.JANUARY, 1, 12, 00);
     String VALID_SUBJECT = "Test subject";
     Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65);
     Group VALID_GROUP = new Group(1, "Group01", "Math");
     Integer VALID_CLASSROOM = 1;
-    Lecture VALID_LECTURE = new Lecture(VALID_DATE_TIME, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
+    Lecture VALID_LECTURE = new Lecture(VALID_ID, VALID_DATE_TIME, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
     List<Lecture> VALID_LECTURE_LIST = new ArrayList<>();
     @Mock
     private ConnectionFactory connectionFactory;
@@ -62,6 +63,7 @@ public class LectureDaoImplTest {
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
 
+        when(resultSet.getInt("id")).thenReturn((VALID_LECTURE.getId()));
         when(resultSet.getString("date")).thenReturn(String.valueOf(VALID_LECTURE.getDate()));
         when(teacherDao.getById(any())).thenReturn(VALID_LECTURE.getTeacher());
         when(groupDao.getById(any())).thenReturn(VALID_LECTURE.getGroup());

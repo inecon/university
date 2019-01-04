@@ -5,6 +5,7 @@ import ua.com.foxminded.domain.Group;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupDaoImpl implements GroupDao {
@@ -17,6 +18,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public List<Group> getAll() throws DaoException {
+        Comparator<Group> byId = Comparator.comparing(Group::getId);
         String sql = "select * from groups";
         log.debug("Method getAll send sql request");
         try {
@@ -26,12 +28,14 @@ public class GroupDaoImpl implements GroupDao {
                     allGroups.add(new Group(result.getInt("id"),
                             result.getString("title"),
                             result.getString("description")));
+
                 }
+                allGroups.sort(byId);
                 return allGroups;
             });
         } catch (DaoException | SQLException e) {
             log.error("Exception in getAll method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
 
@@ -48,7 +52,7 @@ public class GroupDaoImpl implements GroupDao {
             }, id);
         } catch (DaoException | SQLException e) {
             log.error("Exception in getById method", e.getCause());
-            throw new DaoException((RuntimeException) e);
+            throw new DaoException(e);
         }
     }
 
@@ -58,8 +62,9 @@ public class GroupDaoImpl implements GroupDao {
         log.debug("Method CREATE send sql request - ID = " + id + ", TITLE = " + title + ", DESCRIPTION = " + description);
         try {
             jdbcExecutor.execUpdate(sql, id, title, description);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in create method", e.getCause());
+            throw new DaoException(e);
         }
     }
 
@@ -69,8 +74,9 @@ public class GroupDaoImpl implements GroupDao {
         log.debug("Method update send sql request - ID = " + id + ", TITLE = " + title + ", DESCRIPTION = " + description);
         try {
             jdbcExecutor.execUpdate(sql, title, description, id);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in update method", e.getCause());
+            throw new DaoException(e);
         }
     }
 
@@ -80,8 +86,21 @@ public class GroupDaoImpl implements GroupDao {
         log.debug("Method deleteAll send sql request");
         try {
             jdbcExecutor.execUpdate(sql);
-        } catch (Exception e) {
+        } catch (DaoException | SQLException e) {
             log.error("Exception in deleteAll method", e.getCause());
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void deleteById(Integer id) throws DaoException {
+        final String sql = "delete from groups where id = ?";
+        log.debug("Method deleteById send sql request with id = " + id);
+        try {
+            jdbcExecutor.execUpdate(sql, id);
+        } catch (DaoException | SQLException e) {
+            log.error("Exception in deleteById method", e.getCause());
+            throw new DaoException(e);
         }
     }
 }

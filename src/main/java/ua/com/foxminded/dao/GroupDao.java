@@ -15,4 +15,6 @@ public interface GroupDao {
     public void update(String title, String description, Integer id) throws DaoException;
 
     public void deleteAll() throws DaoException;
+
+    public void deleteById(Integer id) throws DaoException;
 }

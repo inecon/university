@@ -13,4 +13,6 @@ public interface LectureDao {
     public void update(Lecture lecture) throws DaoException;
 
     public void deleteAll() throws DaoException;
+
+    public void deleteById(Integer id) throws DaoException;
 }

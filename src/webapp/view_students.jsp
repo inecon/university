@@ -19,7 +19,6 @@
         </tr>
     </thead>
     <c:forEach items="${students}" var="students">
-        <br>
         <tr>
             <td> ${students.id} </td>
             <td> ${students.name} </td>
@@ -27,16 +26,16 @@
             <td> ${students.gender} </td>
             <td> ${students.age} </td>
             <td><form id="edit" action="/students/edit/" method="get" >
-                <button type="submit"  name="student_id" value="${students.id}">Edit</button>
+                <button type="submit"  name="id" value="${students.id}">Edit</button>
             </form></td>
             <td><form  method="post" id="delete" action="/students/delete/" >
-                <button type="submit"  name="student_id" value="${students.id}">Delete</button>
+                <button type="submit"  name="id" value="${students.id}">Delete</button>
             </form></td>
         </tr>
     </c:forEach>
 </table>
 <form id="insert" action="/students/insert/" method="get" style="margin-left: 10%">
-    <button type="submit">Add User</button>
+    <button type="submit">Add student</button>
 </form>
 <div id="button" align="right" style="font-weight: bolder; font-size: larger; background: yellow">
     <button name="back" onclick="window.location = '/index.html'">Back</button>

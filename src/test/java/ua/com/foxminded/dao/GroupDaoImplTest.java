@@ -88,4 +88,10 @@ public class GroupDaoImplTest {
         mockedGroupDao.update( anyString(), anyString(), anyInt());
         verify(mockedGroupDao).update(anyString(), anyString(), anyInt());
     }
+
+    @Test
+    public void shouldInvokeDeleteById() throws Exception {
+        mockedGroupDao.deleteById(anyInt());
+        verify(mockedGroupDao).deleteById(anyInt());
+    }
 }

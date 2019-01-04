@@ -24,7 +24,7 @@ public class LectureDaoImpl implements LectureDao {
     @Override
     public List<Lecture> getAll() throws DaoException {
         Comparator<Lecture> byId = Comparator.comparing(Lecture::getId);
-        String sql = "select * from lectures";
+        final String sql = "select * from lectures";
         log.info("Method getAll send sql request");
         try {
             return jdbcExecutor.execQuery(sql, result -> {
@@ -48,7 +48,7 @@ public class LectureDaoImpl implements LectureDao {
 
     @Override
     public void create(Lecture lecture) throws DaoException {
-        String sql = "insert into lectures (id, date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?,?)";
+        final String sql = "insert into lectures (id, date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?,?)";
         log.info("Method create send sql request with ID = " + lecture.getId() + ", DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
         try {
@@ -62,7 +62,7 @@ public class LectureDaoImpl implements LectureDao {
 
     @Override
     public void update(Lecture lecture) throws DaoException {
-        String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where id = ?";
+        final String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where id = ?";
         log.info("Method update send sql request with  with ID = " + lecture.getId() + ", DATE DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
                 lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
         try {
@@ -76,7 +76,7 @@ public class LectureDaoImpl implements LectureDao {
 
     @Override
     public void deleteAll() throws DaoException {
-        String sql = "delete from lectures";
+        final String sql = "delete from lectures";
         log.info("Method deleteAll send sql request");
         try {
             jdbcExecutor.execUpdate(sql);
@@ -99,7 +99,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     public Lecture getById(Integer id) {
-        String sql = "select * from lectures where id = ?";
+        final String sql = "select * from lectures where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         try {
             return jdbcExecutor.execQuery(sql, result -> {

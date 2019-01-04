@@ -10,6 +10,7 @@ import ua.com.foxminded.domain.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +38,13 @@ public class StudentDaoImplTest {
     StudentDaoImpl studentDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DaoException {
        studentDao = new StudentDaoImpl(connectionFactory);
         VALID_STUDENT_LIST.add(VALID_STUDENT);
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() throws DaoException, SQLException {
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(statement);
         when(statement.executeQuery()).thenReturn(resultSet);
@@ -59,7 +60,7 @@ public class StudentDaoImplTest {
     }
 
     @Test
-    public void getById() throws Exception {
+    public void getById() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -75,25 +76,25 @@ public class StudentDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() throws Exception {
+    public void shouldInvokeCreate() throws DaoException {
         mockedStudentDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedStudentDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws Exception {
+    public void shouldInvokeUpdate() throws DaoException {
         mockedStudentDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
         verify(mockedStudentDao).update(anyString(), anyString(), anyString(), anyInt(), anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws Exception {
+    public void shouldInvokeDeleteAll() throws DaoException {
         mockedStudentDao.deleteAll();
         verify(mockedStudentDao).deleteAll();
     }
 
     @Test
-    public void shouldInvokeDeleteById() throws Exception {
+    public void shouldInvokeDeleteById() throws DaoException {
         mockedStudentDao.deleteById(anyInt());
         verify(mockedStudentDao).deleteById(anyInt());
     }

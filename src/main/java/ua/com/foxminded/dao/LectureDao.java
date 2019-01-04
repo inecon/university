@@ -8,6 +8,8 @@ public interface LectureDao {
 
     public List<Lecture> getAll() throws DaoException;
 
+    public Lecture getById(Integer id) throws DaoException;
+
     public void create(Lecture lecture) throws DaoException;
 
     public void update(Lecture lecture) throws DaoException;

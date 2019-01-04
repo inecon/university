@@ -14,7 +14,7 @@ public class ConnectionFactory {
     private String user = "postgres";
     private String password = "postgres";
     private String url = "jdbc:postgresql://localhost:5433/test";
-    private String driver = "org.postgresql.Driver";
+    //private String driver = "org.postgresql.Driver";
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
     public Connection getConnection() throws SQLException{

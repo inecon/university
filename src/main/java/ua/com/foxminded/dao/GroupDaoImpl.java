@@ -19,7 +19,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Group> getAll() throws DaoException {
         Comparator<Group> byId = Comparator.comparing(Group::getId);
-        String sql = "select * from groups";
+        final String sql = "select * from groups";
         log.debug("Method getAll send sql request");
         try {
             return jdbcExecutor.execQuery(sql, result -> {
@@ -41,7 +41,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group getById(Integer id) throws DaoException {
-        String sql = "select * from groups where id = ?";
+        final String sql = "select * from groups where id = ?";
         log.debug("Method getById send sql request with ID = " + id);
         try {
             return jdbcExecutor.execQuery(sql, result -> {
@@ -58,7 +58,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public void create(Integer id, String title, String description) throws DaoException {
-        String sql = "insert into groups (id, title, description) values (?,?,?)";
+        final String sql = "insert into groups (id, title, description) values (?,?,?)";
         log.debug("Method CREATE send sql request - ID = " + id + ", TITLE = " + title + ", DESCRIPTION = " + description);
         try {
             jdbcExecutor.execUpdate(sql, id, title, description);
@@ -70,7 +70,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public void update(String title, String description, Integer id) throws DaoException {
-        String sql = "update groups set title = ?, description = ? where id = ?";
+        final String sql = "update groups set title = ?, description = ? where id = ?";
         log.debug("Method update send sql request - ID = " + id + ", TITLE = " + title + ", DESCRIPTION = " + description);
         try {
             jdbcExecutor.execUpdate(sql, title, description, id);
@@ -82,7 +82,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public void deleteAll() throws DaoException {
-        String sql = "delete from groups";
+        final String sql = "delete from groups";
         log.debug("Method deleteAll send sql request");
         try {
             jdbcExecutor.execUpdate(sql);

@@ -119,13 +119,6 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldCreate() throws DaoException {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        LectureDao lectureDao = new LectureDaoImpl(connectionFactory);
-        lectureDao.create(VALID_LECTURE);
-    }
-
-    @Test
     public void shouldInvokeDeleteById() throws DaoException {
         mockedLectureDao.deleteById(anyInt());
         verify(mockedLectureDao).deleteById(anyInt());

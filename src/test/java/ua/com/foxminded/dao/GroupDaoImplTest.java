@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -47,37 +47,59 @@ public class GroupDaoImplTest {
     }
 
     @Test
+    public void shouldGetAll() throws SQLException, DaoException {
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(statement.execute()).thenReturn(Boolean.TRUE);
+        when(statement.getResultSet()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+
+        when(resultSet.getInt("id")).thenReturn(VALID_ID);
+        when(resultSet.getString("title")).thenReturn(String.valueOf(VALID_TITLE));
+        when(resultSet.getString("description")).thenReturn(VALID_DESCRIPTION);
+        when(mockedGroupDao.getAll()).thenReturn(VALID_GROUP_LIST);
+
+        List<Group> actualResult = VALID_GROUP_LIST;
+        List<Group> expectedResult = mockedGroupDao.getAll();
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void shouldGetId() throws SQLException, DaoException {
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(statement.execute()).thenReturn(Boolean.TRUE);
+        when(statement.getResultSet()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+
+        when(resultSet.getInt("id")).thenReturn(VALID_ID);
+        when(resultSet.getString("title")).thenReturn(String.valueOf(VALID_TITLE));
+        when(resultSet.getString("description")).thenReturn(VALID_DESCRIPTION);
+        when(mockedGroupDao.getById(anyInt())).thenReturn(VALID_GROUP);
+
+        Group actualResult = VALID_GROUP;
+        Group expectedResult = mockedGroupDao.getById(anyInt());
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     public void shouldInvokeCreate() throws DaoException {
         mockedGroupDao.create(anyInt(), anyString(), anyString());
         verify(mockedGroupDao).create(anyInt(), anyString(), anyString());
     }
 
     @Test
-    public void shouldGetAll() throws DaoException, SQLException {
-        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
-        when(statement.execute()).thenReturn(Boolean.TRUE);
-        when(statement.getResultSet()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(resultSet.getInt("id")).thenReturn(VALID_GROUP.getId());
-        when(resultSet.getString("title")).thenReturn(VALID_GROUP.getTitle());
-        when(resultSet.getString("description")).thenReturn(VALID_GROUP.getDescription());
-
-        assertEquals(VALID_GROUP_LIST, groupDao.getAll());
+    public void shouldInvokeGetAll() throws DaoException, SQLException {
+        mockedGroupDao.getAll();
+        verify(mockedGroupDao).getAll();
     }
+
     @Test
-    public void shouldGetById() throws DaoException, SQLException {
-        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
-        when(statement.execute()).thenReturn(Boolean.TRUE);
-        when(statement.getResultSet()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(resultSet.getInt("id")).thenReturn(VALID_GROUP.getId());
-        when(resultSet.getString("title")).thenReturn(VALID_GROUP.getTitle());
-        when(resultSet.getString("description")).thenReturn(VALID_GROUP.getDescription());
-
-        assertEquals(VALID_GROUP, groupDao.getById(VALID_ID));
+    public void shouldInvokeGetById() throws DaoException, SQLException {
+        mockedGroupDao.getById(anyInt());
+        verify(mockedGroupDao).getById(anyInt());
     }
+
     @Test
     public void shouldInvokeDeleteAll() throws DaoException {
         mockedGroupDao.deleteAll();
@@ -86,7 +108,7 @@ public class GroupDaoImplTest {
 
     @Test
     public void shouldInvokeUpdate() throws DaoException {
-        mockedGroupDao.update( anyString(), anyString(), anyInt());
+        mockedGroupDao.update(anyString(), anyString(), anyInt());
         verify(mockedGroupDao).update(anyString(), anyString(), anyInt());
     }
 

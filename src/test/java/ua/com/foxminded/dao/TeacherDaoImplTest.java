@@ -55,8 +55,12 @@ public class TeacherDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_TEACHER.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_TEACHER.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_TEACHER.getAge());
+        when(mockedTeacherDao.getAll()).thenReturn(VALID_TEACHER_LIST);
 
-        assertEquals(VALID_TEACHER_LIST, teacherDao.getAll());
+        List<Teacher> actual_result = VALID_TEACHER_LIST;
+        List<Teacher> expected_result = mockedTeacherDao.getAll();
+        assertEquals(actual_result, expected_result);
+
     }
 
     @Test
@@ -71,8 +75,10 @@ public class TeacherDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_TEACHER.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_TEACHER.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_TEACHER.getAge());
-
-        assertEquals(VALID_TEACHER, teacherDao.getById(VALID_TEACHER.getId()));
+        when(mockedTeacherDao.getById(anyInt())).thenReturn(VALID_TEACHER);
+        Teacher actual_result = VALID_TEACHER;
+        Teacher expected_result = mockedTeacherDao.getById(anyInt());
+        assertEquals(actual_result, expected_result);
     }
 
     @Test
@@ -84,7 +90,7 @@ public class TeacherDaoImplTest {
     @Test
     public void shouldInvokeUpdate() throws DaoException {
         mockedTeacherDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(),anyInt());
+        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(), anyInt());
     }
 
     @Test

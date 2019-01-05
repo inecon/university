@@ -39,7 +39,7 @@ public class StudentDaoImplTest {
 
     @Before
     public void setUp() throws DaoException {
-       studentDao = new StudentDaoImpl(connectionFactory);
+        studentDao = new StudentDaoImpl(connectionFactory);
         VALID_STUDENT_LIST.add(VALID_STUDENT);
     }
 
@@ -55,8 +55,10 @@ public class StudentDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_STUDENT.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_STUDENT.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_STUDENT.getAge());
-
-        assertEquals(VALID_STUDENT_LIST, studentDao.getAll());
+        when(mockedStudentDao.getAll()).thenReturn(VALID_STUDENT_LIST);
+        List<Student> actual_result = VALID_STUDENT_LIST;
+        List<Student> expected_result = mockedStudentDao.getAll();
+        assertEquals(actual_result, expected_result);
     }
 
     @Test
@@ -71,8 +73,11 @@ public class StudentDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_STUDENT.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_STUDENT.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_STUDENT.getAge());
+        when(mockedStudentDao.getById(anyInt())).thenReturn(VALID_STUDENT);
 
-        assertEquals(VALID_STUDENT, studentDao.getById(VALID_STUDENT.getId()));
+        Student actual_result = VALID_STUDENT;
+        Student expected_result = mockedStudentDao.getById(anyInt());
+        assertEquals(actual_result, expected_result);
     }
 
     @Test

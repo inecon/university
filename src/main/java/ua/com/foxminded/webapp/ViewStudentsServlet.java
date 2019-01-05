@@ -35,7 +35,7 @@ public class ViewStudentsServlet extends HttpServlet {
             forward = CREATE_OR_EDIT_STUDENT_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_STUDENT_PAGE;
-            Integer student_id = Integer.parseInt(request.getParameter("student_id"));
+            Integer student_id = Integer.parseInt(request.getParameter("id"));
             Student student = students.getById(student_id);
             request.setAttribute("student", student);
         }
@@ -44,8 +44,9 @@ public class ViewStudentsServlet extends HttpServlet {
         view.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("student_id");
+        String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
             String name = request.getParameter("name");

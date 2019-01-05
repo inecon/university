@@ -17,6 +17,9 @@ public class Initialization {
     public Teacher VALID_TEACHER1 = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
     public Teacher VALID_TEACHER2 = new Teacher(2,"Nikolai", "Petrovich", "male", 50);
 
+    public Integer VALID_ID1 = 1;
+    public Integer VALID_ID2 = 2;
+
     public String VALID_SUBJECT1 = "Math";
     public String VALID_SUBJECT2 = "Biology";
     public String VALID_SUBJECT3 = "Chemistry";
@@ -28,8 +31,8 @@ public class Initialization {
     public Integer VALID_CLASSROOM1 = 10;
     public Integer VALID_CLASSROOM2 = 11;
 
-    public Lecture VALID_LECTURE1 = new Lecture(VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROOM1);
-    public Lecture VALID_LECTURE2 = new Lecture(VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROOM2);
+    public Lecture VALID_LECTURE1 = new Lecture(VALID_ID1, VALID_DATE1, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROOM1);
+    public Lecture VALID_LECTURE2 = new Lecture(VALID_ID2, VALID_DATE2, VALID_SUBJECT2, VALID_TEACHER2, VALID_GROUP2, VALID_CLASSROOM2);
 
     Set<Student> VALID_STUDENT_LIST = new HashSet<>();
     Set<Teacher> VALID_TEACHERS_LIST = new HashSet<>();

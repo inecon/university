@@ -6,11 +6,15 @@ import java.util.List;
 
 public interface LectureDao {
 
-    public List<Lecture> getAll() throws DaoException;
+    List<Lecture> getAll() throws DaoException;
 
-    public void create(Lecture lecture) throws DaoException;
+    Lecture getById(Integer id) throws DaoException;
 
-    public void update(Lecture lecture) throws DaoException;
+    void create(Lecture lecture) throws DaoException;
 
-    public void deleteAll() throws DaoException;
+    void update(Lecture lecture) throws DaoException;
+
+    void deleteAll() throws DaoException;
+
+    void deleteById(Integer id) throws DaoException;
 }

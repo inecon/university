@@ -10,6 +10,7 @@ import ua.com.foxminded.domain.Teacher;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +38,13 @@ public class TeacherDaoImplTest {
     TeacherDaoImpl teacherDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DaoException {
         teacherDao = new TeacherDaoImpl(connectionFactory);
         VALID_TEACHER_LIST.add(VALID_TEACHER);
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -54,12 +55,16 @@ public class TeacherDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_TEACHER.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_TEACHER.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_TEACHER.getAge());
+        when(mockedTeacherDao.getAll()).thenReturn(VALID_TEACHER_LIST);
 
-        assertEquals(VALID_TEACHER_LIST, teacherDao.getAll());
+        List<Teacher> actual_result = VALID_TEACHER_LIST;
+        List<Teacher> expected_result = mockedTeacherDao.getAll();
+        assertEquals(actual_result, expected_result);
+
     }
 
     @Test
-    public void getById() throws Exception {
+    public void getById() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -70,25 +75,33 @@ public class TeacherDaoImplTest {
         when(resultSet.getString("surname")).thenReturn(VALID_TEACHER.getSurName());
         when(resultSet.getString("gender")).thenReturn(VALID_TEACHER.getGender());
         when(resultSet.getInt("age")).thenReturn(VALID_TEACHER.getAge());
-
-        assertEquals(VALID_TEACHER, teacherDao.getById(VALID_TEACHER.getId()));
+        when(mockedTeacherDao.getById(anyInt())).thenReturn(VALID_TEACHER);
+        Teacher actual_result = VALID_TEACHER;
+        Teacher expected_result = mockedTeacherDao.getById(anyInt());
+        assertEquals(actual_result, expected_result);
     }
 
     @Test
-    public void shouldInvokeCreate() throws Exception {
+    public void shouldInvokeCreate() throws DaoException {
         mockedTeacherDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
         verify(mockedTeacherDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws Exception {
+    public void shouldInvokeUpdate() throws DaoException {
         mockedTeacherDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(),anyInt());
+        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(), anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws Exception {
+    public void shouldInvokeDeleteAll() throws DaoException {
         mockedTeacherDao.deleteAll();
         verify(mockedTeacherDao).deleteAll();
+    }
+
+    @Test
+    public void shouldInvokeDeleteById() throws DaoException {
+        mockedTeacherDao.deleteById(anyInt());
+        verify(mockedTeacherDao).deleteById(anyInt());
     }
 }

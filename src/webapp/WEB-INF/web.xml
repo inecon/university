@@ -23,7 +23,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewTeachersServlet</servlet-name>
-        <url-pattern>/teachers</url-pattern>
+        <url-pattern>/teachers/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -32,7 +32,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewGroupsServlet</servlet-name>
-        <url-pattern>/groups</url-pattern>
+        <url-pattern>/groups/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -41,6 +41,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewLecturesServlet</servlet-name>
-        <url-pattern>/lectures</url-pattern>
+        <url-pattern>/lectures/*</url-pattern>
     </servlet-mapping>
 </web-app>

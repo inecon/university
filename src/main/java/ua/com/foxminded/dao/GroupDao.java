@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface GroupDao {
 
-    public List<Group> getAll() throws DaoException;
+    List<Group> getAll() throws DaoException;
 
-    public Group getById(Integer id) throws DaoException;
+    Group getById(Integer id) throws DaoException;
 
-    public void create(Integer id, String title, String description) throws DaoException;
+    void create(Integer id, String title, String description) throws DaoException;
 
-    public void update(String title, String description, Integer id) throws DaoException;
+    void update(String title, String description, Integer id) throws DaoException;
 
-    public void deleteAll() throws DaoException;
+    void deleteAll() throws DaoException;
 
-    public void deleteById(Integer id) throws DaoException;
+    void deleteById(Integer id) throws DaoException;
 }

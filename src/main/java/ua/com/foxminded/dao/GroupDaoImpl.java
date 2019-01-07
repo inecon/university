@@ -13,7 +13,7 @@ public class GroupDaoImpl implements GroupDao {
     private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
     public GroupDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<Group>(connectionFactory);
+        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
     }
 
     @Override

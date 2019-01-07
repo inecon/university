@@ -16,7 +16,7 @@ public class JdbcExecutor<T> {
     }
 
     public void execUpdate(String update, Object... parameters) throws DaoException, SQLException {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = connectionFactory.getDataSourceConnection();
              PreparedStatement statement = connection.prepareStatement(update);) {
             int count = 1;
             for (Object parameterValue : parameters) {
@@ -32,7 +32,7 @@ public class JdbcExecutor<T> {
     public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws DaoException, SQLException {
         T value = null;
         ResultSet result = null;
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = connectionFactory.getDataSourceConnection();
              PreparedStatement statement = connection.prepareStatement(query);) {
             int count = 1;
             for (Object parameterValue : parameters) {
@@ -41,7 +41,6 @@ public class JdbcExecutor<T> {
             statement.executeQuery();
             result = statement.getResultSet();
             value = handler.handle(result);
-
         } catch (DaoException e) {
             log.error("Exception in execQuery when query = " + query, e.getCause());
             throw e;

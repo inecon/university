@@ -10,16 +10,18 @@ import java.util.Comparator;
 import java.util.List;
 
 public class LectureDaoImpl implements LectureDao {
-    ConnectionFactory connectionFactory = new ConnectionFactory();
     private JdbcExecutor<Lecture> jdbcExecutor;
     private static final Logger log = Logger.getLogger(LectureDaoImpl.class);
-    GroupDao groupDao = new GroupDaoImpl(connectionFactory);
-    TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
+    private GroupDao groupDao;
+    private TeacherDao teacherDao;
 
     public LectureDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<Lecture>(connectionFactory);
-        this.connectionFactory = connectionFactory;
+        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
+        this.groupDao = new GroupDaoImpl(connectionFactory);
+        this.teacherDao = new TeacherDaoImpl(connectionFactory);
     }
+
+
 
     @Override
     public List<Lecture> getAll() throws DaoException {

@@ -2,25 +2,32 @@ package ua.com.foxminded.dao;
 
 import org.apache.log4j.Logger;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    /****
-     * This will be loaded later.....with Spring :)
-     * please accept this implementation for now
-     */
-    private String user = "postgres";
-    private String password = "postgres";
-    private String url = "jdbc:postgresql://localhost:5433/test";
-    //private String driver = "org.postgresql.Driver";
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
-    public Connection getConnection() throws SQLException{
-        log.debug("Connection returns with URL = " + url + ", USER = " + user);
-        //Class.forName(driver);
-        return DriverManager.getConnection(url, user, password);
+    public Connection getDataSourceConnection() {
+        try {
+            InitialContext cxt = new InitialContext();
+            if (cxt == null) {
+                log.error("No context");
+                throw new DaoException("Uh oh -- no context!");
+            }
+            DataSource ds = (DataSource) cxt.lookup("java:comp/env/jdbc/postgres");
+            if (ds == null) {
+                log.error("No DataSource");
+                throw new DaoException("Data source not found!");
+            }
+            return ds.getConnection();
+        } catch (SQLException | DaoException | NamingException e) {
+            log.error("Exception during receiving dataSource", e.getCause());
+            throw new DaoException(e);
+        }
     }
 }
 

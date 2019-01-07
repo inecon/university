@@ -13,7 +13,7 @@ public class TeacherDaoImpl implements TeacherDao {
     private static final Logger log = Logger.getLogger(TeacherDaoImpl.class);
 
     public TeacherDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<Teacher>(connectionFactory);
+        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
     }
 
     @Override

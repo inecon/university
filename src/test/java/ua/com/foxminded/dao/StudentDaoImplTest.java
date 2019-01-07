@@ -45,7 +45,7 @@ public class StudentDaoImplTest {
 
     @Test
     public void getAll() throws DaoException, SQLException {
-        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(statement);
         when(statement.executeQuery()).thenReturn(resultSet);
         when(statement.getResultSet()).thenReturn(resultSet);
@@ -64,7 +64,7 @@ public class StudentDaoImplTest {
     @Test
     public void getById() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);

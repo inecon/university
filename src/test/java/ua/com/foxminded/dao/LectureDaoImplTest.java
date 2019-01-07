@@ -60,7 +60,7 @@ public class LectureDaoImplTest {
     @Test
     public void shouldById() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
@@ -81,7 +81,7 @@ public class LectureDaoImplTest {
     @Test
     public void shouldGetGetAll() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        when(connectionFactory.getConnection()).thenReturn(connection);
+        when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
         when(statement.getResultSet()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);

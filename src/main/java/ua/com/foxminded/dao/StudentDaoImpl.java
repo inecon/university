@@ -1,14 +1,19 @@
 package ua.com.foxminded.dao;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 import ua.com.foxminded.domain.Student;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+@Component
+@Scope(WebApplicationContext.SCOPE_APPLICATION)
 public class StudentDaoImpl implements StudentDao {
+
     private JdbcExecutor<Student> jdbcExecutor;
     private static final Logger log = Logger.getLogger(StudentDaoImpl.class);
 

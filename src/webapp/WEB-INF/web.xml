@@ -8,6 +8,11 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+
+
+
+
     <servlet>
         <servlet-name>ViewStudentsServlet</servlet-name>
         <servlet-class>ua.com.foxminded.webapp.ViewStudentsServlet</servlet-class>
@@ -51,4 +56,22 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+
+    </context-param>
+    <!-- Configuration locations must consist of one or more comma- or space-delimited
+         fully-qualified @Configuration classes. Fully-qualified packages may also be
+         specified for component-scanning -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>ua.com.foxminded.configs.SpringConfig</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 </web-app>

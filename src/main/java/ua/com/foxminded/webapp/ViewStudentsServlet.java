@@ -1,6 +1,9 @@
 package ua.com.foxminded.webapp;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import ua.com.foxminded.dao.ConnectionFactory;
 import ua.com.foxminded.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.Student;
@@ -13,9 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class ViewStudentsServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
-    ConnectionFactory connectionFactory = new ConnectionFactory();
+
+     ConnectionFactory connectionFactory;
+
+     @Autowired
+     @Qualifier("connectionFactory")
+     public void setConnectionFactory(ConnectionFactory connectionFactory) {
+         this.connectionFactory = connectionFactory;
+     }
+
+    //StudentDaoImpl students;
     StudentDaoImpl students = new StudentDaoImpl(connectionFactory);
     String forward = "";
     private static final Integer START_ID = 1;

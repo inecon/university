@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import ua.com.foxminded.dao.ConnectionFactory;
+import ua.com.foxminded.dao.StudentDaoImpl;
 
 import javax.sql.DataSource;
 
@@ -19,5 +20,10 @@ public class SpringConfig {
     @Bean
     public ConnectionFactory connectionFactory(){
         return new ConnectionFactory(dataSource());
+    }
+
+    @Bean
+    public StudentDaoImpl studentDao(){
+        return new StudentDaoImpl(connectionFactory());
     }
 }

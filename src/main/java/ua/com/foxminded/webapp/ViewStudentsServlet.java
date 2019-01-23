@@ -31,7 +31,8 @@ public class ViewStudentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ApplicationContext ctx = (ApplicationContext) getServletContext().getAttribute("ctx");
 
-        students = new StudentDaoImpl((ConnectionFactory) ctx.getBean("connectionFactory"));
+        //students = new StudentDaoImpl((ConnectionFactory) ctx.getBean("connectionFactory"));
+        students = (StudentDaoImpl) ctx.getBean("studentDao");
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {

@@ -1,13 +1,13 @@
 package ua.com.foxminded.webapp;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import ua.com.foxminded.dao.ConnectionFactory;
 import ua.com.foxminded.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.Student;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +18,8 @@ import java.util.List;
 @Component
 public class ViewStudentsServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
-    ServletConfig servletContext = getServletConfig(); ///HERE TROUBLE
 
-     ConnectionFactory connectionFactory;
-
-    //StudentDaoImpl students;
-    StudentDaoImpl students = new StudentDaoImpl(connectionFactory);
+    StudentDaoImpl students;
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -33,6 +29,9 @@ public class ViewStudentsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ApplicationContext ctx = (ApplicationContext) getServletContext().getAttribute("ctx");
+
+        students = new StudentDaoImpl((ConnectionFactory) ctx.getBean("connectionFactory"));
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {

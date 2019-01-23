@@ -12,14 +12,11 @@ public class MyListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent context) {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
-        context.getServletContext().setAttribute("applicationContext",ctx);
+        context.getServletContext().setAttribute("ctx",ctx);
     }
 
     @Override
-
     public void contextDestroyed(ServletContextEvent arg0) {
-
-        System.out.println("ServletContextListener destroyed");
-
+        //System.out.println("ServletContextListener destroyed");
     }
 }

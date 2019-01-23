@@ -56,16 +56,15 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>
-            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-        </param-value>
+    <!-- <context-param>
+         <param-name>contextClass</param-name>
+         <param-value>
+             org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+         </param-value>
 
-    </context-param>
-    <!-- Configuration locations must consist of one or more comma- or space-delimited
-         fully-qualified @Configuration classes. Fully-qualified packages may also be
-         specified for component-scanning -->
+     </context-param   Configuration locations must consist of one or more comma- or space-delimited
+          fully-qualified @Configuration classes. Fully-qualified packages may also be
+          specified for component-scanning
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>ua.com.foxminded.configs.SpringConfig</param-value>
@@ -73,5 +72,8 @@
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>-->
+    <listener>
+        <listener-class>ua.com.foxminded.configs.MyListener</listener-class>
     </listener>
 </web-app>

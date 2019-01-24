@@ -13,6 +13,7 @@ public class StudentDaoImpl implements StudentDao {
     private JdbcExecutor<Student> jdbcExecutor;
     private static final Logger log = Logger.getLogger(StudentDaoImpl.class);
 
+
     public StudentDaoImpl(ConnectionFactory connectionFactory) {
         this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
     }

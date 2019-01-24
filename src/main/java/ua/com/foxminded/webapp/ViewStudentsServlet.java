@@ -1,13 +1,16 @@
 package ua.com.foxminded.webapp;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.foxminded.dao.ConnectionFactory;
 import ua.com.foxminded.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.Student;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,23 +19,27 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@Configurable
 public class ViewStudentsServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
-    StudentDaoImpl students;
     String forward = "";
     private static final Integer START_ID = 1;
 
     private static String CREATE_OR_EDIT_STUDENT_PAGE = "/student.jsp";
     private static String VIEW_ALL_STUDENTS_PAGE = "/view_students.jsp";
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+
+    @Inject
+    StudentDaoImpl students;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ApplicationContext ctx = (ApplicationContext) getServletContext().getAttribute("ctx");
-
-        //students = new StudentDaoImpl((ConnectionFactory) ctx.getBean("connectionFactory"));
-        students = (StudentDaoImpl) ctx.getBean("studentDao");
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
@@ -61,7 +68,6 @@ public class ViewStudentsServlet extends HttpServlet {
             String gender = request.getParameter("gender");
             Integer age = Integer.parseInt(request.getParameter("age"));
             if (id == null || id.isEmpty()) {
-                //sort list to find max id
                 List<Student> studentList = students.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1

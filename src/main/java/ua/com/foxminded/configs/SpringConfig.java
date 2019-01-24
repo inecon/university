@@ -18,12 +18,13 @@ public class SpringConfig {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory(){
+    public ConnectionFactory connectionFactory() {
         return new ConnectionFactory(dataSource());
     }
 
     @Bean
-    public StudentDaoImpl studentDao(){
+    public StudentDaoImpl studentDao() {
         return new StudentDaoImpl(connectionFactory());
     }
+
 }

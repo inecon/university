@@ -3,19 +3,19 @@ package ua.com.foxminded.dao;
 import org.apache.log4j.Logger;
 import ua.com.foxminded.domain.Student;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
-
+    @Inject
     private JdbcExecutor<Student> jdbcExecutor;
     private static final Logger log = Logger.getLogger(StudentDaoImpl.class);
 
+    public StudentDaoImpl() {
 
-    public StudentDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
     }
 
     @Override

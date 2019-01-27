@@ -1,20 +1,21 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Group;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+@Log4j
 public class GroupDaoImpl implements GroupDao {
+    @Inject
+    @Qualifier("group")
     private JdbcExecutor<Group> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
-    public GroupDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
-    }
+    public GroupDaoImpl() {}
 
     @Override
     public List<Group> getAll() throws DaoException {

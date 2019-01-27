@@ -1,26 +1,36 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Lecture;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Log4j
 public class LectureDaoImpl implements LectureDao {
+
+    @Inject
+    @Qualifier("lecture")
     private JdbcExecutor<Lecture> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(LectureDaoImpl.class);
+
+    @Setter
+    @Getter
     private GroupDao groupDao;
+    @Setter
+    @Getter
     private TeacherDao teacherDao;
 
-    public LectureDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
-        this.groupDao = new GroupDaoImpl(connectionFactory);
-        this.teacherDao = new TeacherDaoImpl(connectionFactory);
+    public LectureDaoImpl(GroupDao groupDao, TeacherDao teacherDao) {
+        this.groupDao = groupDao;
+        this.teacherDao = teacherDao;
     }
-
 
 
     @Override

@@ -1,15 +1,14 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+@Log4j
 public class JdbcExecutor<T> {
     private ConnectionFactory connectionFactory;
-    private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
     public JdbcExecutor(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;

@@ -1,10 +1,15 @@
-package ua.com.foxminded.webapp;
+package ua.com.foxminded.servlet;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.foxminded.dao.*;
 import ua.com.foxminded.domain.Lecture;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,19 +17,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Component
+@Configurable
+@Log4j
 public class ViewLecturesServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    LectureDaoImpl lectures = new LectureDaoImpl(connectionFactory);
+
     String forward = "";
     private static final Integer START_ID = 1;
 
     private static String CREATE_OR_EDIT_LECTURES_PAGE = "/lecture.jsp";
     private static String VIEW_ALL_LECTURES_PAGE = "/view_lectures.jsp";
 
-    GroupDao groupDao = new GroupDaoImpl(connectionFactory);
-    TeacherDao teacherDao = new TeacherDaoImpl(connectionFactory);
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+
+    @Inject
+    LectureDaoImpl lectures;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,12 +77,12 @@ public class ViewLecturesServlet extends HttpServlet {
                 } else {
                     newId = lectureList.get(lectureList.size() - 1).getId() + 1;
                 }
-                Lecture lecture = new Lecture(newId, LocalDateTime.parse(date), subject, teacherDao.getById(Integer.parseInt(teacher_id)),
-                        groupDao.getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+                Lecture lecture = new Lecture(newId, LocalDateTime.parse(date), subject, lectures.getTeacherDao().getById(Integer.parseInt(teacher_id)),
+                        lectures.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
                 lectures.create(lecture);
             } else {
-                Lecture lecture = new Lecture(Integer.parseInt(id), LocalDateTime.parse(date), subject, teacherDao.getById(Integer.parseInt(teacher_id)),
-                        groupDao.getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+                Lecture lecture = new Lecture(Integer.parseInt(id), LocalDateTime.parse(date), subject, lectures.getTeacherDao().getById(Integer.parseInt(teacher_id)),
+                        lectures.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
                 lectures.update(lecture);
             }
             forward = VIEW_ALL_LECTURES_PAGE;

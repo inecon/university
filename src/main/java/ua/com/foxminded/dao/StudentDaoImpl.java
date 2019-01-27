@@ -1,6 +1,7 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Student;
 
 import javax.inject.Inject;
@@ -9,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
+@Log4j
 public class StudentDaoImpl implements StudentDao {
     @Inject
+    @Qualifier("student")
     private JdbcExecutor<Student> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(StudentDaoImpl.class);
 
     public StudentDaoImpl() {
 

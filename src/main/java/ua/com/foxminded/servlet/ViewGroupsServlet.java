@@ -1,27 +1,41 @@
-package ua.com.foxminded.webapp;
+package ua.com.foxminded.servlet;
 
-import org.apache.log4j.Logger;
-import ua.com.foxminded.dao.ConnectionFactory;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.foxminded.dao.GroupDaoImpl;
 import ua.com.foxminded.domain.Group;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
+@Component
+@Configurable
+@Log4j
 public class ViewGroupsServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    GroupDaoImpl groups = new GroupDaoImpl(connectionFactory);
+
+
     String forward = "";
     private static final Integer START_ID = 1;
 
     private static String CREATE_OR_EDIT_GROUPS_PAGE = "/group.jsp";
     private static String VIEW_ALL_GROUPS_PAGE = "/view_groups.jsp";
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+
+    @Inject
+    GroupDaoImpl groups;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

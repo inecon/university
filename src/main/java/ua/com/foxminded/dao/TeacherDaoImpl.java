@@ -1,20 +1,22 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Teacher;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Log4j
 public class TeacherDaoImpl implements TeacherDao {
+    @Inject
+    @Qualifier("teacher")
     private JdbcExecutor<Teacher> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(TeacherDaoImpl.class);
 
-    public TeacherDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
-    }
+    public TeacherDaoImpl() {}
 
     @Override
     public List<Teacher> getAll() throws DaoException {

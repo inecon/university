@@ -45,6 +45,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <jstl.version>1.2</jstl.version>
         <springframework.version>5.1.4.RELEASE</springframework.version>
+        <lombok.version>1.16.18</lombok.version>
     </properties>
 
     <dependencies>
@@ -111,6 +112,11 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,10 +1,9 @@
-package ua.com.foxminded.webapp;
+package ua.com.foxminded.servlet;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ua.com.foxminded.dao.ConnectionFactory;
 import ua.com.foxminded.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.Student;
 
@@ -20,8 +19,8 @@ import java.util.List;
 
 @Component
 @Configurable
+@Log4j
 public class ViewStudentsServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
     String forward = "";
     private static final Integer START_ID = 1;

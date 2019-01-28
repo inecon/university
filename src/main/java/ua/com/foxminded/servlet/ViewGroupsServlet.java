@@ -21,7 +21,6 @@ import java.util.List;
 @Log4j
 public class ViewGroupsServlet extends HttpServlet {
 
-
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -35,21 +34,21 @@ public class ViewGroupsServlet extends HttpServlet {
     }
 
     @Inject
-    GroupDaoImpl groups;
+    GroupDaoImpl groupDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
-            request.setAttribute("groups", groups.getAll());
+            request.setAttribute("groups", groupDao.getAll());
             forward = VIEW_ALL_GROUPS_PAGE;
         } else if (request.getPathInfo().equals("/insert/")) {
             forward = CREATE_OR_EDIT_GROUPS_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_GROUPS_PAGE;
             Integer group_id = Integer.parseInt(request.getParameter("id"));
-            Group group = groups.getById(group_id);
+            Group group = groupDao.getById(group_id);
             request.setAttribute("group", group);
         }
 
@@ -66,7 +65,7 @@ public class ViewGroupsServlet extends HttpServlet {
             String description = request.getParameter("description");
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
-                List<Group> groupList = groups.getAll();
+                List<Group> groupList = groupDao.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (groupList.isEmpty()) {
@@ -74,19 +73,19 @@ public class ViewGroupsServlet extends HttpServlet {
                 } else {
                     newId = groupList.get(groupList.size() - 1).getId() + 1;
                 }
-                groups.create(newId, title, description);
+                groupDao.create(newId, title, description);
             } else {
-                groups.update(title, description, Integer.parseInt(id));
+                groupDao.update(title, description, Integer.parseInt(id));
             }
             forward = VIEW_ALL_GROUPS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_GROUPS_PAGE;
             Integer groupId = Integer.parseInt(id);
-            groups.deleteById(groupId);
-            request.setAttribute("groups", groups.getAll());
+            groupDao.deleteById(groupId);
+            request.setAttribute("groups", groupDao.getAll());
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("groups", groups.getAll());
+        request.setAttribute("groups", groupDao.getAll());
         view.forward(request, response);
     }
 }

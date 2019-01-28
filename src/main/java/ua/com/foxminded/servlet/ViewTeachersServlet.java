@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
 @Component
 @Configurable
 @Log4j
@@ -33,21 +34,21 @@ public class ViewTeachersServlet extends HttpServlet {
     }
 
     @Inject
-    TeacherDaoImpl teachers;
+    TeacherDaoImpl teacherDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
-            request.setAttribute("teachers", teachers.getAll());
+            request.setAttribute("teachers", teacherDao.getAll());
             forward = VIEW_ALL_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/insert/")) {
             forward = CREATE_OR_EDIT_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_TEACHERS_PAGE;
             Integer teacher_id = Integer.parseInt(request.getParameter("id"));
-            Teacher teacher = teachers.getById(teacher_id);
+            Teacher teacher = teacherDao.getById(teacher_id);
             request.setAttribute("teacher", teacher);
         }
 
@@ -66,7 +67,7 @@ public class ViewTeachersServlet extends HttpServlet {
             Integer age = Integer.parseInt(request.getParameter("age"));
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
-                List<Teacher> teacherList = teachers.getAll();
+                List<Teacher> teacherList = teacherDao.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (teacherList.isEmpty()) {
@@ -74,20 +75,20 @@ public class ViewTeachersServlet extends HttpServlet {
                 } else {
                     newId = teacherList.get(teacherList.size() - 1).getId() + 1;
                 }
-                teachers.create(newId, name, surName, gender, age);
+                teacherDao.create(newId, name, surName, gender, age);
             } else {
-                teachers.update(name, surName, gender, age, Integer.parseInt(id));
+                teacherDao.update(name, surName, gender, age, Integer.parseInt(id));
             }
             forward = VIEW_ALL_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_TEACHERS_PAGE;
             Integer teacherId = Integer.parseInt(id);
-            teachers.deleteById(teacherId);
-            request.setAttribute("teachers", teachers.getAll());
+            teacherDao.deleteById(teacherId);
+            request.setAttribute("teachers", teacherDao.getAll());
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("teachers", teachers.getAll());
+        request.setAttribute("teachers", teacherDao.getAll());
         view.forward(request, response);
     }
 }

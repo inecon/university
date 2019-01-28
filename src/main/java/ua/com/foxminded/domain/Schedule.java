@@ -1,11 +1,17 @@
 package ua.com.foxminded.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+@ToString
 public class Schedule {
+    @Setter
+    @Getter
     private University university;
 
     public List<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
@@ -34,20 +40,5 @@ public class Schedule {
             }
         }
         return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(this.university + "\n");
-        return result.toString();
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
     }
 }

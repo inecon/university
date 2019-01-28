@@ -1,5 +1,6 @@
 package ua.com.foxminded.dao;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Teacher;
@@ -11,12 +12,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @Log4j
+@NoArgsConstructor
 public class TeacherDaoImpl implements TeacherDao {
     @Inject
     @Qualifier("teacher")
     private JdbcExecutor<Teacher> jdbcExecutor;
-
-    public TeacherDaoImpl() {}
 
     @Override
     public List<Teacher> getAll() throws DaoException {

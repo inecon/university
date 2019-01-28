@@ -1,5 +1,6 @@
 package ua.com.foxminded.dao;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Group;
@@ -9,13 +10,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 @Log4j
+@NoArgsConstructor
 public class GroupDaoImpl implements GroupDao {
     @Inject
     @Qualifier("group")
     private JdbcExecutor<Group> jdbcExecutor;
-
-    public GroupDaoImpl() {}
 
     @Override
     public List<Group> getAll() throws DaoException {
@@ -29,7 +30,6 @@ public class GroupDaoImpl implements GroupDao {
                     allGroups.add(new Group(result.getInt("id"),
                             result.getString("title"),
                             result.getString("description")));
-
                 }
                 allGroups.sort(byId);
                 return allGroups;

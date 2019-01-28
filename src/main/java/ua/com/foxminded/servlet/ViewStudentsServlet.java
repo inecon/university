@@ -35,21 +35,21 @@ public class ViewStudentsServlet extends HttpServlet {
     }
 
     @Inject
-    StudentDaoImpl students;
+    StudentDaoImpl studentDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
-            request.setAttribute("students", students.getAll());
+            request.setAttribute("students", studentDao.getAll());
             forward = VIEW_ALL_STUDENTS_PAGE;
         } else if (request.getPathInfo().equals("/insert/")) {
             forward = CREATE_OR_EDIT_STUDENT_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_STUDENT_PAGE;
             Integer student_id = Integer.parseInt(request.getParameter("id"));
-            Student student = students.getById(student_id);
+            Student student = studentDao.getById(student_id);
             request.setAttribute("student", student);
         }
 
@@ -67,7 +67,7 @@ public class ViewStudentsServlet extends HttpServlet {
             String gender = request.getParameter("gender");
             Integer age = Integer.parseInt(request.getParameter("age"));
             if (id == null || id.isEmpty()) {
-                List<Student> studentList = students.getAll();
+                List<Student> studentList = studentDao.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (studentList.isEmpty()) {
@@ -75,20 +75,20 @@ public class ViewStudentsServlet extends HttpServlet {
                 } else {
                     newId = studentList.get(studentList.size() - 1).getId() + 1;
                 }
-                students.create(newId, name, surName, gender, age);
+                studentDao.create(newId, name, surName, gender, age);
             } else {
-                students.update(name, surName, gender, age, Integer.parseInt(id));
+                studentDao.update(name, surName, gender, age, Integer.parseInt(id));
             }
             forward = VIEW_ALL_STUDENTS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_STUDENTS_PAGE;
             Integer studentId = Integer.parseInt(id);
-            students.deleteById(studentId);
-            request.setAttribute("students", students.getAll());
+            studentDao.deleteById(studentId);
+            request.setAttribute("students", studentDao.getAll());
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("students", students.getAll());
+        request.setAttribute("students", studentDao.getAll());
         view.forward(request, response);
     }
 }

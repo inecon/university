@@ -35,21 +35,21 @@ public class ViewLecturesServlet extends HttpServlet {
     }
 
     @Inject
-    LectureDaoImpl lectures;
+    LectureDaoImpl lectureDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
-            request.setAttribute("lectures", lectures.getAll());
+            request.setAttribute("lecture", lectureDao.getAll());
             forward = VIEW_ALL_LECTURES_PAGE;
         } else if (request.getPathInfo().equals("/insert/")) {
             forward = CREATE_OR_EDIT_LECTURES_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_LECTURES_PAGE;
             Integer lecture_id = Integer.parseInt(request.getParameter("id"));
-            Lecture lecture = lectures.getById(lecture_id);
+            Lecture lecture = lectureDao.getById(lecture_id);
             request.setAttribute("lecture", lecture);
         }
 
@@ -69,7 +69,7 @@ public class ViewLecturesServlet extends HttpServlet {
             String classroom = request.getParameter("classroom");
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
-                List<Lecture> lectureList = lectures.getAll();
+                List<Lecture> lectureList = lectureDao.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (lectureList.isEmpty()) {
@@ -77,23 +77,23 @@ public class ViewLecturesServlet extends HttpServlet {
                 } else {
                     newId = lectureList.get(lectureList.size() - 1).getId() + 1;
                 }
-                Lecture lecture = new Lecture(newId, LocalDateTime.parse(date), subject, lectures.getTeacherDao().getById(Integer.parseInt(teacher_id)),
-                        lectures.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
-                lectures.create(lecture);
+                Lecture lecture = new Lecture(newId, LocalDateTime.parse(date), subject, lectureDao.getTeacherDao().getById(Integer.parseInt(teacher_id)),
+                        lectureDao.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+                lectureDao.create(lecture);
             } else {
-                Lecture lecture = new Lecture(Integer.parseInt(id), LocalDateTime.parse(date), subject, lectures.getTeacherDao().getById(Integer.parseInt(teacher_id)),
-                        lectures.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
-                lectures.update(lecture);
+                Lecture lecture = new Lecture(Integer.parseInt(id), LocalDateTime.parse(date), subject, lectureDao.getTeacherDao().getById(Integer.parseInt(teacher_id)),
+                        lectureDao.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+                lectureDao.update(lecture);
             }
             forward = VIEW_ALL_LECTURES_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_LECTURES_PAGE;
             Integer lectureId = Integer.parseInt(id);
-            lectures.deleteById(lectureId);
-            request.setAttribute("lectures", lectures.getAll());
+            lectureDao.deleteById(lectureId);
+            request.setAttribute("lecture", lectureDao.getAll());
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("lectures", lectures.getAll());
+        request.setAttribute("lecture", lectureDao.getAll());
         view.forward(request, response);
     }
 }

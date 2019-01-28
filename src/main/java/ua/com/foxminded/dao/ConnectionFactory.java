@@ -1,6 +1,8 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -8,17 +10,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Component
+@NoArgsConstructor
+@Log4j
 public class ConnectionFactory {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
 
+    @Setter
     public DataSource dataSource;
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public ConnectionFactory() {
-    }
 
     public ConnectionFactory(DataSource dataSource) {
         setDataSource(dataSource);

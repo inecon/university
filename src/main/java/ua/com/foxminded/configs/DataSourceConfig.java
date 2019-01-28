@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("ua.com.foxminded")
-public class SpringConfig {
+public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         return new JndiDataSourceLookup().getDataSource("java:comp/env/jdbc/postgres");

@@ -10,7 +10,7 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>ViewStudentsServlet</servlet-name>
-        <servlet-class>ua.com.foxminded.webapp.ViewStudentsServlet</servlet-class>
+        <servlet-class>ua.com.foxminded.servlet.ViewStudentsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewStudentsServlet</servlet-name>
@@ -19,7 +19,7 @@
 
     <servlet>
         <servlet-name>ViewTeachersServlet</servlet-name>
-        <servlet-class>ua.com.foxminded.webapp.ViewTeachersServlet</servlet-class>
+        <servlet-class>ua.com.foxminded.servlet.ViewTeachersServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewTeachersServlet</servlet-name>
@@ -28,7 +28,7 @@
 
     <servlet>
         <servlet-name>ViewGroupsServlet</servlet-name>
-        <servlet-class>ua.com.foxminded.webapp.ViewGroupsServlet</servlet-class>
+        <servlet-class>ua.com.foxminded.servlet.ViewGroupsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewGroupsServlet</servlet-name>
@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>ViewLecturesServlet</servlet-name>
-        <servlet-class>ua.com.foxminded.webapp.ViewLecturesServlet</servlet-class>
+        <servlet-class>ua.com.foxminded.servlet.ViewLecturesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewLecturesServlet</servlet-name>
@@ -50,4 +50,20 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>ua.com.foxminded.configs.SpringConfig</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 </web-app>
+

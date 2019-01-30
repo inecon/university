@@ -42,7 +42,7 @@ public class GroupDaoImplTest {
 
     @Before
     public void setUp() throws DaoException {
-        groupDao = new GroupDaoImpl(connectionFactory);
+        groupDao = new GroupDaoImpl();
         VALID_GROUP_LIST.add(VALID_GROUP);
     }
 

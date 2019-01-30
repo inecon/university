@@ -1,33 +1,36 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import org.springframework.stereotype.Component;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Component
+@NoArgsConstructor
+@Log4j
 public class ConnectionFactory {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
+
+    @Setter
+    public DataSource dataSource;
+
+    public ConnectionFactory(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     public Connection getDataSourceConnection() {
         try {
-            InitialContext cxt = new InitialContext();
-            if (cxt == null) {
-                log.error("No context");
-                throw new DaoException("Uh oh -- no context!");
-            }
-            DataSource ds = (DataSource) cxt.lookup("java:comp/env/jdbc/postgres");
-            if (ds == null) {
+            if (dataSource == null) {
                 log.error("No DataSource");
                 throw new DaoException("Data source not found!");
             }
-            return ds.getConnection();
-        } catch (SQLException | DaoException | NamingException e) {
+            return dataSource.getConnection();
+        } catch (SQLException | DaoException e) {
             log.error("Exception during receiving dataSource", e.getCause());
             throw new DaoException(e);
         }
     }
 }
-

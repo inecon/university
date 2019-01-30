@@ -1,20 +1,21 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import ua.com.foxminded.domain.Group;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Log4j
+@NoArgsConstructor
 public class GroupDaoImpl implements GroupDao {
-    private JdbcExecutor<Group> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
+    @Inject
+    private JdbcExecutor<?> jdbcExecutor;
 
-    public GroupDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
-    }
 
     @Override
     public List<Group> getAll() throws DaoException {
@@ -28,7 +29,6 @@ public class GroupDaoImpl implements GroupDao {
                     allGroups.add(new Group(result.getInt("id"),
                             result.getString("title"),
                             result.getString("description")));
-
                 }
                 allGroups.sort(byId);
                 return allGroups;

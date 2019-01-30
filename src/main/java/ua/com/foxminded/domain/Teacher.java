@@ -1,12 +1,17 @@
 package ua.com.foxminded.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.ArrayList;
 
+@NoArgsConstructor
+@ToString(callSuper = true)
 public class Teacher extends Human {
 
+    @Getter
     private ArrayList<String> subject = new ArrayList<String>();
-
-    public Teacher() {}
 
     public Teacher(Integer id, String name, String surName, String gender, Integer age) {
         super(id, name, surName, gender, age);
@@ -15,18 +20,6 @@ public class Teacher extends Human {
     @Override
     public int compareTo(Human anotherTeacher) {
         return (this.getSurName().compareTo(anotherTeacher.getSurName()));
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(super.toString());
-        result.append("subject - " + this.subject + "\n");
-        return result.toString();
-    }
-
-    public ArrayList<String> getSubject() {
-        return subject;
     }
 
     public void setSubject(String subject) {

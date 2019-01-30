@@ -1,27 +1,33 @@
 package ua.com.foxminded.dao;
 
-import org.apache.log4j.Logger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import ua.com.foxminded.domain.Lecture;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Log4j
+@NoArgsConstructor
 public class LectureDaoImpl implements LectureDao {
-    private JdbcExecutor<Lecture> jdbcExecutor;
-    private static final Logger log = Logger.getLogger(LectureDaoImpl.class);
+
+    @Inject
+    private JdbcExecutor<?> jdbcExecutor;
+
+    @Setter
+    @Getter
+    @Inject
     private GroupDao groupDao;
+    @Setter
+    @Getter
+    @Inject
     private TeacherDao teacherDao;
-
-    public LectureDaoImpl(ConnectionFactory connectionFactory) {
-        this.jdbcExecutor = new JdbcExecutor<>(connectionFactory);
-        this.groupDao = new GroupDaoImpl(connectionFactory);
-        this.teacherDao = new TeacherDaoImpl(connectionFactory);
-    }
-
-
 
     @Override
     public List<Lecture> getAll() throws DaoException {

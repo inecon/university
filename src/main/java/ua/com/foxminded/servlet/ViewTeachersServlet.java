@@ -1,11 +1,15 @@
-package ua.com.foxminded.webapp;
+package ua.com.foxminded.servlet;
 
-import org.apache.log4j.Logger;
-import ua.com.foxminded.dao.ConnectionFactory;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.foxminded.dao.TeacherDaoImpl;
 import ua.com.foxminded.domain.Teacher;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Component
+@Configurable
+@Log4j
 public class ViewTeachersServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ConnectionFactory.class);
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    TeacherDaoImpl teachers = new TeacherDaoImpl(connectionFactory);
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -24,18 +28,27 @@ public class ViewTeachersServlet extends HttpServlet {
     private static String VIEW_ALL_TEACHERS_PAGE = "/view_teachers.jsp";
 
     @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+
+    @Inject
+    TeacherDaoImpl teacherDao;
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
 
         if (request.getPathInfo() == null) {
-            request.setAttribute("teachers", teachers.getAll());
+            request.setAttribute("teachers", teacherDao.getAll());
             forward = VIEW_ALL_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/insert/")) {
             forward = CREATE_OR_EDIT_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/edit/")) {
             forward = CREATE_OR_EDIT_TEACHERS_PAGE;
             Integer teacher_id = Integer.parseInt(request.getParameter("id"));
-            Teacher teacher = teachers.getById(teacher_id);
+            Teacher teacher = teacherDao.getById(teacher_id);
             request.setAttribute("teacher", teacher);
         }
 
@@ -54,7 +67,7 @@ public class ViewTeachersServlet extends HttpServlet {
             Integer age = Integer.parseInt(request.getParameter("age"));
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
-                List<Teacher> teacherList = teachers.getAll();
+                List<Teacher> teacherList = teacherDao.getAll();
                 Integer newId;
                 //if no users, to first user set id = 1
                 if (teacherList.isEmpty()) {
@@ -62,20 +75,20 @@ public class ViewTeachersServlet extends HttpServlet {
                 } else {
                     newId = teacherList.get(teacherList.size() - 1).getId() + 1;
                 }
-                teachers.create(newId, name, surName, gender, age);
+                teacherDao.create(newId, name, surName, gender, age);
             } else {
-                teachers.update(name, surName, gender, age, Integer.parseInt(id));
+                teacherDao.update(name, surName, gender, age, Integer.parseInt(id));
             }
             forward = VIEW_ALL_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_TEACHERS_PAGE;
             Integer teacherId = Integer.parseInt(id);
-            teachers.deleteById(teacherId);
-            request.setAttribute("teachers", teachers.getAll());
+            teacherDao.deleteById(teacherId);
+            request.setAttribute("teachers", teacherDao.getAll());
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("teachers", teachers.getAll());
+        request.setAttribute("teachers", teacherDao.getAll());
         view.forward(request, response);
     }
 }

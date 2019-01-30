@@ -39,7 +39,7 @@ public class StudentDaoImplTest {
 
     @Before
     public void setUp() throws DaoException {
-        studentDao = new StudentDaoImpl(connectionFactory);
+        studentDao = new StudentDaoImpl();
         VALID_STUDENT_LIST.add(VALID_STUDENT);
     }
 

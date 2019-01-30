@@ -1,4 +1,4 @@
-package ua.com.foxminded.webapp;
+package ua.com.foxminded.servlet;
 
 public class ServletException extends RuntimeException {
     public ServletException(Exception e) throws Exception {

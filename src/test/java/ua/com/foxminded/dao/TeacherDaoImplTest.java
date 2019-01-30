@@ -39,7 +39,7 @@ public class TeacherDaoImplTest {
 
     @Before
     public void setUp() throws DaoException {
-        teacherDao = new TeacherDaoImpl(connectionFactory);
+        teacherDao = new TeacherDaoImpl();
         VALID_TEACHER_LIST.add(VALID_TEACHER);
     }
 

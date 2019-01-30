@@ -59,7 +59,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>ua.com.foxminded.configs.DataSourceConfig</param-value>
+        <param-value>ua.com.foxminded.configs.SpringConfig</param-value>
     </context-param>
 
     <listener>

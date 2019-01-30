@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Lecture;
 
 import javax.inject.Inject;
@@ -19,8 +18,7 @@ import java.util.List;
 public class LectureDaoImpl implements LectureDao {
 
     @Inject
-    @Qualifier("lecture")
-    private JdbcExecutor<Lecture> jdbcExecutor;
+    private JdbcExecutor<?> jdbcExecutor;
 
     @Setter
     @Getter

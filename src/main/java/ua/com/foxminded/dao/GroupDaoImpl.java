@@ -2,7 +2,6 @@ package ua.com.foxminded.dao;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Group;
 
 import javax.inject.Inject;
@@ -15,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class GroupDaoImpl implements GroupDao {
     @Inject
-    @Qualifier("group")
-    private JdbcExecutor<Group> jdbcExecutor;
+    private JdbcExecutor<?> jdbcExecutor;
+
 
     @Override
     public List<Group> getAll() throws DaoException {

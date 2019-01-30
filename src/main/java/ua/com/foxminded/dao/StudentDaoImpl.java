@@ -2,7 +2,6 @@ package ua.com.foxminded.dao;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import ua.com.foxminded.domain.Student;
 
 import javax.inject.Inject;
@@ -15,8 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class StudentDaoImpl implements StudentDao {
     @Inject
-    @Qualifier("student")
-    private JdbcExecutor<Student> jdbcExecutor;
+    private JdbcExecutor<?> jdbcExecutor;
 
     @Override
     public List<Student> getAll() throws DaoException {

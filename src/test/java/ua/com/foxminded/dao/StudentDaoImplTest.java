@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Student;
 
 import java.sql.Connection;
@@ -22,8 +23,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class StudentDaoImplTest {
     List<Student> VALID_STUDENT_LIST = new ArrayList<>();
-
-    Student VALID_STUDENT = new Student(1, "student", "testSurname", "male", 25);
+    Group VALID_GROUP = new Group(1,"Group01", "Spring math group");
+    Student VALID_STUDENT = new Student(1, "student", "testSurname", "male", 25, VALID_GROUP);
     @Mock
     private ConnectionFactory connectionFactory;
     @Mock
@@ -82,20 +83,14 @@ public class StudentDaoImplTest {
 
     @Test
     public void shouldInvokeCreate() throws DaoException {
-        mockedStudentDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
-        verify(mockedStudentDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        mockedStudentDao.create(any(Student.class));
+        verify(mockedStudentDao).create(any(Student.class));
     }
 
     @Test
     public void shouldInvokeUpdate() throws DaoException {
-        mockedStudentDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-        verify(mockedStudentDao).update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-    }
-
-    @Test
-    public void shouldInvokeDeleteAll() throws DaoException {
-        mockedStudentDao.deleteAll();
-        verify(mockedStudentDao).deleteAll();
+        mockedStudentDao.update(any(Student.class));
+        verify(mockedStudentDao).update(any(Student.class));
     }
 
     @Test

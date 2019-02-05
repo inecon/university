@@ -52,7 +52,7 @@ public class ViewTeachersServlet extends HttpServlet {
             request.setAttribute("teacher", teacher);
         }
 
-        RequestDispatcher view = request.getRequestDispatcher(forward);
+         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
 

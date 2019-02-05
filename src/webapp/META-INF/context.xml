@@ -10,4 +10,10 @@
               maxTotal="20"
               maxIdle="10"
     />
+    <Resource name="hibernate/properties"
+              hibernate.hbm2ddl.auto = "auto"
+              hibernate.dialect = "	net.sf.hibernate.dialect.PostgreSQLDialect"
+              hibernate.globally_quoted_identifiers = "true"
+              />
+
 </Context>

@@ -7,12 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Initialization {
-    private static final Object Student = new Student(1,"Petro", "Kolhozin", "male", 19);
-    public Student VALID_STUDENT1 = new Student(1,"Petro", "Kolhozin", "male", 19);
     public Group VALID_GROUP1 = new Group(1,"Group01", "Spring math group");
+    public Student VALID_STUDENT1 = new Student(1,"Petro", "Kolhozin", "male", 19, VALID_GROUP1);
 
-    public Student VALID_STUDENT2 = new Student(2,"Tanya", "Pupkina", "female", 18);
     public Group VALID_GROUP2 = new Group(2,"Group02", "Winter linguist group");
+    public Student VALID_STUDENT2 = new Student(2,"Tanya", "Pupkina", "female", 18, VALID_GROUP2);
 
     public Teacher VALID_TEACHER1 = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
     public Teacher VALID_TEACHER2 = new Teacher(2,"Nikolai", "Petrovich", "male", 50);

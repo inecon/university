@@ -7,8 +7,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class StudentTest {
-    public Student VALID_STUDENT = new Student(1, "Petro", "Kolhozin", "male", 19);
     public Group VALID_GROUP = new Group(1, "Group01", "Spring math group");
+    public Student VALID_STUDENT = new Student(1, "Petro", "Kolhozin", "male", 19, VALID_GROUP);
+
 
     @Test
     public void shouldCreateStudent() {

@@ -16,7 +16,6 @@ public class GroupDaoImpl implements GroupDao {
     @Inject
     private JdbcExecutor<?> jdbcExecutor;
 
-
     @Override
     public List<Group> getAll() throws DaoException {
         Comparator<Group> byId = Comparator.comparing(Group::getId);

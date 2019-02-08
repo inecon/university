@@ -22,7 +22,6 @@ import java.util.List;
 @Configurable
 @Log4j
 public class ViewStudentsServlet extends HttpServlet {
-
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -67,7 +66,6 @@ public class ViewStudentsServlet extends HttpServlet {
         String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
-            //student.setId(Integer.parseInt(request.getParameter("id")));
             student.setName(request.getParameter("name"));
             student.setSurName(request.getParameter("surName"));
             student.setGender(request.getParameter("gender"));

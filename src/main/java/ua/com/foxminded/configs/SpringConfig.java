@@ -1,24 +1,40 @@
 package ua.com.foxminded.configs;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import lombok.extern.log4j.Log4j;
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 import ua.com.foxminded.dao.*;
+import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Student;
+import ua.com.foxminded.domain.Teacher;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("ua.com.foxminded")
 @Import(HibernateConfig.class)
+@PropertySource(value = "classpath:app.properties")
+@Log4j
 public class SpringConfig {
+
+    @Value("${driverClassName}")
+    private String driverClassName;
+    @Value("${url}")
+    private String url;
+    @Value("${usernameValue}")
+    private String username;
+    @Value("${password}")
+    private String password;
+
     @Bean
-    public DataSource dataSource() {
-        return new JndiDataSourceLookup().getDataSource("java:comp/env/jdbc/postgres");
+    public DataSource dataSource(){
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(driverClassName);
+        ds.setUrl(url);
+        ds.setUsername(username);
+        ds.setPassword(password);
+        return ds;
     }
 
     @Bean
@@ -57,11 +73,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-        ppc.setLocation(new ClassPathResource("app.properties"));
-        ppc.setIgnoreUnresolvablePlaceholders(true);
-        return ppc;
+    public Teacher teacher(){
+        return new Teacher();
     }
 
+    @Bean
+    public  Group group(){
+        return new Group();
+    }
 }

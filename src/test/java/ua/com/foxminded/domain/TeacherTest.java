@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 
 public class TeacherTest {
 
-    public Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65);
+    public Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65, "Math");
 
     @Test
     public void shouldCreateTeacher() {

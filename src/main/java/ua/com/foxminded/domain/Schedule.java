@@ -27,9 +27,9 @@ public class Schedule {
         return result;
     }
 
-    public List<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        List<Lecture> result = new ArrayList<>();
-        List<String> subjectToFindSchedule = teacher.getSubject();
+   /* public List<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
+        String result = new ArrayList<>();
+        String subjectToFindSchedule = teacher.getSubject();
 
         Set<Lecture> allScheduleLectures = university.getLectures();
         for (Lecture lecture : allScheduleLectures) {
@@ -40,5 +40,5 @@ public class Schedule {
             }
         }
         return result;
-    }
+    }*/
 }

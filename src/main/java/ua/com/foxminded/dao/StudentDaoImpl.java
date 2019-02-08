@@ -7,7 +7,6 @@ import lombok.extern.log4j.Log4j;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.Student;
 
@@ -20,17 +19,12 @@ import java.util.List;
 @Transactional
 public class StudentDaoImpl implements StudentDao {
     @Inject
-    private JdbcExecutor<?> jdbcExecutor;
-    @Autowired
-    GroupDao groupDao;
-
-    @Autowired
     @Setter
     @Getter
     public SessionFactory sessionFactory;
 
     @Override
-    public List<Student> getAll(){
+    public List<Student> getAll() {
         Session session = getSessionFactory().getCurrentSession();
         Comparator<Student> byId = Comparator.comparing(Student::getId);
         List<Student> allStudents = session.createQuery("FROM Student").list();
@@ -39,7 +33,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getById(Integer id){
+    public Student getById(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createQuery("FROM Student WHERE ID = :id ");
         query.setParameter("id", id);
@@ -53,7 +47,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void update(Student student){
+    public void update(Student student) {
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createQuery("UPDATE Student SET name = :name, surName = :surName," +
                 "age = :age, gender = :gender , group_id = :group_id" +
@@ -68,9 +62,9 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void deleteById(Integer id){
+    public void deleteById(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("DELETE Student where ID = :ID ");
+        Query query = session.createQuery("DELETE Student WHERE ID = :ID ");
         query.setParameter("ID", id);
         query.executeUpdate();
     }

@@ -4,7 +4,9 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ua.com.foxminded.dao.*;
+import ua.com.foxminded.dao.GroupDao;
+import ua.com.foxminded.dao.LectureDao;
+import ua.com.foxminded.dao.TeacherDao;
 import ua.com.foxminded.domain.Lecture;
 
 import javax.inject.Inject;
@@ -17,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Component
 @Configurable
 @Log4j
 public class ViewLecturesServlet extends HttpServlet {
-
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -35,7 +37,11 @@ public class ViewLecturesServlet extends HttpServlet {
     }
 
     @Inject
-    LectureDaoImpl lectureDao;
+    LectureDao lectureDao;
+    @Inject
+    TeacherDao teacherDao;
+    @Inject
+    GroupDao groupDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +68,7 @@ public class ViewLecturesServlet extends HttpServlet {
         String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new lecture
         if (request.getPathInfo() == null) {
-            String date = request.getParameter("date");
+            LocalDateTime localDateTime = LocalDateTime.parse(request.getParameter("date"));
             String subject = request.getParameter("subject");
             String teacher_id = request.getParameter("teacher_id");
             String group_id = request.getParameter("group_id");
@@ -77,12 +83,13 @@ public class ViewLecturesServlet extends HttpServlet {
                 } else {
                     newId = lectureList.get(lectureList.size() - 1).getId() + 1;
                 }
-                Lecture lecture = new Lecture(newId, LocalDateTime.parse(date), subject, lectureDao.getTeacherDao().getById(Integer.parseInt(teacher_id)),
-                        lectureDao.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+                Lecture lecture = new Lecture(newId, localDateTime, subject, teacherDao.getById(Integer.parseInt(teacher_id)),
+                        groupDao.getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
                 lectureDao.create(lecture);
             } else {
-                Lecture lecture = new Lecture(Integer.parseInt(id), LocalDateTime.parse(date), subject, lectureDao.getTeacherDao().getById(Integer.parseInt(teacher_id)),
-                        lectureDao.getGroupDao().getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
+
+                Lecture lecture = new Lecture(Integer.parseInt(id), localDateTime, subject, teacherDao.getById(Integer.parseInt(teacher_id)),
+                        groupDao.getById(Integer.parseInt(group_id)), Integer.parseInt(classroom));
                 lectureDao.update(lecture);
             }
             forward = VIEW_ALL_LECTURES_PAGE;

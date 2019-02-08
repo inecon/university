@@ -2,19 +2,25 @@ package ua.com.foxminded.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@SuppressWarnings("ALL")
 @NoArgsConstructor
 @ToString(callSuper = true)
+@Entity
+@Table(name = "teachers")
 public class Teacher extends Human {
-
     @Getter
-    private ArrayList<String> subject = new ArrayList<String>();
+    @Setter
+    private String subject;
 
-    public Teacher(Integer id, String name, String surName, String gender, Integer age) {
+    public Teacher(Integer id, String name, String surName, String gender, Integer age, String subject) {
         super(id, name, surName, gender, age);
+        this.subject = subject;
     }
 
     @Override
@@ -22,7 +28,4 @@ public class Teacher extends Human {
         return (this.getSurName().compareTo(anotherTeacher.getSurName()));
     }
 
-    public void setSubject(String subject) {
-        this.subject.add(subject);
-    }
 }

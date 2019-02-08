@@ -16,7 +16,7 @@ public class Human implements Comparable <Human> {
     private Integer id;
     @Column
     private String name;
-    @Column
+    @Column (name = "surname")
     private String surName;
     @Column
     private String gender;

@@ -12,7 +12,7 @@ public class LectureTest {
     public Integer VALID_ID = 1;
     public LocalDateTime VALID_DATE = LocalDateTime.of(2000, 01, 01, 12, 00);
     public String VALID_SUBJECT = "Math";
-    public Teacher VALID_TEACHER = new Teacher(1,"Ivan", "Ivanovich", "male", 65);
+    public Teacher VALID_TEACHER = new Teacher(1,"Ivan", "Ivanovich", "male", 65, VALID_SUBJECT);
     public Group VALID_GROUP = new Group(1,"Group01", "Spring math group");
     public Integer VALID_CLASSROOM = 10;
     public Lecture VALID_LECTURE = new Lecture(VALID_ID, VALID_DATE, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);

@@ -4,124 +4,69 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.Lecture;
 
 import javax.inject.Inject;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Log4j
 @NoArgsConstructor
+@Transactional
 public class LectureDaoImpl implements LectureDao {
 
     @Inject
-    private JdbcExecutor<?> jdbcExecutor;
-
     @Setter
     @Getter
-    @Inject
-    private GroupDao groupDao;
-    @Setter
-    @Getter
-    @Inject
-    private TeacherDao teacherDao;
+    public SessionFactory sessionFactory;
 
     @Override
-    public List<Lecture> getAll() throws DaoException {
+    public List<Lecture> getAll() {
+        Session session = getSessionFactory().getCurrentSession();
         Comparator<Lecture> byId = Comparator.comparing(Lecture::getId);
-        final String sql = "select * from lectures";
-        log.info("Method getAll send sql request");
-        try {
-            return jdbcExecutor.execQuery(sql, result -> {
-                List<Lecture> allLectures = new ArrayList<>();
-                while (result.next()) {
-                    allLectures.add(new Lecture(result.getInt("id"),
-                            (LocalDateTime.parse(result.getString("date"))),
-                            result.getString("subject"),
-                            teacherDao.getById(result.getInt("teacher_id")),
-                            groupDao.getById(result.getInt("group_id")),
-                            result.getInt("classroom")));
-                }
-                allLectures.sort(byId);
-                return allLectures;
-            });
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in getAll method", e.getCause());
-            throw new DaoException(e);
-        }
+        List<Lecture> allLectures = session.createQuery("FROM Lecture").list();
+        allLectures.sort(byId);
+        return allLectures;
     }
 
     @Override
-    public void create(Lecture lecture) throws DaoException {
-        final String sql = "insert into lectures (id, date, subject, teacher_id, group_id, classroom) values (?,?,?,?,?,?)";
-        log.info("Method create send sql request with ID = " + lecture.getId() + ", DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
-                lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
-        try {
-            jdbcExecutor.execUpdate(sql, lecture.getId(), lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
-                    lecture.getGroup().getId(), lecture.getClassroom());
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in create method", e.getCause());
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void update(Lecture lecture) throws DaoException {
-        final String sql = "update lectures set  date = ?, subject = ?, teacher_id = ?, group_id = ?, classroom = ? where id = ?";
-        log.info("Method update send sql request with  with ID = " + lecture.getId() + ", DATE DATE = " + lecture.getDate().toString() + ", SUBJECT = " + lecture.getSubject() + ", TEACHER_ID= " +
-                lecture.getTeacher().getId() + ", GROUP_ID = " + lecture.getGroup().getId() + ", CLASSROOM = " + lecture.getClassroom());
-        try {
-            jdbcExecutor.execUpdate(sql, lecture.getDate().toString(), lecture.getSubject(), lecture.getTeacher().getId(),
-                    lecture.getGroup().getId(), lecture.getClassroom(), lecture.getId());
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in update method", e.getCause());
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void deleteAll() throws DaoException {
-        final String sql = "delete from lectures";
-        log.info("Method deleteAll send sql request");
-        try {
-            jdbcExecutor.execUpdate(sql);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in deleteAll method", e.getCause());
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void deleteById(Integer id) throws DaoException {
-        final String sql = "delete from lectures where id = ?";
-        log.debug("Method deleteById send sql request with id = " + id);
-        try {
-            jdbcExecutor.execUpdate(sql, id);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in deleteById method", e.getCause());
-            throw new DaoException(e);
-        }
-    }
-
     public Lecture getById(Integer id) {
-        final String sql = "select * from lectures where id = ?";
-        log.debug("Method getById send sql request with ID = " + id);
-        try {
-            return jdbcExecutor.execQuery(sql, result -> {
-                result.next();
-                return new Lecture(result.getInt("id"),
-                        (LocalDateTime.parse(result.getString("date"))),
-                        result.getString("subject"),
-                        teacherDao.getById(result.getInt("teacher_id")),
-                        groupDao.getById(result.getInt("group_id")),
-                        result.getInt("classroom"));
-            }, id);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in getById method", e.getCause());
-            throw new DaoException(e);
-        }
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("FROM Lecture WHERE ID = :id ");
+        query.setParameter("id", id);
+        return (Lecture) query.uniqueResult();
+    }
+
+    @Override
+    public void create(Lecture lecture) {
+        Session session = getSessionFactory().getCurrentSession();
+        session.save(lecture);
+    }
+
+    @Override
+    public void update(Lecture lecture) {
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("UPDATE Lecture SET date = :date, subject = :subject," +
+                "teacher_id = :teacher_id, group_id = :group_id , classroom = :classroom" +
+                " WHERE ID = :id");
+        query.setParameter("date", lecture.getDate());
+        query.setParameter("subject", lecture.getSubject());
+        query.setParameter("teacher_id", lecture.getTeacher().getId());
+        query.setParameter("group_id", lecture.getGroup().getId());
+        query.setParameter("classroom", lecture.getClassroom());
+        query.setParameter("id", lecture.getId());
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("DELETE Lecture WHERE ID = :ID ");
+        query.setParameter("ID", id);
+        query.executeUpdate();
     }
 }

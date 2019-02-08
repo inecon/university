@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ua.com.foxminded.dao.TeacherDaoImpl;
+import ua.com.foxminded.dao.TeacherDao;
 import ua.com.foxminded.domain.Teacher;
 
 import javax.inject.Inject;
@@ -34,7 +34,9 @@ public class ViewTeachersServlet extends HttpServlet {
     }
 
     @Inject
-    TeacherDaoImpl teacherDao;
+    TeacherDao teacherDao;
+    @Inject
+    Teacher teacher;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,7 +54,7 @@ public class ViewTeachersServlet extends HttpServlet {
             request.setAttribute("teacher", teacher);
         }
 
-         RequestDispatcher view = request.getRequestDispatcher(forward);
+        RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
 
@@ -61,10 +63,11 @@ public class ViewTeachersServlet extends HttpServlet {
         String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
-            String name = request.getParameter("name");
-            String surName = request.getParameter("surName");
-            String gender = request.getParameter("gender");
-            Integer age = Integer.parseInt(request.getParameter("age"));
+            teacher.setName(request.getParameter("name"));
+            teacher.setSurName(request.getParameter("surName"));
+            teacher.setGender(request.getParameter("gender"));
+            teacher.setAge(Integer.parseInt(request.getParameter("age")));
+            teacher.setSubject(request.getParameter("subject"));
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
                 List<Teacher> teacherList = teacherDao.getAll();
@@ -75,9 +78,11 @@ public class ViewTeachersServlet extends HttpServlet {
                 } else {
                     newId = teacherList.get(teacherList.size() - 1).getId() + 1;
                 }
-                teacherDao.create(newId, name, surName, gender, age);
+                teacher.setId(newId);
+                teacherDao.create(teacher);
             } else {
-                teacherDao.update(name, surName, gender, age, Integer.parseInt(id));
+                teacher.setId(Integer.parseInt(id));
+                teacherDao.update(teacher);
             }
             forward = VIEW_ALL_TEACHERS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {

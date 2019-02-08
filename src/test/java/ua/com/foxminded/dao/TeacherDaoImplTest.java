@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class TeacherDaoImplTest {
     List<Teacher> VALID_TEACHER_LIST = new ArrayList<>();
 
-    Teacher VALID_TEACHER = new Teacher(1, "teacher", "testSurname", "male", 45);
+    Teacher VALID_TEACHER = new Teacher(1, "teacher", "testSurname", "male", 45, "Math");
     @Mock
     private ConnectionFactory connectionFactory;
     @Mock
@@ -83,20 +83,14 @@ public class TeacherDaoImplTest {
 
     @Test
     public void shouldInvokeCreate() throws DaoException {
-        mockedTeacherDao.create(anyInt(), anyString(), anyString(), anyString(), anyInt());
-        verify(mockedTeacherDao).create(anyInt(), anyString(), anyString(), anyString(), anyInt());
+        mockedTeacherDao.create(VALID_TEACHER);
+        verify(mockedTeacherDao).create(VALID_TEACHER);
     }
 
     @Test
     public void shouldInvokeUpdate() throws DaoException {
-        mockedTeacherDao.update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-        verify(mockedTeacherDao).update(anyString(), anyString(), anyString(), anyInt(), anyInt());
-    }
-
-    @Test
-    public void shouldInvokeDeleteAll() throws DaoException {
-        mockedTeacherDao.deleteAll();
-        verify(mockedTeacherDao).deleteAll();
+        mockedTeacherDao.update(VALID_TEACHER);
+        verify(mockedTeacherDao).update(VALID_TEACHER);
     }
 
     @Test

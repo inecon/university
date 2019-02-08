@@ -1,111 +1,71 @@
 package ua.com.foxminded.dao;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.Teacher;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Transactional
 @Log4j
 @NoArgsConstructor
 public class TeacherDaoImpl implements TeacherDao {
-    @Inject
-    private JdbcExecutor<?> jdbcExecutor;
+    @Autowired
+    @Setter
+    @Getter
+    public SessionFactory sessionFactory;
 
     @Override
-    public List<Teacher> getAll() throws DaoException {
+    public List<Teacher> getAll() {
+        Session session = getSessionFactory().getCurrentSession();
         Comparator<Teacher> byId = Comparator.comparing(Teacher::getId);
-        final String sql = "select * from teachers";
-        log.debug("Method getAll send sql request");
-        try {
-            return jdbcExecutor.execQuery(sql, result -> {
-                List<Teacher> allTeachers = new ArrayList<>();
-                while (result.next()) {
-                    allTeachers.add(new Teacher(result.getInt("id"),
-                            result.getString("name"),
-                            result.getString("surname"),
-                            result.getString("gender"),
-                            result.getInt("age")));
-                }
-                allTeachers.sort(byId);
-                return allTeachers;
-            });
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in getAll method", e.getCause());
-            throw new DaoException(e);
-        }
+        List<Teacher> allTeachers = session.createQuery("FROM Teacher").list();
+        allTeachers.sort(byId);
+        return allTeachers;
     }
 
     @Override
     public Teacher getById(Integer id) throws DaoException {
-        final String sql = "select * from teachers where id = ?";
-        log.debug("Method getById send sql request with ID = " + id);
-        try {
-            return jdbcExecutor.execQuery(sql, result -> {
-                result.next();
-                return new Teacher(result.getInt("id"),
-                        result.getString("name"),
-                        result.getString("surname"),
-                        result.getString("gender"),
-                        result.getInt("age"));
-            }, id);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in getById method", e.getCause());
-            throw new DaoException(e);
-        }
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("FROM Teacher WHERE ID = :id ");
+        query.setParameter("id", id);
+        return (Teacher) query.uniqueResult();
     }
 
     @Override
-    public void create(Integer id, String name, String surName, String gender, Integer age) throws DaoException {
-        final String sql = "insert into teachers (id, name, surname, gender, age) values (?,?,?,?,?)";
-        log.debug("Method create send sql request with - ID = " + id + ", NAME = " + name + ", SURNAME = " + surName +
-                ", GENDER = " + gender + ", age = " + age);
-        try {
-            jdbcExecutor.execUpdate(sql, id, name, surName, gender, age);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in create method", e.getCause());
-            throw new DaoException(e);
-        }
+    public void create(Teacher teacher) {
+        Session session = getSessionFactory().getCurrentSession();
+        session.save(teacher);
     }
 
     @Override
-    public void update(String name, String surName, String gender, Integer age, Integer id) throws DaoException {
-        final String sql = "update teachers set  name = ?, surname = ?, gender = ?, age = ? where id = ?";
-        log.debug("Method update send sql request with NAME = " + name + ", SURNAME = " + surName +
-                ", GENDER = " + gender + ", age = " + age + ", ID = " + id);
-        try {
-            jdbcExecutor.execUpdate(sql, name, surName, gender, age, id);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in update method", e.getCause());
-            throw new DaoException(e);
-        }
+    public void update(Teacher teacher) {
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("UPDATE Teacher SET name = :name, surName = :surName," +
+                "age = :age, gender = :gender , subject = :subject" +
+                " WHERE ID = :id");
+        query.setParameter("name", teacher.getName());
+        query.setParameter("surName", teacher.getSurName());
+        query.setParameter("age", teacher.getAge());
+        query.setParameter("gender", teacher.getGender());
+        query.setParameter("subject", teacher.getSubject());
+        query.setParameter("id", teacher.getId());
+        query.executeUpdate();
     }
 
     @Override
-    public void deleteAll() throws DaoException {
-        final String sql = "delete from teachers";
-        log.debug("Method deleteAll send sql request");
-        try {
-            jdbcExecutor.execUpdate(sql);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in deleteAll method", e.getCause());
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void deleteById(Integer id) throws DaoException {
-        final String sql = "delete from teachers where id = ?";
-        log.debug("Method deleteById send sql request with id = " + id);
-        try {
-            jdbcExecutor.execUpdate(sql, id);
-        } catch (DaoException | SQLException e) {
-            log.error("Exception in deleteById method", e.getCause());
-            throw new DaoException(e);
-        }
+    public void deleteById(Integer id) {
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("DELETE Teacher WHERE ID = :ID ");
+        query.setParameter("ID", id);
+        query.executeUpdate();
     }
 }

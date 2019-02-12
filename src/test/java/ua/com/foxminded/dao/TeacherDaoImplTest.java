@@ -95,7 +95,7 @@ public class TeacherDaoImplTest {
 
     @Test
     public void shouldInvokeDeleteById() throws DaoException {
-        mockedTeacherDao.deleteById(anyInt());
-        verify(mockedTeacherDao).deleteById(anyInt());
+        mockedTeacherDao.delete(any());
+        verify(mockedTeacherDao).delete(any());
     }
 }

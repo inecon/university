@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import ua.com.foxminded.dao.*;
 import ua.com.foxminded.domain.Group;
+import ua.com.foxminded.domain.Lecture;
 import ua.com.foxminded.domain.Student;
 import ua.com.foxminded.domain.Teacher;
 
@@ -28,7 +29,7 @@ public class SpringConfig {
     private String password;
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(driverClassName);
         ds.setUrl(url);
@@ -43,7 +44,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public JdbcExecutor<?> jdbcExecutor(){
+    public JdbcExecutor<?> jdbcExecutor() {
         return new JdbcExecutor<>();
     }
 
@@ -68,17 +69,22 @@ public class SpringConfig {
     }
 
     @Bean
-    public Student student(){
+    public Student student() {
         return new Student();
     }
 
     @Bean
-    public Teacher teacher(){
+    public Teacher teacher() {
         return new Teacher();
     }
 
     @Bean
-    public  Group group(){
+    public Lecture lecture() {
+        return new Lecture();
+    }
+
+    @Bean
+    public Group group() {
         return new Group();
     }
 }

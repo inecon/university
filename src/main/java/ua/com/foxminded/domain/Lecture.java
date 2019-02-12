@@ -6,13 +6,14 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "lectures")
-public class Lecture implements Comparable<Lecture> {
+public class Lecture implements Comparable<Lecture>, Serializable {
     @Id
     private Integer id;
     @Column(name = "date")

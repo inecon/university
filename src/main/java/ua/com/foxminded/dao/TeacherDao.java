@@ -7,12 +7,12 @@ import java.util.List;
 public interface TeacherDao {
     List<Teacher> getAll();
 
-    Teacher getById(Integer id);
+    Teacher getById(final Integer id);
 
     void create(Teacher teacher);
 
     void update(Teacher teacher);
 
-    void deleteById(Integer id);
+    void delete(final Integer id);
 }
 

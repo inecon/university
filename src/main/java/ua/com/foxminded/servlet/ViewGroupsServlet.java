@@ -86,8 +86,7 @@ public class ViewGroupsServlet extends HttpServlet {
             forward = VIEW_ALL_GROUPS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_GROUPS_PAGE;
-            Integer groupId = Integer.parseInt(id);
-            groupDao.deleteById(groupId);
+            groupDao.delete(Integer.parseInt(id));
             request.setAttribute("groups", groupDao.getAll());
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);

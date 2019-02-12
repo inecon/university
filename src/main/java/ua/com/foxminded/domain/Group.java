@@ -7,12 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "groups")
-public class Group implements Comparable<Group> {
+public class Group implements Comparable<Group>, Serializable {
     @Id
     private Integer id;
     @Column

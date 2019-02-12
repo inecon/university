@@ -89,7 +89,7 @@ public class ViewStudentsServlet extends HttpServlet {
             forward = VIEW_ALL_STUDENTS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_STUDENTS_PAGE;
-            studentDao.deleteById(Integer.parseInt(id));
+            studentDao.delete(Integer.parseInt(id));
             request.setAttribute("students", studentDao.getAll());
         }
 

@@ -43,12 +43,10 @@ class HibernateConfig {
     }
 
     @Bean
-    @SuppressWarnings("deprecation")
     public SessionFactory sessionFactory() {
         return new LocalSessionFactoryBuilder(dataSource)
                 .scanPackages("ua.com.foxminded")
                 .addProperties(hibernateProperties())
-                // use deprecated method because Spring uses it
                 .buildSessionFactory();
     }
 

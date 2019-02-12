@@ -108,7 +108,7 @@ public class GroupDaoImplTest {
 
     @Test
     public void shouldInvokeDeleteById() throws DaoException {
-        mockedGroupDao.deleteById(anyInt());
-        verify(mockedGroupDao).deleteById(anyInt());
+        mockedGroupDao.delete(any());
+        verify(mockedGroupDao).delete(any());
     }
 }

@@ -8,11 +8,11 @@ public interface GroupDao {
 
     List<Group> getAll();
 
-    Group getById(Integer id);
+    Group getById(final Integer id);
 
     void create(Group group);
 
     void update(Group group);
 
-    void deleteById(Integer id);
+    void delete(final Integer id);
 }

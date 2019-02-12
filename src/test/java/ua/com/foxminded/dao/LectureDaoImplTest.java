@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LectureDaoImplTest {
-    Integer  VALID_ID = 1;
+    Integer VALID_ID = 1;
     LocalDateTime VALID_DATE_TIME = LocalDateTime.of(2018, Month.JANUARY, 1, 12, 00);
     String VALID_SUBJECT = "Test subject";
     Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65, VALID_SUBJECT);
@@ -114,8 +114,8 @@ public class LectureDaoImplTest {
 
     @Test
     public void shouldInvokeDeleteById() throws DaoException {
-        mockedLectureDao.deleteById(anyInt());
-        verify(mockedLectureDao).deleteById(anyInt());
+        mockedLectureDao.delete(any());
+        verify(mockedLectureDao).delete(any());
     }
 
 }

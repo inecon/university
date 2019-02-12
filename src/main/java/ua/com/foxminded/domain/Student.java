@@ -6,13 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @SuppressWarnings("ALL")
 @NoArgsConstructor
 @ToString(callSuper = true)
 @Entity
 @Table(name = "students")
-public class Student extends Human {
+public class Student extends Human implements Serializable {
     @Setter
     @Getter
     @ManyToOne

@@ -8,13 +8,14 @@
 <body>
 <table border="3" align="center">
 <thead>
-    <td align="center" colspan="7" style="font-size: large; font-weight: bold">Teachers list</td>
+    <td align="center" colspan="8" style="font-size: large; font-weight: bold">Teachers list</td>
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Surname</th>
         <th>Gender</th>
         <th>Age</th>
+        <th>Subject</th>
         <th colspan=2>Action</th>
     </tr>
 </thead>
@@ -25,6 +26,7 @@
             <td> ${teachers.surName} </td>
             <td> ${teachers.gender} </td>
             <td> ${teachers.age} </td>
+            <td> ${teachers.subject} </td>
             <td><form id="edit" action="/teachers/edit/" method="get" >
                 <button type="submit"  name="id" value="${teachers.id}">Edit</button>
             </form></td>

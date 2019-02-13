@@ -4,7 +4,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ua.com.foxminded.dao.StudentDaoImpl;
+import ua.com.foxminded.dao.GroupDao;
+import ua.com.foxminded.dao.StudentDao;
 import ua.com.foxminded.domain.Student;
 
 import javax.inject.Inject;
@@ -21,7 +22,6 @@ import java.util.List;
 @Configurable
 @Log4j
 public class ViewStudentsServlet extends HttpServlet {
-
     String forward = "";
     private static final Integer START_ID = 1;
 
@@ -35,7 +35,11 @@ public class ViewStudentsServlet extends HttpServlet {
     }
 
     @Inject
-    StudentDaoImpl studentDao;
+    StudentDao studentDao;
+    @Inject
+    GroupDao groupDao;
+    @Inject
+    Student student;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,10 +66,11 @@ public class ViewStudentsServlet extends HttpServlet {
         String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
-            String name = request.getParameter("name");
-            String surName = request.getParameter("surName");
-            String gender = request.getParameter("gender");
-            Integer age = Integer.parseInt(request.getParameter("age"));
+            student.setName(request.getParameter("name"));
+            student.setSurName(request.getParameter("surName"));
+            student.setGender(request.getParameter("gender"));
+            student.setAge(Integer.parseInt(request.getParameter("age")));
+            student.setGroup(groupDao.getById(Integer.parseInt(request.getParameter("group_id"))));
             if (id == null || id.isEmpty()) {
                 List<Student> studentList = studentDao.getAll();
                 Integer newId;
@@ -75,15 +80,16 @@ public class ViewStudentsServlet extends HttpServlet {
                 } else {
                     newId = studentList.get(studentList.size() - 1).getId() + 1;
                 }
-                studentDao.create(newId, name, surName, gender, age);
+                student.setId(newId);
+                studentDao.create(student);
             } else {
-                studentDao.update(name, surName, gender, age, Integer.parseInt(id));
+                student.setId(Integer.parseInt(id));
+                studentDao.update(student);
             }
             forward = VIEW_ALL_STUDENTS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_STUDENTS_PAGE;
-            Integer studentId = Integer.parseInt(id);
-            studentDao.deleteById(studentId);
+            studentDao.delete(Integer.parseInt(id));
             request.setAttribute("students", studentDao.getAll());
         }
 

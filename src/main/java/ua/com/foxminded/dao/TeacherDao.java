@@ -5,16 +5,14 @@ import ua.com.foxminded.domain.Teacher;
 import java.util.List;
 
 public interface TeacherDao {
-    List<Teacher> getAll() throws DaoException;
+    List<Teacher> getAll();
 
-    Teacher getById(Integer id) throws DaoException;
+    Teacher getById(final Integer id);
 
-    void create(Integer id, String name, String surName, String gender, Integer age) throws DaoException;
+    void create(Teacher teacher);
 
-    void update(String name, String surName, String gender, Integer age, Integer id) throws DaoException;
+    void update(Teacher teacher);
 
-    void deleteAll() throws DaoException;
-
-    void deleteById(Integer id);
+    void delete(final Integer id);
 }
 

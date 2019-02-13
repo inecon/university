@@ -84,37 +84,31 @@ public class GroupDaoImplTest {
 
     @Test
     public void shouldInvokeCreate() throws DaoException {
-        mockedGroupDao.create(anyInt(), anyString(), anyString());
-        verify(mockedGroupDao).create(anyInt(), anyString(), anyString());
+        mockedGroupDao.create(any());
+        verify(mockedGroupDao).create(any());
     }
 
     @Test
-    public void shouldInvokeGetAll() throws DaoException, SQLException {
+    public void shouldInvokeGetAll() throws DaoException{
         mockedGroupDao.getAll();
         verify(mockedGroupDao).getAll();
     }
 
     @Test
-    public void shouldInvokeGetById() throws DaoException, SQLException {
+    public void shouldInvokeGetById() throws DaoException{
         mockedGroupDao.getById(anyInt());
         verify(mockedGroupDao).getById(anyInt());
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws DaoException {
-        mockedGroupDao.deleteAll();
-        verify(mockedGroupDao).deleteAll();
-    }
-
-    @Test
     public void shouldInvokeUpdate() throws DaoException {
-        mockedGroupDao.update(anyString(), anyString(), anyInt());
-        verify(mockedGroupDao).update(anyString(), anyString(), anyInt());
+        mockedGroupDao.update(any());
+        verify(mockedGroupDao).update(any());
     }
 
     @Test
     public void shouldInvokeDeleteById() throws DaoException {
-        mockedGroupDao.deleteById(anyInt());
-        verify(mockedGroupDao).deleteById(anyInt());
+        mockedGroupDao.delete(any());
+        verify(mockedGroupDao).delete(any());
     }
 }

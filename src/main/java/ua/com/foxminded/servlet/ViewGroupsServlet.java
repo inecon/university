@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ua.com.foxminded.dao.GroupDaoImpl;
+import ua.com.foxminded.dao.GroupDao;
 import ua.com.foxminded.domain.Group;
 
 import javax.inject.Inject;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
 @Component
 @Configurable
 @Log4j
@@ -34,7 +35,10 @@ public class ViewGroupsServlet extends HttpServlet {
     }
 
     @Inject
-    GroupDaoImpl groupDao;
+    GroupDao groupDao;
+
+    @Inject
+    Group group;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,8 +65,8 @@ public class ViewGroupsServlet extends HttpServlet {
         String id = request.getParameter("id");
         //if request.getPathInfo == null - adding new student
         if (request.getPathInfo() == null) {
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
+            group.setTitle(request.getParameter("title"));
+            group.setDescription(request.getParameter("description"));
             if (id == null || id.isEmpty()) {
                 //sort list to find max id
                 List<Group> groupList = groupDao.getAll();
@@ -73,15 +77,16 @@ public class ViewGroupsServlet extends HttpServlet {
                 } else {
                     newId = groupList.get(groupList.size() - 1).getId() + 1;
                 }
-                groupDao.create(newId, title, description);
+                group.setId(newId);
+                groupDao.create(group);
             } else {
-                groupDao.update(title, description, Integer.parseInt(id));
+                group.setId(Integer.parseInt(id));
+                groupDao.update(group);
             }
             forward = VIEW_ALL_GROUPS_PAGE;
         } else if (request.getPathInfo().equals("/delete/")) {
             forward = VIEW_ALL_GROUPS_PAGE;
-            Integer groupId = Integer.parseInt(id);
-            groupDao.deleteById(groupId);
+            groupDao.delete(Integer.parseInt(id));
             request.setAttribute("groups", groupDao.getAll());
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);

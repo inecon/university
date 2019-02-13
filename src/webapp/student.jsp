@@ -23,8 +23,11 @@
         type="text" name="gender"
         value="<c:out value="${student.gender}" />" /> <br />
     Age : <input type="text" name="age"
-                   value="<c:out value="${student.age}" />" /> <br /> <input
-        type="submit" value="Submit" />
+                   value="<c:out value="${student.age}" />" /> <br />
+    Group : <input type="text" name="group_id"
+                 value="<c:out value="${student.group.id}" />" /> <br />
+
+    <input type="submit" value="Submit" />
 </form>
 </body>
 </html>

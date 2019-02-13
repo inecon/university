@@ -27,10 +27,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LectureDaoImplTest {
-    Integer  VALID_ID = 1;
+    Integer VALID_ID = 1;
     LocalDateTime VALID_DATE_TIME = LocalDateTime.of(2018, Month.JANUARY, 1, 12, 00);
     String VALID_SUBJECT = "Test subject";
-    Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65);
+    Teacher VALID_TEACHER = new Teacher(1, "Ivan", "Ivanovich", "male", 65, VALID_SUBJECT);
     Group VALID_GROUP = new Group(1, "Group01", "Math");
     Integer VALID_CLASSROOM = 1;
     Lecture VALID_LECTURE = new Lecture(VALID_ID, VALID_DATE_TIME, VALID_SUBJECT, VALID_TEACHER, VALID_GROUP, VALID_CLASSROOM);
@@ -113,15 +113,9 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeDeleteAll() throws DaoException {
-        mockedLectureDao.deleteAll();
-        verify(mockedLectureDao).deleteAll();
-    }
-
-    @Test
     public void shouldInvokeDeleteById() throws DaoException {
-        mockedLectureDao.deleteById(anyInt());
-        verify(mockedLectureDao).deleteById(anyInt());
+        mockedLectureDao.delete(any());
+        verify(mockedLectureDao).delete(any());
     }
 
 }

@@ -2,11 +2,10 @@ package ua.com.foxminded.dao;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,37 +13,34 @@ import java.util.List;
 public abstract class AbstractDao<T extends Serializable> {
     private Class<T> clazz;
 
-    @Inject
+
     @Setter
     @Getter
-    SessionFactory sessionFactory;
-
-    protected Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    @PersistenceContext
+    protected EntityManager entityManager;
 
     public void setClazz(final Class<T> clazzToSet) {
         this.clazz = clazzToSet;
     }
 
     public T getById(final Integer id) {
-        return (T) getCurrentSession().get(clazz, id);
+        return (T) entityManager.find(clazz, id);
     }
 
     public List<T> getAll() {
-        return getCurrentSession().createQuery("from " + clazz.getName()).list();
+        return entityManager.createQuery("from " + clazz.getName()).getResultList();
     }
 
     public void create(final T entity) {
-        getCurrentSession().persist(entity);
+        entityManager.persist(entity);
     }
 
     public void update(final T entity) {
-        getCurrentSession().merge(entity);
+        entityManager.merge(entity);
     }
 
     public void delete(final Integer id) {
         T entity = getById(id);
-        getCurrentSession().delete(entity);
+        entityManager.remove(entity);
     }
 }

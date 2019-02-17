@@ -1,10 +1,10 @@
 package ua.com.foxminded.dao;
 
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,12 +14,8 @@ import java.sql.SQLException;
 @Log4j
 public class ConnectionFactory {
 
-    @Setter
+    @Inject
     public DataSource dataSource;
-
-    public ConnectionFactory(DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     public Connection getDataSourceConnection() {
         try {

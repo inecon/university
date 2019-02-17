@@ -1,13 +1,13 @@
 package ua.com.foxminded.configs;
 
 import lombok.extern.log4j.Log4j;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.inject.Inject;
@@ -19,9 +19,6 @@ import java.util.Properties;
 @ComponentScan("ua.com.foxminded")
 @Log4j
 class HibernateConfig {
-
-    @Inject
-    DataSource dataSource;
 
     @Value("${hibernate.dialect}")
     private String hibernateDialect;
@@ -42,18 +39,19 @@ class HibernateConfig {
         return properties;
     }
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        return new LocalSessionFactoryBuilder(dataSource)
-                .scanPackages("ua.com.foxminded")
-                .addProperties(hibernateProperties())
-                .buildSessionFactory();
-    }
+    @Inject
+    DataSource dataSource;
 
     @Bean
-    public HibernateTransactionManager transactionManager() {
-        HibernateTransactionManager htm = new HibernateTransactionManager();
-        htm.setSessionFactory(sessionFactory());
-        return htm;
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan(new String[] { "ua.com.foxminded" });
+
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(hibernateProperties());
+
+        return em;
     }
 }

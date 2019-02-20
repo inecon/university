@@ -6,10 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import ua.com.foxminded.dao.*;
-import ua.com.foxminded.domain.Group;
-import ua.com.foxminded.domain.Lecture;
-import ua.com.foxminded.domain.Student;
-import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.domain.*;
 
 @SpringBootApplication()
 @Import(HibernateConfig.class)
@@ -59,5 +56,10 @@ public class SpringConfig {
     @Bean
     public Group group() {
         return new Group();
+    }
+
+    @Bean
+    public Schedule schedule(){
+        return new Schedule();
     }
 }

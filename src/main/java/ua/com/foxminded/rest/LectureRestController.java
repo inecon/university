@@ -21,7 +21,7 @@ public class LectureRestController {
     @Inject
     private LectureDao lectureDao;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Lecture> getLecture(@PathVariable("id") Integer lectureId) {
         if (lectureId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +33,7 @@ public class LectureRestController {
         return new ResponseEntity<>(lecture, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping (value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Lecture> saveLecture(@RequestBody @Valid Lecture lecture) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class LectureRestController {
         return new ResponseEntity<>(lecture, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Lecture> updateLecture(@RequestBody @Valid Lecture lecture) {
         HttpHeaders headers = new HttpHeaders();
         if (lecture == null) {
@@ -54,7 +54,7 @@ public class LectureRestController {
         return new ResponseEntity<>(lecture, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Lecture> deleteLecture(@PathVariable("id") Integer id) {
         Lecture lecture = this.lectureDao.getById(id);
         if (lecture == null) {
@@ -64,7 +64,7 @@ public class LectureRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> lectures = this.lectureDao.getAll();
         if (lectures.isEmpty()) {

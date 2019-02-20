@@ -1,44 +1,49 @@
 package ua.com.foxminded.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import ua.com.foxminded.dao.LectureDao;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-@ToString
+
+@Data
+@Slf4j
 public class Schedule {
-    @Setter
-    @Getter
-    private University university;
+    List<Lecture> studentSchedule = new ArrayList<>();
+    List<Lecture> teacherSchedule = new ArrayList<>();
 
-    public List<Lecture> getStudentScheduledLectures(Student student, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        List<Lecture> result = new ArrayList<>();
+    @Inject
+    Lecture lecture;
+
+    @Inject
+    LectureDao lectureDao;
+
+    //Method returns students schedule to current month
+    public List<Lecture> getStudentScheduledLecturesMonth(Student student) {
         Group groupToFindSchedule = student.getGroup();
-
-        Set<Lecture> allScheduleLectures = university.getLectures();
+        List<Lecture> allScheduleLectures = lectureDao.getAll();
         for (Lecture lecture : allScheduleLectures) {
-            if (lecture.getGroup().equals(groupToFindSchedule)) {
-                result.add(lecture);
+            if (lecture.getGroup().equals(groupToFindSchedule) &&
+                    (lecture.getDate().getMonth()).equals(LocalDateTime.now().getMonth())) {
+                studentSchedule.add(lecture);
             }
         }
-        return result;
+        return studentSchedule;
     }
 
-   /* public List<Lecture> getTeacherScheduledLectures(Teacher teacher, LocalDateTime startPeriod, LocalDateTime endPeriod) {
-        String result = new ArrayList<>();
-        String subjectToFindSchedule = teacher.getSubject();
-
-        Set<Lecture> allScheduleLectures = university.getLectures();
+    //Method returns teachers schedule to current month
+    public List<Lecture> getTeacherScheduledLecturesMonth(Teacher teacher) {
+        Integer idToFindSchedule = teacher.getId();
+        List<Lecture> allScheduleLectures = lectureDao.getAll();
         for (Lecture lecture : allScheduleLectures) {
-            for (String subject : subjectToFindSchedule) {
-                if (lecture.getSubject().equals(subject)) {
-                    result.add(lecture);
-                }
+            if (lecture.getTeacher().getId().equals(idToFindSchedule) &&
+                    (lecture.getDate().getMonth()).equals(LocalDateTime.now().getMonth())) {
+                teacherSchedule.add(lecture);
             }
         }
-        return result;
-    }*/
+        return teacherSchedule;
+    }
 }

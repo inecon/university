@@ -4,72 +4,70 @@ package ua.com.foxminded.domain;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import ua.com.foxminded.dao.LectureDao;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScheduleTest {
-    Initialization initialization = new Initialization();
-    University VALID_UNIVERSITY = initialization.VALID_UNIVERSITY;
-    Lecture VALID_LECTURE1 = initialization.VALID_LECTURE1;
-    Lecture VALID_LECTURE2 = initialization.VALID_LECTURE2;
-    Student VALID_STUDENT1 = initialization.VALID_STUDENT1;
-    LocalDateTime VALID_DATE2 = initialization.VALID_DATE2;
-    LocalDateTime VALID_DATE1 = initialization.VALID_DATE1;
-    Teacher VALID_TEACHER1 = initialization.VALID_TEACHER1;
-    List<Lecture> VALID_STUDENTS_LECTURES = new ArrayList<>();
-    List<Lecture> VALID_TEACHERS_LECTURES = new ArrayList<>();
+    public Group VALID_GROUP1 = new Group(1, "Group01", "Spring math group");
+    public Student VALID_STUDENT1 = new Student(1, "Petro", "Kolhozin", "male", 19, VALID_GROUP1);
+
+    public String VALID_SUBJECT1 = "Math";
+
+    public Teacher VALID_TEACHER1 = new Teacher(1, "Ivan", "Ivanovich", "male", 65, VALID_SUBJECT1);
+
+    public Integer VALID_ID1 = 1;
+
+    public LocalDateTime VALID_NOW_DATE = LocalDateTime.now();
+
+    public Integer VALID_CLASSROOM1 = 10;
+
+    public Lecture VALID_LECTURE1 = new Lecture(VALID_ID1, VALID_NOW_DATE, VALID_SUBJECT1, VALID_TEACHER1, VALID_GROUP1, VALID_CLASSROOM1);
+
+    public List<Lecture> VALID_LECTURES = new ArrayList<>();
 
     @Mock
-    Schedule schedule;
+    Lecture lecture;
+
+    @Mock
+    LectureDao lectureDao;
+
+    @InjectMocks
+    Schedule sut;
 
     @Before
-    public void universityInitialization() {
-        //initialization.initializationUniversity();
-        VALID_STUDENTS_LECTURES.add(VALID_LECTURE1);
-        VALID_TEACHERS_LECTURES.add(VALID_LECTURE1);
-        VALID_TEACHERS_LECTURES.add(VALID_LECTURE2);
+    public void init() {
+        VALID_LECTURES.add(VALID_LECTURE1);
     }
 
     @Test
-    public void shouldSetUniversity() {
-        Schedule actualSchedule = Mockito.mock(Schedule.class);
-        actualSchedule.setUniversity(VALID_UNIVERSITY);
-        verify(actualSchedule).setUniversity(VALID_UNIVERSITY);
-    }
-
-    @Test
-    public void shouldGetValidStudentScheduledLectures() {
+    public void shouldGetValidStudentScheduledLecturesMonth() {
         // arrange
-        List<Lecture> expectedLectures = new ArrayList<>();
-        expectedLectures.add(VALID_LECTURE1);
-        when(schedule.getStudentScheduledLectures(any(),any(),any())).thenReturn(VALID_STUDENTS_LECTURES);
+        Mockito.when(lectureDao.getAll()).thenReturn(VALID_LECTURES);
+        List<Lecture> expectedLectures = VALID_LECTURES;
         // act
-        List<Lecture> actualLectures = schedule.getStudentScheduledLectures(VALID_STUDENT1, VALID_DATE2, VALID_DATE1);
+        List<Lecture> actualLectures = sut.getStudentScheduledLecturesMonth(VALID_STUDENT1);
         // assert
         assertEquals(actualLectures, expectedLectures);
     }
 
     @Test
-    public void shouldGetValidTeacherScheduledLectures() {
+    public void shouldGetValidTeacherScheduledLecturesMonth() {
         // arrange
-        List<Lecture> expectedLectures = new ArrayList<>();
-        expectedLectures.add(VALID_LECTURE1);
-        expectedLectures.add(VALID_LECTURE2);
-        //when(schedule.getTeacherScheduledLectures(any(),any(),any())).thenReturn(VALID_TEACHERS_LECTURES);
+        Mockito.when(lectureDao.getAll()).thenReturn(VALID_LECTURES);
+        List<Lecture> expectedLectures = VALID_LECTURES;
         // act
-        //List<Lecture> actualLectures = schedule.getTeacherScheduledLectures(VALID_TEACHER1, VALID_DATE2, VALID_DATE1);
+        List<Lecture> actualLectures = sut.getTeacherScheduledLecturesMonth(VALID_TEACHER1);
         // assert
-        //assertEquals(actualLectures, expectedLectures);
+        assertEquals(actualLectures, expectedLectures);
     }
 }

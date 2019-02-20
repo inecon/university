@@ -4,9 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import ua.com.foxminded.domain.Group;
-import ua.com.foxminded.domain.Initialization;
 import ua.com.foxminded.domain.Lecture;
 import ua.com.foxminded.domain.Teacher;
 
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -52,8 +51,6 @@ public class LectureDaoImplTest {
 
     @Before
     public void setUp() throws DaoException {
-        Initialization init = new Initialization();
-        init.initializationUniversity();
         VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
 

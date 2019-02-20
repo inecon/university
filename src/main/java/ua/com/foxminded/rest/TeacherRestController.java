@@ -21,7 +21,7 @@ public class TeacherRestController {
     @Inject
     private TeacherDao teacherDao;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Teacher> getTeacher(@PathVariable("id") Integer teacherId) {
         if (teacherId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +33,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Teacher> saveTeacher(@RequestBody @Valid Teacher teacher) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Teacher> updateTeacher(@RequestBody @Valid Teacher teacher) {
         HttpHeaders headers = new HttpHeaders();
         if (teacher == null) {
@@ -54,7 +54,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Teacher> deleteTeacher(@PathVariable("id") Integer id) {
         Teacher teacher = this.teacherDao.getById(id);
         if (teacher == null) {
@@ -64,7 +64,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         List<Teacher> teachers = this.teacherDao.getAll();
         if (teachers.isEmpty()) {

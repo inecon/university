@@ -1,0 +1,119 @@
+package ua.com.foxminded.rest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import ua.com.foxminded.dao.StudentDao;
+import ua.com.foxminded.domain.Group;
+import ua.com.foxminded.domain.Student;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringRunner.class)
+//@SpringBootTest
+@WebMvcTest(StudentRestController.class)
+public class StudentRestControllerTest {
+    public Group VALID_GROUP1 = new Group(1, "Group01", "Spring math group");
+    public Student VALID_STUDENT1 = new Student(1, "Petro", "Kolhozin", "male", 19, VALID_GROUP1);
+    public Student VALID_STUDENT2 = new Student(7, "Vasya", "Pupkin", "male", 29, VALID_GROUP1);
+    public List<Student> VALID_STUDENTS = new ArrayList<>();
+
+    @Inject
+    private MockMvc mockMvc;
+
+    @MockBean
+    private StudentDao studentDao;
+
+    @MockBean
+    private Student student;
+
+    @Before
+    public void init() {
+        VALID_STUDENTS.add(VALID_STUDENT1);
+        VALID_STUDENTS.add(VALID_STUDENT2);
+
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void getStudentById() throws Exception {
+        when(studentDao.getById(VALID_STUDENT1.getId())).thenReturn(VALID_STUDENT1);
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/students/1")
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(VALID_STUDENT1.getName()));
+    }
+
+    @Test
+    public void getStudentByIdFail() throws Exception {
+        when(studentDao.getById(VALID_STUDENT1.getId())).thenReturn(isNull());
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/students/1")
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void saveStudent() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/students/")
+                .content(asJsonString(VALID_STUDENT1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void updateStudent() {
+    }
+
+    @Test
+    public void deleteStudent() {
+    }
+
+    @Test
+    public void getAllStudents() throws Exception {
+        when(studentDao.getAll()).thenReturn(VALID_STUDENTS);
+        this.mockMvc.perform(get("/api/students/")).andDo(print()).andExpect(status().isOk())
+                .andReturn();
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/students/")
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty());
+    }
+}

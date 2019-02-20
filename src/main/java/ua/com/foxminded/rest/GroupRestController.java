@@ -21,7 +21,7 @@ public class GroupRestController {
     @Inject
     private GroupDao groupDao;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Group> getGroup(@PathVariable("id") Integer groupId) {
         if (groupId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +33,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Group> saveLecture(@RequestBody @Valid Group group) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Group> updateLecture(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
         if (group == null) {
@@ -54,7 +54,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Group> deleteGroup(@PathVariable("id") Integer id) {
         Group group = this.groupDao.getById(id);
         if (group == null) {
@@ -64,7 +64,7 @@ public class GroupRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<Group>> getAllGroups() {
         List<Group> groups = this.groupDao.getAll();
         if (groups.isEmpty()) {

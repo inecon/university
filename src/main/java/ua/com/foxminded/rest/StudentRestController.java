@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import ua.com.foxminded.dao.StudentDao;
 import ua.com.foxminded.domain.Student;
 
@@ -46,7 +45,8 @@ public class StudentRestController {
     }
 
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student, UriComponentsBuilder builder) {
+    public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student) {
+        //for a future improvements
         HttpHeaders headers = new HttpHeaders();
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

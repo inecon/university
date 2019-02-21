@@ -30,9 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@SpringBootTest
 @WebMvcTest(StudentRestController.class)
 public class StudentRestControllerTest {
-    public Group VALID_GROUP1 = new Group(1, "Group01", "Spring math group");
-    public Student VALID_STUDENT1 = new Student(1, "Petro", "Kolhozin", "male", 19, VALID_GROUP1);
-    public Student VALID_STUDENT2 = new Student(7, "Vasya", "Pupkin", "male", 29, VALID_GROUP1);
+    private static final Integer VALID_ID = 1;
+    public static final Group VALID_GROUP1 = new Group(1, "Group01", "Spring math group");
+    public static final Student VALID_STUDENT1 = new Student(1, "Petro", "Kolhozin", "male", 19, VALID_GROUP1);
+    public static final Student VALID_STUDENT2 = new Student(7, "Vasya", "Pupkin", "male", 29, VALID_GROUP1);
     public List<Student> VALID_STUDENTS = new ArrayList<>();
 
     @Inject
@@ -95,11 +96,23 @@ public class StudentRestControllerTest {
     }
 
     @Test
-    public void updateStudent() {
+    public void updateStudent() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .put("/api/students/")
+                .content(asJsonString(VALID_STUDENT1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Petro"));
     }
 
     @Test
-    public void deleteStudent() {
+    public void deleteStudent() throws Exception {
+        when(studentDao.getById(VALID_ID)).thenReturn(VALID_STUDENT1);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/students/{id}", VALID_ID))
+                .andExpect(status().isNoContent());
     }
 
     @Test

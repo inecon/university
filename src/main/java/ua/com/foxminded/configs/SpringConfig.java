@@ -12,6 +12,7 @@ import ua.com.foxminded.domain.*;
 @Import(HibernateConfig.class)
 @PropertySource(value = "classpath:application.properties")
 @Log4j
+
 public class SpringConfig {
     @Bean
     public JdbcExecutor<?> jdbcExecutor() {
@@ -26,11 +27,6 @@ public class SpringConfig {
     @Bean
     public LectureDaoImpl lectureDao() {
         return new LectureDaoImpl();
-    }
-
-    @Bean
-    public StudentDaoImpl studentDao() {
-        return new StudentDaoImpl();
     }
 
     @Bean
@@ -59,7 +55,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public Schedule schedule(){
+    public Schedule schedule() {
         return new Schedule();
     }
 }

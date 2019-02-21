@@ -2,6 +2,7 @@ package ua.com.foxminded.rest;
 
 
 import lombok.Data;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import ua.com.foxminded.domain.Student;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students/")
@@ -22,12 +24,12 @@ public class StudentRestController {
     private StudentDao studentDao;
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Student> getStudent(@PathVariable("id") Integer studentId) {
+    public ResponseEntity<Optional> getStudent(@PathVariable("id") Integer studentId) {
         if (studentId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Student student = this.studentDao.getById(studentId);
-        if (student == null) {
+        Optional<Student> student = this.studentDao.findById(studentId);
+        if (student.equals(Optional.empty())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
@@ -35,13 +37,11 @@ public class StudentRestController {
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
-        //change before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        HttpHeaders headers = new HttpHeaders();
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        this.studentDao.create(student);
-        return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
+        this.studentDao.save(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -51,26 +51,30 @@ public class StudentRestController {
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        this.studentDao.update(student);
+        this.studentDao.save(student);
         return new ResponseEntity<>(student, headers, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Integer id) {
-        Student student = this.studentDao.getById(id);
+        Optional<Student> student = this.studentDao.findById(id);
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        this.studentDao.delete(id);
+        this.studentDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> students = this.studentDao.getAll();
+        List<Student> students = (List<Student>) this.studentDao.findAll(sortByIdAsc());
         if (students.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(students, HttpStatus.OK);
+    }
+
+    private Sort sortByIdAsc() {
+        return new Sort(Sort.Direction.ASC, "id");
     }
 }

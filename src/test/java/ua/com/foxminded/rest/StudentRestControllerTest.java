@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,15 +20,15 @@ import ua.com.foxminded.domain.Student;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-//@SpringBootTest
 @WebMvcTest(StudentRestController.class)
 public class StudentRestControllerTest {
     private static final Integer VALID_ID = 1;
@@ -42,9 +43,6 @@ public class StudentRestControllerTest {
     @MockBean
     private StudentDao studentDao;
 
-    @MockBean
-    private Student student;
-
     @Before
     public void init() {
         VALID_STUDENTS.add(VALID_STUDENT1);
@@ -55,10 +53,9 @@ public class StudentRestControllerTest {
 
     @Test
     public void getStudentById() throws Exception {
-        when(studentDao.getById(VALID_STUDENT1.getId())).thenReturn(VALID_STUDENT1);
+        when(studentDao.findById(VALID_STUDENT1.getId())).thenReturn(java.util.Optional.ofNullable(VALID_STUDENT1));
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/students/1")
+        this.mockMvc.perform(get("/api/students/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -67,10 +64,9 @@ public class StudentRestControllerTest {
 
     @Test
     public void getStudentByIdFail() throws Exception {
-        when(studentDao.getById(VALID_STUDENT1.getId())).thenReturn(isNull());
+        when(studentDao.findById(VALID_STUDENT1.getId())).thenReturn(Optional.empty());
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/students/1")
+        this.mockMvc.perform(get("/api/students/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -109,7 +105,7 @@ public class StudentRestControllerTest {
 
     @Test
     public void deleteStudent() throws Exception {
-        when(studentDao.getById(VALID_ID)).thenReturn(VALID_STUDENT1);
+        when(studentDao.findById(VALID_ID)).thenReturn(java.util.Optional.ofNullable(VALID_STUDENT1));
 
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/students/{id}", VALID_ID))
                 .andExpect(status().isNoContent());
@@ -117,16 +113,15 @@ public class StudentRestControllerTest {
 
     @Test
     public void getAllStudents() throws Exception {
-        when(studentDao.getAll()).thenReturn(VALID_STUDENTS);
-        this.mockMvc.perform(get("/api/students/")).andDo(print()).andExpect(status().isOk())
-                .andReturn();
+        when(studentDao.findAll((Sort) any())).thenReturn(VALID_STUDENTS);
+        this.mockMvc.perform(get("/api/students/")).andDo(print()).andExpect(status().isOk());
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/students/")
+        this.mockMvc.perform(get("/api/students/")
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty());
+
     }
 }

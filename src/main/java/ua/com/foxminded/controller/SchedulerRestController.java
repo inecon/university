@@ -1,4 +1,4 @@
-package ua.com.foxminded.rest;
+package ua.com.foxminded.controller;
 
 
 import lombok.Data;

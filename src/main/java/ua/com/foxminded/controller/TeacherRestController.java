@@ -1,4 +1,4 @@
-package ua.com.foxminded.rest;
+package ua.com.foxminded.controller;
 
 
 import lombok.Data;
@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.dao.TeacherDao;
+import ua.com.foxminded.repository.TeacherDao;
 import ua.com.foxminded.domain.Teacher;
 
 import javax.inject.Inject;

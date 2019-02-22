@@ -1,4 +1,4 @@
-package ua.com.foxminded.dao;
+package ua.com.foxminded.repository;
 
 import lombok.extern.log4j.Log4j;
 

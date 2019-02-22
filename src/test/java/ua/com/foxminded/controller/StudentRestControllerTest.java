@@ -1,4 +1,4 @@
-package ua.com.foxminded.rest;
+package ua.com.foxminded.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -13,9 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ua.com.foxminded.dao.StudentDao;
 import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Student;
+import ua.com.foxminded.repository.StudentDao;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

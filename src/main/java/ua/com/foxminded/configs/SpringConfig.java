@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import ua.com.foxminded.dao.*;
+import ua.com.foxminded.repository.*;
 import ua.com.foxminded.domain.*;
 
 @SpringBootApplication()

@@ -1,4 +1,4 @@
-package ua.com.foxminded.rest;
+package ua.com.foxminded.controller;
 
 
 import lombok.Data;
@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.dao.StudentDao;
+import ua.com.foxminded.repository.StudentDao;
 import ua.com.foxminded.domain.Student;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,16 +36,19 @@ public class StudentRestController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         this.studentDao.save(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/api/students/" + student.getId()));
+
+        return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student) {
         //for a future improvements
         HttpHeaders headers = new HttpHeaders();
@@ -65,7 +69,7 @@ public class StudentRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = (List<Student>) this.studentDao.findAll(sortByIdAsc());
         if (students.isEmpty()) {

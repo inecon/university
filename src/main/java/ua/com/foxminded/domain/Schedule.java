@@ -2,7 +2,7 @@ package ua.com.foxminded.domain;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ua.com.foxminded.dao.LectureDao;
+import ua.com.foxminded.repository.LectureDao;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ua.com.foxminded.dao;
+package ua.com.foxminded.repository;
 
 import org.junit.Before;
 import org.junit.Test;

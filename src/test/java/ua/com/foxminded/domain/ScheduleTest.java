@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.com.foxminded.dao.LectureDao;
+import ua.com.foxminded.repository.LectureDao;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

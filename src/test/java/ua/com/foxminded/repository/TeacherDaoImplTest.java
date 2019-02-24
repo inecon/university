@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.exceptions.MyException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,13 +39,13 @@ public class TeacherDaoImplTest {
     TeacherDaoImpl teacherDao;
 
     @Before
-    public void setUp() throws DaoException {
+    public void setUp() throws MyException {
         teacherDao = new TeacherDaoImpl();
         VALID_TEACHER_LIST.add(VALID_TEACHER);
     }
 
     @Test
-    public void getAll() throws DaoException, SQLException {
+    public void getAll() throws MyException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -64,7 +65,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void getById() throws DaoException, SQLException {
+    public void getById() throws MyException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -82,19 +83,19 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() throws DaoException {
+    public void shouldInvokeCreate() throws MyException {
         mockedTeacherDao.create(VALID_TEACHER);
         verify(mockedTeacherDao).create(VALID_TEACHER);
     }
 
     @Test
-    public void shouldInvokeUpdate() throws DaoException {
+    public void shouldInvokeUpdate() throws MyException {
         mockedTeacherDao.update(VALID_TEACHER);
         verify(mockedTeacherDao).update(VALID_TEACHER);
     }
 
     @Test
-    public void shouldInvokeDeleteById() throws DaoException {
+    public void shouldInvokeDeleteById() throws MyException {
         mockedTeacherDao.delete(any());
         verify(mockedTeacherDao).delete(any());
     }

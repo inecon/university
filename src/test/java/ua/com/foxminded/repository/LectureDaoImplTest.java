@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Lecture;
 import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.exceptions.MyException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,12 +51,12 @@ public class LectureDaoImplTest {
     private LectureDaoImpl mockedLectureDao;
 
     @Before
-    public void setUp() throws DaoException {
+    public void setUp() throws MyException {
         VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
 
     @Test
-    public void shouldById() throws DaoException, SQLException {
+    public void shouldById() throws MyException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -76,7 +77,7 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldGetGetAll() throws DaoException, SQLException {
+    public void shouldGetGetAll() throws MyException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -98,19 +99,19 @@ public class LectureDaoImplTest {
 
 
     @Test
-    public void shouldInvokeCreate() throws DaoException {
+    public void shouldInvokeCreate() throws MyException {
         mockedLectureDao.create(any());
         verify(mockedLectureDao).create(any());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws DaoException {
+    public void shouldInvokeUpdate() throws MyException {
         mockedLectureDao.update(any());
         verify(mockedLectureDao).update(any());
     }
 
     @Test
-    public void shouldInvokeDeleteById() throws DaoException {
+    public void shouldInvokeDeleteById() throws MyException {
         mockedLectureDao.delete(any());
         verify(mockedLectureDao).delete(any());
     }

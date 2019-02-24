@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.com.foxminded.domain.Group;
+import ua.com.foxminded.exceptions.MyException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,13 +42,13 @@ public class GroupDaoImplTest {
     GroupDaoImpl groupDao;
 
     @Before
-    public void setUp() throws DaoException {
+    public void setUp() throws MyException {
         groupDao = new GroupDaoImpl();
         VALID_GROUP_LIST.add(VALID_GROUP);
     }
 
     @Test
-    public void shouldGetAll() throws SQLException, DaoException {
+    public void shouldGetAll() throws SQLException, MyException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -65,7 +66,7 @@ public class GroupDaoImplTest {
     }
 
     @Test
-    public void shouldGetId() throws SQLException, DaoException {
+    public void shouldGetId() throws SQLException, MyException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -83,31 +84,31 @@ public class GroupDaoImplTest {
     }
 
     @Test
-    public void shouldInvokeCreate() throws DaoException {
+    public void shouldInvokeCreate() throws MyException {
         mockedGroupDao.create(any());
         verify(mockedGroupDao).create(any());
     }
 
     @Test
-    public void shouldInvokeGetAll() throws DaoException{
+    public void shouldInvokeGetAll() throws MyException {
         mockedGroupDao.getAll();
         verify(mockedGroupDao).getAll();
     }
 
     @Test
-    public void shouldInvokeGetById() throws DaoException{
+    public void shouldInvokeGetById() throws MyException {
         mockedGroupDao.getById(anyInt());
         verify(mockedGroupDao).getById(anyInt());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws DaoException {
+    public void shouldInvokeUpdate() throws MyException {
         mockedGroupDao.update(any());
         verify(mockedGroupDao).update(any());
     }
 
     @Test
-    public void shouldInvokeDeleteById() throws DaoException {
+    public void shouldInvokeDeleteById() throws MyException {
         mockedGroupDao.delete(any());
         verify(mockedGroupDao).delete(any());
     }

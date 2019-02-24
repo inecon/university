@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.repository.StudentDao;
 import ua.com.foxminded.domain.Student;
+import ua.com.foxminded.repository.StudentDao;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -25,27 +25,26 @@ public class StudentRestController {
     private StudentDao studentDao;
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Optional> getStudent(@PathVariable("id") Integer studentId) {
+    public ResponseEntity<Optional> getStudent(@PathVariable("id") @Valid Integer studentId) throws Exception {
         if (studentId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        @Valid
         Optional<Student> student = this.studentDao.findById(studentId);
         if (student.equals(Optional.empty())) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+          throw new Exception("There no Student with ID = " + studentId + " found", new Throwable("NOT FOUND"));
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
-        if (student == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         this.studentDao.save(student);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/students/" + student.getId()));
 
         return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
+
     }
 
     @PutMapping

@@ -11,7 +11,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -138,7 +137,7 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 .body("Exception: " + ex.getLocalizedMessage());
     }
 
-    //405-notworking yet
+    //405
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
             HttpRequestMethodNotSupportedException ex,
@@ -155,14 +154,5 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 ex.getLocalizedMessage(), builder.toString());
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-    //405
-    @Override
-    public ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error("Error code - 405, Cause - " + ex.getLocalizedMessage());
-        String error = String.valueOf(ex.getCause());
-        ApiError apiError = new ApiError(405, HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), error);
-        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

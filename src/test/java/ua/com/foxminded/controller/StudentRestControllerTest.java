@@ -69,7 +69,7 @@ public class StudentRestControllerTest {
         this.mockMvc.perform(get("/api/students/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().is5xxServerError());
     }
 
     @Test
@@ -81,6 +81,16 @@ public class StudentRestControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+    }
+
+    @Test
+    public void saveStudentFail() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/students/22")
+                .content(asJsonString(VALID_STUDENT1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
     }
 
     public static String asJsonString(final Object obj) {

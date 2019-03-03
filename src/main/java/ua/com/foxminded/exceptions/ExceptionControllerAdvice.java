@@ -11,8 +11,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -23,9 +24,10 @@ import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestControllerAdvice("ua.com.foxminded")
+@ControllerAdvice//("ua.com.foxminded")
 @Log4j
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
+    //400
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -40,14 +42,13 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
 
-        ApiError apiError = new ApiError(22, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+        ApiError apiError = new ApiError(400, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
     }
 
+    //415
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName());
-
         final List<String> errors = new ArrayList<>();
         for (final FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.add(error.getField() + ": " + error.getDefaultMessage());
@@ -55,10 +56,12 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         for (final ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
+        log.error("Error code - " + 415 + ", Cause - " + ex.getLocalizedMessage());
         final ApiError apiError = new ApiError(400, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
     }
 
+    //400
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(
             ConstraintViolationException ex, WebRequest request) {
@@ -67,13 +70,14 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
             errors.add(violation.getRootBeanClass().getName() + " " +
                     violation.getPropertyPath() + ": " + violation.getMessage());
         }
-
+        log.error("Error code - " + 400 + ", Cause - " + ex.getLocalizedMessage());
         ApiError apiError =
                 new ApiError(400, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    //415
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, WebRequest request) {
@@ -83,32 +87,13 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    //404
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.info(ex.getClass().getName());
-        //
         final String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
-
+        log.error("Error code - " + 404 + ", Cause - " + ex.getLocalizedMessage());
         final ApiError apiError = new ApiError(404, HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
-            HttpRequestMethodNotSupportedException ex,
-            HttpHeaders headers,
-            HttpStatus status,
-            WebRequest request) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(ex.getMethod());
-        builder.append(
-                " method is not supported for this request. Supported methods are ");
-        ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
-
-        log.error("Error code - " + 405 + ", Cause - " + ex.getLocalizedMessage());
-        ApiError apiError = new ApiError(405, HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), builder.toString());
-        return new ResponseEntity<Object>(
-                apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @Override
@@ -126,6 +111,7 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    //415
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
             HttpMediaTypeNotSupportedException ex,
@@ -143,11 +129,40 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-        log.error("Error code - 500, Cause - " + ex.getLocalizedMessage());
+    //500
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) throws Exception {
+        System.out.println("Exception Occured: " + ex);
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Exception: " + ex.getLocalizedMessage());
+    }
+
+    //405-notworking yet
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ex.getMethod());
+        builder.append(
+                " method is not supported for this request. Supported methods are ");
+        ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
+
+        ApiError apiError = new ApiError(405, HttpStatus.METHOD_NOT_ALLOWED,
+                ex.getLocalizedMessage(), builder.toString());
+        return new ResponseEntity<>(
+                apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    //405
+    @Override
+    public ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error("Error code - 405, Cause - " + ex.getLocalizedMessage());
         String error = String.valueOf(ex.getCause());
-        ApiError apiError = new ApiError(500, HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), error);
+        ApiError apiError = new ApiError(405, HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

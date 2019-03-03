@@ -3,6 +3,7 @@ package ua.com.foxminded.controller;
 
 import lombok.Data;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RepositoryRestController
 @RequestMapping("/api/students/")
 @Data
 public class StudentRestController {
@@ -29,15 +30,14 @@ public class StudentRestController {
         if (studentId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        @Valid
         Optional<Student> student = this.studentDao.findById(studentId);
         if (student.equals(Optional.empty())) {
-          throw new Exception("There no Student with ID = " + studentId + " found", new Throwable("NOT FOUND"));
+            throw new Exception("There no Student with ID = " + studentId + " found", new Throwable("NOT FOUND"));
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
         this.studentDao.save(student);
         HttpHeaders headers = new HttpHeaders();

@@ -154,5 +154,6 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 ex.getLocalizedMessage(), builder.toString());
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
+
     }
 }

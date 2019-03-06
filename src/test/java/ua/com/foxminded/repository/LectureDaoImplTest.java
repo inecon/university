@@ -8,7 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ua.com.foxminded.domain.Group;
 import ua.com.foxminded.domain.Lecture;
 import ua.com.foxminded.domain.Teacher;
-import ua.com.foxminded.exceptions.MyException;
+import ua.com.foxminded.exceptions.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,12 +51,12 @@ public class LectureDaoImplTest {
     private LectureDaoImpl mockedLectureDao;
 
     @Before
-    public void setUp() throws MyException {
+    public void setUp() throws DaoException {
         VALID_LECTURE_LIST.add(VALID_LECTURE);
     }
 
     @Test
-    public void shouldById() throws MyException, SQLException {
+    public void shouldById() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -77,7 +77,7 @@ public class LectureDaoImplTest {
     }
 
     @Test
-    public void shouldGetGetAll() throws MyException, SQLException {
+    public void shouldGetGetAll() throws DaoException, SQLException {
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
         when(connectionFactory.getDataSourceConnection()).thenReturn(connection);
         when(statement.execute()).thenReturn(Boolean.TRUE);
@@ -99,19 +99,19 @@ public class LectureDaoImplTest {
 
 
     @Test
-    public void shouldInvokeCreate() throws MyException {
+    public void shouldInvokeCreate() throws DaoException {
         mockedLectureDao.create(any());
         verify(mockedLectureDao).create(any());
     }
 
     @Test
-    public void shouldInvokeUpdate() throws MyException {
+    public void shouldInvokeUpdate() throws DaoException {
         mockedLectureDao.update(any());
         verify(mockedLectureDao).update(any());
     }
 
     @Test
-    public void shouldInvokeDeleteById() throws MyException {
+    public void shouldInvokeDeleteById() throws DaoException {
         mockedLectureDao.delete(any());
         verify(mockedLectureDao).delete(any());
     }

@@ -7,17 +7,17 @@ import java.sql.SQLException;
 
 @Component
 @NoArgsConstructor
-public class MyException extends RuntimeException {
+public class DaoException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public MyException(SQLException e) {
+    public DaoException(SQLException e) {
     }
 
-    public MyException(String msg) {
+    public DaoException(String msg) {
         super(msg);
     }
 
-    public MyException(Exception e) {
+    public DaoException(Exception e) {
     }
 
 }

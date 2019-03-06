@@ -1,7 +1,7 @@
 package ua.com.foxminded.repository;
 
 import lombok.extern.log4j.Log4j;
-import ua.com.foxminded.exceptions.MyException;
+import ua.com.foxminded.exceptions.DaoException;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class JdbcExecutor<T> {
     @Inject
     private ConnectionFactory connectionFactory;
 
-    public void execUpdate(String update, Object... parameters) throws MyException, SQLException {
+    public void execUpdate(String update, Object... parameters) throws DaoException, SQLException {
         try (Connection connection = connectionFactory.getDataSourceConnection();
              PreparedStatement statement = connection.prepareStatement(update);) {
             int count = 1;
@@ -23,11 +23,11 @@ public class JdbcExecutor<T> {
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error("Exception in execUpdate", e.getCause());
-            throw new MyException(e);
+            throw new DaoException(e);
         }
     }
 
-    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws MyException, SQLException {
+    public <T> T execQuery(String query, ResultHandler<T> handler, Object... parameters) throws DaoException, SQLException {
         T value = null;
         ResultSet result = null;
         try (Connection connection = connectionFactory.getDataSourceConnection();
@@ -39,7 +39,7 @@ public class JdbcExecutor<T> {
             statement.executeQuery();
             result = statement.getResultSet();
             value = handler.handle(result);
-        } catch (MyException e) {
+        } catch (DaoException e) {
             log.error("Exception in execQuery when query = " + query, e.getCause());
             throw e;
         } finally {
@@ -49,7 +49,7 @@ public class JdbcExecutor<T> {
                 }
             } catch (SQLException e) {
                 log.error("resultSet not closing correctly = ", e.getCause());
-                throw new MyException(e);
+                throw new DaoException(e);
             }
         }
         return value;

@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -155,5 +156,24 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
 
+    }
+
+    //406
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(
+            HttpMediaTypeNotAcceptableException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ex.getSupportedMediaTypes());
+        builder.append(
+                "Only accepteble media type  ");
+        ex.getSupportedMediaTypes().forEach(t -> builder.append(t + " "));
+
+        ApiError apiError = new ApiError(406, HttpStatus.NOT_ACCEPTABLE,
+                ex.getLocalizedMessage(), builder.toString());
+        return new ResponseEntity<>(
+                apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

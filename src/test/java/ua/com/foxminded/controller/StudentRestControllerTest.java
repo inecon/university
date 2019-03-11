@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -69,7 +70,7 @@ public class StudentRestControllerTest {
         this.mockMvc.perform(get("/api/students/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -85,11 +86,13 @@ public class StudentRestControllerTest {
 
     @Test
     public void saveStudentFail() throws Exception {
+        when(studentDao.save(VALID_STUDENT1)).thenThrow(HttpMessageNotReadableException.class);
+
         this.mockMvc.perform(MockMvcRequestBuilders
-                .post("/api/students/22")
+                .post("/api/students/")
                 .content(asJsonString(VALID_STUDENT1))
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 

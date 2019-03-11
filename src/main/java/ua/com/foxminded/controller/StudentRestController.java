@@ -2,11 +2,11 @@ package ua.com.foxminded.controller;
 
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.Student;
@@ -18,26 +18,28 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 @RepositoryRestController
-@RequestMapping("/api/students/")
+@RequestMapping(value = "/api/students/", produces = APPLICATION_JSON_UTF8_VALUE)
 @Data
+@Log4j
+
 public class StudentRestController {
     @Inject
     private StudentDao studentDao;
 
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Optional> getStudent(@PathVariable("id") @Valid Integer studentId) throws Exception {
-        if (studentId == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping(value = "{id}")
+    public ResponseEntity<Optional> getStudent(@PathVariable("id") @Valid Integer studentId) {
         Optional<Student> student = this.studentDao.findById(studentId);
         if (student.equals(Optional.empty())) {
-            throw new Exception("There no Student with ID = " + studentId + " found", new Throwable("NOT FOUND"));
+            log.debug("There no Student with ID = " + studentId + " found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
         this.studentDao.save(student);
         HttpHeaders headers = new HttpHeaders();
@@ -58,7 +60,7 @@ public class StudentRestController {
         return new ResponseEntity<>(student, headers, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Integer id) {
         Optional<Student> student = this.studentDao.findById(id);
         if (student == null) {

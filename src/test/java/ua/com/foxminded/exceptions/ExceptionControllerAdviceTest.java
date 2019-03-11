@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(ExceptionControllerAdvice.class)
 public class ExceptionControllerAdviceTest {
+    private static final String URL_PREFIX = "http://localhost:8080";
     String content = "{"+
             "id"+":1,"+
             "name"+":"+ "Student 2,"+
@@ -51,40 +52,28 @@ public class ExceptionControllerAdviceTest {
     @Test
     public void handleMethodArgumentNotValid() throws Exception {
     }
-
+    //405
     @Test
-    public void handleBindException() {
-    }
-
-    @Test
-    public void handleConstraintViolation() {
-    }
-
-    @Test
-    public void handleMethodArgumentTypeMismatch() {
-    }
-
-    @Test
-    public void handleNoHandlerFoundException() {
-    }
-
-    @Test
-    public void handleHttpRequestMethodNotSupported() {
-    }
-
-    @Test
-    public void handleHttpMessageNotReadable() {
+    public void handleHttpRequestMethodNotSupported() throws Exception {
         when(studentRestController.saveStudent(any())).thenThrow(new RuntimeException("Unexpected exception"));
 
-       /*mockMvc.perform(post("/api/students/22").accept(TEXT_PLAIN))
+        mockMvc.perform(post("/api/students/22").accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
-                .andExpect(status().isNotAcceptable());*/
+                .andExpect(status().isMethodNotAllowed());
+    }
 
+    @Test
+    public void handleHttpMessageNotReadable() throws Exception {
+        when(studentRestController.saveStudent(any())).thenThrow(new RuntimeException("Not read"));
+
+        mockMvc.perform(post("/api/students/").accept(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
     }
 //406
     @Test
     public void handleHttpMediaTypeNotAcceptable() throws Exception {
-        when(studentRestController.saveStudent(any())).thenThrow(new RuntimeException("HttpMediaTypeNotSupported"));
+        when(studentRestController.saveStudent(any())).thenThrow(new RuntimeException("HttpMediaTypeNotAcceptable"));
 
         mockMvc.perform(post("/api/students/").accept(TEXT_PLAIN))
                 .andDo(print())
@@ -93,7 +82,7 @@ public class ExceptionControllerAdviceTest {
 //500
     @Test
     public void handleAll() throws Exception {
-        when(studentRestController.getStudent(anyInt())).thenThrow(new Exception("Unexpected exception"));
+        when(studentRestController.getStudent(anyInt())).thenThrow(new RuntimeException("Unexpected exception"));
 
         mockMvc.perform(get("/api/students/1").accept(MediaType.APPLICATION_JSON_UTF8_VALUE)).andDo(print())
                 .andExpect(status().isInternalServerError())

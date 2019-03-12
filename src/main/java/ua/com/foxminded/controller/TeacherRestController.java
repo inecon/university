@@ -4,24 +4,25 @@ package ua.com.foxminded.controller;
 import lombok.Data;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.repository.TeacherDao;
 import ua.com.foxminded.domain.Teacher;
+import ua.com.foxminded.repository.TeacherDao;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 @RestController
-@RequestMapping("/api/teachers/")
+@RequestMapping(value = "/api/teachers/", produces = APPLICATION_JSON_UTF8_VALUE)
 @Data
 public class TeacherRestController {
     @Inject
     private TeacherDao teacherDao;
 
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{id}")
     public ResponseEntity<Teacher> getTeacher(@PathVariable("id") Integer teacherId) {
         if (teacherId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +34,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "")
     public ResponseEntity<Teacher> saveTeacher(@RequestBody @Valid Teacher teacher) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +45,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "")
     public ResponseEntity<Teacher> updateTeacher(@RequestBody @Valid Teacher teacher) {
         HttpHeaders headers = new HttpHeaders();
         if (teacher == null) {
@@ -54,7 +55,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, headers, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<Teacher> deleteTeacher(@PathVariable("id") Integer id) {
         Teacher teacher = this.teacherDao.getById(id);
         if (teacher == null) {
@@ -64,7 +65,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "")
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         List<Teacher> teachers = this.teacherDao.getAll();
         if (teachers.isEmpty()) {

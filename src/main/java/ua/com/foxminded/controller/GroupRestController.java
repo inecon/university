@@ -4,24 +4,25 @@ package ua.com.foxminded.controller;
 import lombok.Data;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.repository.GroupDao;
 import ua.com.foxminded.domain.Group;
+import ua.com.foxminded.repository.GroupDao;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 @RestController
-@RequestMapping("/api/groups/")
+@RequestMapping(value = "/api/groups/", produces = APPLICATION_JSON_UTF8_VALUE)
 @Data
 public class GroupRestController {
     @Inject
     private GroupDao groupDao;
 
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{id}")
     public ResponseEntity<Group> getGroup(@PathVariable("id") Integer groupId) {
         if (groupId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +34,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "")
     public ResponseEntity<Group> saveLecture(@RequestBody @Valid Group group) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +45,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "")
     public ResponseEntity<Group> updateLecture(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
         if (group == null) {
@@ -54,7 +55,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, headers, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<Group> deleteGroup(@PathVariable("id") Integer id) {
         Group group = this.groupDao.getById(id);
         if (group == null) {
@@ -64,7 +65,7 @@ public class GroupRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "")
     public ResponseEntity<List<Group>> getAllGroups() {
         List<Group> groups = this.groupDao.getAll();
         if (groups.isEmpty()) {

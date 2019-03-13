@@ -34,9 +34,8 @@ public class GroupRestController {
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @PostMapping(value = "")
+    @PostMapping()
     public ResponseEntity<Group> saveLecture(@RequestBody @Valid Group group) {
-        //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
         if (group == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +44,7 @@ public class GroupRestController {
         return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "")
+    @PutMapping()
     public ResponseEntity<Group> updateLecture(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
         if (group == null) {
@@ -65,7 +64,7 @@ public class GroupRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<List<Group>> getAllGroups() {
         List<Group> groups = this.groupDao.getAll();
         if (groups.isEmpty()) {

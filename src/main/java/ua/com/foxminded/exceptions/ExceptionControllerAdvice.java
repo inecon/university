@@ -1,6 +1,6 @@
 package ua.com.foxminded.exceptions;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-@ControllerAdvice//("ua.com.foxminded")
-@Log4j
+@ControllerAdvice
+@Slf4j
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
     //400
     @Override

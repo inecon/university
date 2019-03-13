@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ExceptionControllerAdvice.class)
 public class ExceptionControllerAdviceTest {
     private static final String URL_PREFIX = "http://localhost:8080";
-    String content = "{"+
+    String VALID_STUDENT_IN_STRING_FORMAT = "{"+
             "id"+":1,"+
             "name"+":"+ "Student 2,"+
             "surName"+":"+"Json,"+
@@ -66,9 +66,9 @@ public class ExceptionControllerAdviceTest {
     public void handleHttpMessageNotReadable() throws Exception {
         when(studentRestController.saveStudent(any())).thenThrow(new RuntimeException("Not read"));
 
-        mockMvc.perform(post("/api/students/").accept(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+        mockMvc.perform(post("/api/students/").accept(MediaType.APPLICATION_JSON_UTF8_VALUE).content(VALID_STUDENT_IN_STRING_FORMAT))
                 .andDo(print())
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isUnsupportedMediaType());
     }
 //406
     @Test

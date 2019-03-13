@@ -1,7 +1,7 @@
 package ua.com.foxminded.repository;
 
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ua.com.foxminded.exceptions.DaoException;
 
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @Component
 @NoArgsConstructor
-@Log4j
+@Slf4j
 public class ConnectionFactory {
 
     @Inject

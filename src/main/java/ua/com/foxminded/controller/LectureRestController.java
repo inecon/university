@@ -34,7 +34,7 @@ public class LectureRestController {
         return new ResponseEntity<>(lecture, HttpStatus.OK);
     }
 
-    @PostMapping (value = "")
+    @PostMapping ()
     public ResponseEntity<Lecture> saveLecture(@RequestBody @Valid Lecture lecture) {
         //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
@@ -45,7 +45,7 @@ public class LectureRestController {
         return new ResponseEntity<>(lecture, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "")
+    @PutMapping()
     public ResponseEntity<Lecture> updateLecture(@RequestBody @Valid Lecture lecture) {
         HttpHeaders headers = new HttpHeaders();
         if (lecture == null) {
@@ -65,7 +65,7 @@ public class LectureRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> lectures = this.lectureDao.getAll();
         if (lectures.isEmpty()) {

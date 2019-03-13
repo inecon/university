@@ -13,9 +13,6 @@ public class ApiError {
     private String message;
     private List<String> errors;
 
-    /*public ApiError() {
-        super();
-    }*/
 
     public ApiError(Integer errorCode, HttpStatus status, String message, List<String> errors) {
         super();

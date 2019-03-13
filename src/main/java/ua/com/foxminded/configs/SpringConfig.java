@@ -1,25 +1,18 @@
 package ua.com.foxminded.configs;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import ua.com.foxminded.domain.*;
 import ua.com.foxminded.repository.GroupDaoImpl;
-import ua.com.foxminded.repository.JdbcExecutor;
 import ua.com.foxminded.repository.LectureDaoImpl;
 import ua.com.foxminded.repository.TeacherDaoImpl;
 
 @SpringBootApplication()
 @PropertySource(value = "classpath:application.properties")
-@Log4j
-
+@Slf4j
 public class SpringConfig {
-    @Bean
-    public JdbcExecutor<?> jdbcExecutor() {
-        return new JdbcExecutor<>();
-    }
-
     @Bean
     public GroupDaoImpl groupDao() {
         return new GroupDaoImpl();

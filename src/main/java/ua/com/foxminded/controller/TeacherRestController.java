@@ -34,9 +34,8 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
 
-    @PostMapping(value = "")
+    @PostMapping()
     public ResponseEntity<Teacher> saveTeacher(@RequestBody @Valid Teacher teacher) {
-        //modify before release!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         HttpHeaders headers = new HttpHeaders();
         if (teacher == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +44,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(teacher, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "")
+    @PutMapping()
     public ResponseEntity<Teacher> updateTeacher(@RequestBody @Valid Teacher teacher) {
         HttpHeaders headers = new HttpHeaders();
         if (teacher == null) {
@@ -65,7 +64,7 @@ public class TeacherRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         List<Teacher> teachers = this.teacherDao.getAll();
         if (teachers.isEmpty()) {

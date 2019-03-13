@@ -2,7 +2,7 @@ package ua.com.foxminded.controller;
 
 
 import lombok.Data;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 @RepositoryRestController
 @RequestMapping(value = "/api/students/", produces = APPLICATION_JSON_UTF8_VALUE)
 @Data
-@Log4j
-
+@Slf4j
 public class StudentRestController {
     @Inject
     private StudentDao studentDao;
@@ -44,9 +43,7 @@ public class StudentRestController {
         this.studentDao.save(student);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/students/" + student.getId()));
-
         return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
-
     }
 
     @PutMapping

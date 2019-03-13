@@ -12,8 +12,6 @@ import java.util.List;
 @Transactional
 public abstract class AbstractDao<T extends Serializable> {
     private Class<T> clazz;
-
-
     @Setter
     @Getter
     @PersistenceContext

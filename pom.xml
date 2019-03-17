@@ -32,6 +32,19 @@
                     <webappDirectory>${webappDirectory}</webappDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5433/test</url>
+                    <user>${flyway.user}</user>
+                    <password>${flyway.password}</password>
+                    <schemas>
+                        <schema>${flyway.schemas}</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <packaging>war</packaging>
@@ -57,6 +70,9 @@
         <java.asist.version>3.18.2-GA</java.asist.version>
         <tomcat-dbcp.version>7.0.47</tomcat-dbcp.version>
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
+        <flyway.user>university_app</flyway.user>
+        <flyway.password>postgres</flyway.password>
+        <flyway.schemas>public</flyway.schemas>
     </properties>
 
     <dependencies>

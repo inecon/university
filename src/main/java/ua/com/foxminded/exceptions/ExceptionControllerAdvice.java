@@ -82,8 +82,8 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, WebRequest request) {
         String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
-        log.error("Error code - " + 415 + ", Cause - " + ex.getLocalizedMessage());
-        ApiError apiError = new ApiError(415, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        log.error("Error code - " + 400 + ", Cause - " + ex.getLocalizedMessage());
+        ApiError apiError = new ApiError(400, HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 

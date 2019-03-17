@@ -27,7 +27,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class StudentRestController {
     @Inject
     private StudentDao studentDao;
-
+    /**
+     * This method is used to get student by ID.
+     * @param studentId This is the Student ID to find student in DB
+     */
     @GetMapping(value = "{id}")
     public ResponseEntity<Optional> getStudent(@PathVariable("id") @Valid Integer studentId) {
         Optional<Student> student = this.studentDao.findById(studentId);
@@ -37,7 +40,10 @@ public class StudentRestController {
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to write student to DB.
+     * @param student This is the Student to add to DB
+     */
     @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
         this.studentDao.save(student);
@@ -45,7 +51,10 @@ public class StudentRestController {
         headers.setLocation(URI.create("/api/students/" + student.getId()));
         return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
     }
-
+    /**
+     * This method is used to UPDATE student in DB.
+     * @param student This is the Student to UPDATE in DB
+     */
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student) {
         //for a future improvements
@@ -56,7 +65,10 @@ public class StudentRestController {
         this.studentDao.save(student);
         return new ResponseEntity<>(student, headers, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to DELETE student from DB.
+     * @param id This is ID of the Student which will be DELETE from DB
+     */
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Integer id) {
         Optional<Student> student = this.studentDao.findById(id);
@@ -66,7 +78,9 @@ public class StudentRestController {
         this.studentDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    /**
+     * This method is used to get all Students from DB.
+     */
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = (List<Student>) this.studentDao.findAll(sortByIdAsc());
@@ -75,6 +89,7 @@ public class StudentRestController {
         }
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
+
 
     private Sort sortByIdAsc() {
         return new Sort(Sort.Direction.ASC, "id");

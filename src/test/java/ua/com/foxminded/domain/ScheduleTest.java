@@ -52,7 +52,7 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidStudentScheduledLecturesMonth() {
         // arrange
-        Mockito.when(lectureDao.getAll()).thenReturn(VALID_LECTURES);
+        Mockito.when(lectureDao.findAll()).thenReturn(VALID_LECTURES);
         List<Lecture> expectedLectures = VALID_LECTURES;
         // act
         List<Lecture> actualLectures = sut.getStudentScheduledLecturesMonth(VALID_STUDENT1);
@@ -63,7 +63,7 @@ public class ScheduleTest {
     @Test
     public void shouldGetValidTeacherScheduledLecturesMonth() {
         // arrange
-        Mockito.when(lectureDao.getAll()).thenReturn(VALID_LECTURES);
+        Mockito.when(lectureDao.findAll()).thenReturn(VALID_LECTURES);
         List<Lecture> expectedLectures = VALID_LECTURES;
         // act
         List<Lecture> actualLectures = sut.getTeacherScheduledLecturesMonth(VALID_TEACHER1);

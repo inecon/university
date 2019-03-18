@@ -24,7 +24,7 @@ public class Schedule {
     //Method returns students schedule to current month
     public List<Lecture> getStudentScheduledLecturesMonth(Student student) {
         Group groupToFindSchedule = student.getGroup();
-        List<Lecture> allScheduleLectures = lectureDao.getAll();
+        List<Lecture> allScheduleLectures = (List<Lecture>) lectureDao.findAll();
         for (Lecture lecture : allScheduleLectures) {
             if (lecture.getGroup().equals(groupToFindSchedule) &&
                     (lecture.getDate().getMonth()).equals(LocalDateTime.now().getMonth())) {
@@ -37,7 +37,7 @@ public class Schedule {
     //Method returns teachers schedule to current month
     public List<Lecture> getTeacherScheduledLecturesMonth(Teacher teacher) {
         Integer idToFindSchedule = teacher.getId();
-        List<Lecture> allScheduleLectures = lectureDao.getAll();
+        List<Lecture> allScheduleLectures = (List<Lecture>) lectureDao.findAll();
         for (Lecture lecture : allScheduleLectures) {
             if (lecture.getTeacher().getId().equals(idToFindSchedule) &&
                     (lecture.getDate().getMonth()).equals(LocalDateTime.now().getMonth())) {

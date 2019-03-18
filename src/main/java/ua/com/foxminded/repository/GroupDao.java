@@ -1,18 +1,6 @@
 package ua.com.foxminded.repository;
 
+import org.springframework.data.repository.PagingAndSortingRepository;
 import ua.com.foxminded.domain.Group;
 
-import java.util.List;
-
-public interface GroupDao {
-
-    List<Group> getAll();
-
-    Group getById(final Integer id);
-
-    void create(Group group);
-
-    void update(Group group);
-
-    void delete(final Integer id);
-}
+public interface GroupDao extends PagingAndSortingRepository<Group, Integer> {}

@@ -59,9 +59,6 @@ public class StudentRestController {
     public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student) {
         //for a future improvements
         HttpHeaders headers = new HttpHeaders();
-        if (student == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         this.studentDao.save(student);
         return new ResponseEntity<>(student, headers, HttpStatus.OK);
     }
@@ -73,6 +70,7 @@ public class StudentRestController {
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Integer id) {
         Optional<Student> student = this.studentDao.findById(id);
         if (student == null) {
+            log.debug("There no Student with ID = " + id + " found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         this.studentDao.deleteById(id);

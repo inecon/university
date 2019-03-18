@@ -5,29 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import ua.com.foxminded.domain.*;
-import ua.com.foxminded.repository.GroupDaoImpl;
-import ua.com.foxminded.repository.LectureDaoImpl;
-import ua.com.foxminded.repository.TeacherDaoImpl;
 
 @SpringBootApplication()
 @PropertySource(value = "classpath:application.properties")
 @Slf4j
 public class SpringConfig {
-    @Bean
-    public GroupDaoImpl groupDao() {
-        return new GroupDaoImpl();
-    }
-
-    @Bean
-    public LectureDaoImpl lectureDao() {
-        return new LectureDaoImpl();
-    }
-
-    @Bean
-    public TeacherDaoImpl teacherDao() {
-        return new TeacherDaoImpl();
-    }
-
     @Bean
     public Student student() {
         return new Student();

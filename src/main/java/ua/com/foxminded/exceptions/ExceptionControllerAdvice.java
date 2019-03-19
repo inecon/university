@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -175,5 +176,15 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 ex.getLocalizedMessage(), builder.toString());
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    //404
+    @ExceptionHandler({JpaObjectRetrievalFailureException.class})
+    public ResponseEntity<Object> handleMethodEntityNotFound(
+            JpaObjectRetrievalFailureException ex, WebRequest request) {
+        String error = "Entity " + ex.getCause() + " not found";
+        log.error("Error code - " + 404 + ", Cause - " + ex.getLocalizedMessage());
+        ApiError apiError = new ApiError(404, HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

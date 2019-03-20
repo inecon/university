@@ -29,7 +29,7 @@ public class StudentRestController {
     private StudentDao studentDao;
     /**
      * This method is used to get student by ID.
-     * @param studentId This is the Student ID to find student in DB
+     * @param studentId This is the student ID to find student in DB
      */
     @GetMapping(value = "{id}")
     public ResponseEntity<Optional> getStudent(@PathVariable("id") @Valid Integer studentId) {
@@ -42,7 +42,7 @@ public class StudentRestController {
     }
     /**
      * This method is used to write student to DB.
-     * @param student This is the Student to add to DB
+     * @param student This is the student to add to DB
      */
     @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
@@ -53,7 +53,7 @@ public class StudentRestController {
     }
     /**
      * This method is used to UPDATE student in DB.
-     * @param student This is the Student to UPDATE in DB
+     * @param student This is the student to UPDATE in DB
      */
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody @Valid Student student) {
@@ -64,7 +64,7 @@ public class StudentRestController {
     }
     /**
      * This method is used to DELETE student from DB.
-     * @param id This is ID of the Student which will be DELETE from DB
+     * @param id This is ID of the student which will be DELETE from DB
      */
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Integer id) {
@@ -77,7 +77,7 @@ public class StudentRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     /**
-     * This method is used to get all Students from DB.
+     * This method is used to get all students from DB.
      */
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {

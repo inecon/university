@@ -26,7 +26,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class GroupRestController {
     @Inject
     private GroupDao groupDao;
-
+    /**
+     * This method is used to get Group by ID.
+     * @param groupId This is the Group ID to find lecture in DB
+     */
     @GetMapping(value = "{id}")
     public ResponseEntity<Optional> getGroup(@PathVariable("id") Integer groupId) {
         Optional<Group> group = this.groupDao.findById(groupId);
@@ -36,22 +39,31 @@ public class GroupRestController {
         }
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
-
-    @PostMapping()
+    /**
+     * This method is used to write group to DB.
+     * @param group This is the group to add to DB
+     */
+    @PostMapping
     public ResponseEntity<Group> saveGroup(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
         this.groupDao.save(group);
         headers.setLocation(URI.create("/api/groups/" + group.getId()));
         return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
     }
-
-    @PutMapping()
+    /**
+     * This method is used to UPDATE group in DB.
+     * @param group This is the group to UPDATE in DB
+     */
+    @PutMapping
     public ResponseEntity<Group> updateGroup(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
         this.groupDao.save(group);
         return new ResponseEntity<>(group, headers, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to DELETE group from DB.
+     * @param id This is ID of the group which will be DELETE from DB
+     */
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Group> deleteGroup(@PathVariable("id") Integer id) {
         Optional<Group> group = this.groupDao.findById(id);
@@ -62,8 +74,10 @@ public class GroupRestController {
         this.groupDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping()
+    /**
+     * This method is used to get all groups from DB.
+     */
+    @GetMapping
     public ResponseEntity<List<Group>> getAllGroups() {
         List<Group> groups = (List<Group>) this.groupDao.findAll(sortByIdAsc());
         if (groups.isEmpty()) {

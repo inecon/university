@@ -26,7 +26,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class TeacherRestController {
     @Inject
     private TeacherDao teacherDao;
-
+    /**
+     * This method is used to get teacher by ID.
+     * @param teacherId This is the teacher ID to find teacher in DB
+     */
     @GetMapping(value = "{id}")
     public ResponseEntity<Optional> getTeacher(@PathVariable("id") Integer teacherId) {
         Optional<Teacher> teacher = this.teacherDao.findById(teacherId);
@@ -36,7 +39,10 @@ public class TeacherRestController {
         }
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to write teacher to DB.
+     * @param teacher This is the teacher to add to DB
+     */
     @PostMapping()
     public ResponseEntity<Teacher> saveTeacher(@RequestBody @Valid Teacher teacher) {
         HttpHeaders headers = new HttpHeaders();
@@ -44,14 +50,20 @@ public class TeacherRestController {
         headers.setLocation(URI.create("/api/teachers/" + teacher.getId()));
         return new ResponseEntity<>(teacher, headers, HttpStatus.CREATED);
     }
-
+    /**
+     * This method is used to UPDATE teacher in DB.
+     * @param teacher This is the teacher to UPDATE in DB
+     */
     @PutMapping()
     public ResponseEntity<Teacher> updateTeacher(@RequestBody @Valid Teacher teacher) {
         HttpHeaders headers = new HttpHeaders();
         this.teacherDao.save(teacher);
         return new ResponseEntity<>(teacher, headers, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to DELETE teacher from DB.
+     * @param id This is ID of the teacher which will be DELETE from DB
+     */
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Teacher> deleteTeacher(@PathVariable("id") Integer id) {
         Optional<Teacher> teacher = this.teacherDao.findById(id);
@@ -62,7 +74,9 @@ public class TeacherRestController {
         this.teacherDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    /**
+     * This method is used to get all teachers from DB.
+     */
     @GetMapping()
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         List<Teacher> teachers = (List<Teacher>) this.teacherDao.findAll(sortByIdAsc());

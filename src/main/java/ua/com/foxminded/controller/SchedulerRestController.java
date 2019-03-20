@@ -25,7 +25,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class SchedulerRestController {
     @Inject
     Schedule schedule;
-
+    /**
+     * This method is used to get student schedule of current month.
+     * @param student This is the Student to get its schedule.
+     */
     @PostMapping(value = "/students")
     public ResponseEntity<List<Lecture>> getStudentScheduler(@RequestBody @Valid Student student) {
         if (student == null) {
@@ -37,7 +40,10 @@ public class SchedulerRestController {
         }
         return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to get teacher schedule of current month.
+     * @param teacher This is the Teacher to get its schedule.
+     */
     @PostMapping(value = "/teachers")
     public ResponseEntity<List<Lecture>> getTeacherScheduler(@RequestBody @Valid Teacher teacher) {
         if (teacher == null) {

@@ -26,7 +26,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class LectureRestController {
     @Inject
     private LectureDao lectureDao;
-
+    /**
+     * This method is used to get lecture by ID.
+     * @param lectureId This is the Lecture ID to find lecture in DB
+     */
     @GetMapping(value = "{id}")
     public ResponseEntity<Optional> getLecture(@PathVariable("id") Integer lectureId) {
         Optional<Lecture> lecture = this.lectureDao.findById(lectureId);
@@ -36,22 +39,31 @@ public class LectureRestController {
         }
         return new ResponseEntity<>(lecture, HttpStatus.OK);
     }
-
-    @PostMapping ()
+    /**
+     * This method is used to write lecture to DB.
+     * @param lecture This is the lecture to add to DB
+     */
+    @PostMapping
     public ResponseEntity<Lecture> saveLecture(@RequestBody @Valid Lecture lecture) {
         HttpHeaders headers = new HttpHeaders();
         this.lectureDao.save(lecture);
         headers.setLocation(URI.create("/api/lectures/" + lecture.getId()));
         return new ResponseEntity<>(lecture, headers, HttpStatus.CREATED);
     }
-
-    @PutMapping()
+    /**
+     * This method is used to UPDATE lecture in DB.
+     * @param lecture This is the lecture to UPDATE in DB
+     */
+    @PutMapping
     public ResponseEntity<Lecture> updateLecture(@RequestBody @Valid Lecture lecture) {
         HttpHeaders headers = new HttpHeaders();
         this.lectureDao.save(lecture);
         return new ResponseEntity<>(lecture, headers, HttpStatus.OK);
     }
-
+    /**
+     * This method is used to DELETE lecture from DB.
+     * @param id This is ID of the lecture which will be DELETE from DB
+     */
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Lecture> deleteLecture(@PathVariable("id") Integer id) {
         Optional<Lecture> lecture = this.lectureDao.findById(id);
@@ -62,8 +74,10 @@ public class LectureRestController {
         this.lectureDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping()
+    /**
+     * This method is used to get all lectures from DB.
+     */
+    @GetMapping
     public ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> lectures = (List<Lecture>) this.lectureDao.findAll(sortByIdAsc());
         if (lectures.isEmpty()) {

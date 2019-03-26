@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "0840ec00-c41c-4b2f-a70c-4d5443d41f74",
+		"name": "university groups requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "View Group with id=1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f38849f-7ea0-4a00-8c02-3ee8009581f5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						"1"
+					]
+				},
+				"description": "Getting  group from DB with id=1"
+			},
+			"response": []
+		},
+		{
+			"name": "View all  groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Geting all  groups from DB"
+			},
+			"response": []
+		},
+		{
+			"name": "Add  Group",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"title\": \"New\",\n    \"description\": \"testGroup1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Add new  Group to DB with POST method"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Group",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"title\": \"Updated\",\n    \"description\": \"testGroup1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Update Group in DB with PUT method"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Group",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						"1"
+					]
+				},
+				"description": "Delete Group from DB with ID=1 with DELETE method"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - wrong type of ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/s",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						"s"
+					]
+				},
+				"description": "Throwing exception when Method GET with wrong type of ID (ID=s)"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - wrong type of request body",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"Student 2\",\n        \"surName\": \"Updated\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Throwing exception when Method POST with wrong type of body (type of body - text)"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - out of DELETE request parameter",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Throwing exception when Method DELETE without any parameters"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception -PUT method, request with wrong body",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": ,\n        \"name\": \"Student 2\",\n        \"surName\": \"Updated\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/groups/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "Throwing exception when method PUT with wrong body"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "44521092-bd54-4b92-b6a1-1ed0a41bbe6a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e3e6c227-95c8-42e1-a27f-bf1611061de3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

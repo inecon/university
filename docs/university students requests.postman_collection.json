@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "fc245037-42ed-4e4e-bc6b-b3624e0b8c38",
+		"name": "university students requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "View one teacher with id=1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f38849f-7ea0-4a00-8c02-3ee8009581f5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/teachers/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"teachers",
+						"1"
+					]
+				},
+				"description": "Getting one students from DB with id=1"
+			},
+			"response": []
+		},
+		{
+			"name": "View all students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Geting all students from DB"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1 ,\n        \"name\": \"Student 2\",\n        \"surName\": \"Json\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Add new Student to DB with POST method"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Student",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"Student 2\",\n        \"surName\": \"Updated\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Update Student in DB with PUT method"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						"1"
+					]
+				},
+				"description": "Delete Student from DB with ID=1 with DELETE method"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - wrong type of ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/s",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						"s"
+					]
+				},
+				"description": "Throwing exception when Method GET with wrong type of ID (ID=s)"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - wrong type of request body",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"Student 2\",\n        \"surName\": \"Updated\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Throwing exception when Method POST with wrong type of body (type of body - text)"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception - out of DELETE request parameter",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Throwing exception when Method DELETE without any parameters"
+			},
+			"response": []
+		},
+		{
+			"name": "Throw exception -PUT method, request with wrong body",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": ,\n        \"name\": \"Student 2\",\n        \"surName\": \"Updated\",\n        \"gender\": \"Male\",\n        \"age\": 23,\n        \"group\": {\n            \"id\":1 ,\n            \"title\": \"group1\",\n            \"description\": \"Group1\"\n        }\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/students/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				},
+				"description": "Throwing exception when method PUT with wrong body"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "52ac1ecb-1836-42c9-8e1a-87a5c6267724",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "efad4d5f-c5d0-4b68-8041-0c7c1e0d315a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

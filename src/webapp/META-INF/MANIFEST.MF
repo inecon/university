@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: university
-Implementation-Version: 1
-Built-By: User
-Implementation-Vendor-Id: ua.com.foxminded
-Created-By: IntelliJ IDEA
-Build-Jdk: 1.8.0_181
-Main-Class: ${start-class}
-

@@ -26,8 +26,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class GroupRestController {
     @Inject
     private GroupDao groupDao;
+
     /**
      * This method is used to get Group by ID.
+     *
      * @param groupId This is the Group ID to find lecture in DB
      */
     @GetMapping(value = "{id}")
@@ -39,19 +41,24 @@ public class GroupRestController {
         }
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
+
     /**
      * This method is used to write group to DB.
+     *
      * @param group This is the group to add to DB
      */
     @PostMapping
     public ResponseEntity<Group> saveGroup(@RequestBody @Valid Group group) {
         HttpHeaders headers = new HttpHeaders();
-        this.groupDao.save(group);
-        headers.setLocation(URI.create("/api/groups/" + group.getId()));
-        return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
+        Group validatedGroup = validateGroupID(group);
+        this.groupDao.save(validatedGroup);
+        headers.setLocation(URI.create("/api/groups/" + validatedGroup.getId()));
+        return new ResponseEntity<>(validatedGroup, headers, HttpStatus.CREATED);
     }
+
     /**
      * This method is used to UPDATE group in DB.
+     *
      * @param group This is the group to UPDATE in DB
      */
     @PutMapping
@@ -60,8 +67,10 @@ public class GroupRestController {
         this.groupDao.save(group);
         return new ResponseEntity<>(group, headers, HttpStatus.OK);
     }
+
     /**
      * This method is used to DELETE group from DB.
+     *
      * @param id This is ID of the group which will be DELETE from DB
      */
     @DeleteMapping(value = "{id}")
@@ -74,6 +83,7 @@ public class GroupRestController {
         this.groupDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     /**
      * This method is used to get all groups from DB.
      */
@@ -88,5 +98,23 @@ public class GroupRestController {
 
     private Sort sortByIdAsc() {
         return new Sort(Sort.Direction.ASC, "id");
+    }
+
+    private Group validateGroupID(Group group) {
+        Group validatedGroup = new Group();
+        if (group.getId() == null) {
+            validatedGroup = group;
+            List<Group> groups = (List<Group>) this.groupDao.findAll(sortByIdAsc());
+            for (Group groupInList : groups) {
+                if (groupInList.compareTo(validatedGroup) == 0) {
+                    return groupInList;
+                }
+            }
+            //getting last Student ID and increase it
+            validatedGroup.setId(groups.get(groups.size() - 1).getId() + 1);
+            return validatedGroup;
+        } else {
+            return group;
+        }
     }
 }

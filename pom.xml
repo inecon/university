@@ -38,7 +38,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway.version}</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5433/test</url>
+                    <url>jdbc:postgresql://localhost:5432/university</url>
                     <user>${flyway.user}</user>
                     <password>${flyway.password}</password>
                     <schemas>

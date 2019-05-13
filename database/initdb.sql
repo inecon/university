@@ -15,9 +15,9 @@ GRANT ALL PRIVILEGES ON DATABASE "university" TO postgres;
 \connect "dbname=university user=postgres password=postgres port=5432"
 
 BEGIN;
-\i ./migration/V1__Initialize.sql
-\i ./migration/V1_2__createDemoStudents.sql
-\i ./migration/V1_3__createDemoGroups.sql
-\i ./migration/V1_4__createDemoTeachers.sql
-\i ./migration/V1_5__createDemoLectures.sql
+\i ../src/main/resources/db/migration/V1__Initialize.sql
+\i ../src/main/resources/db/migration/V1_2__createDemoStudents.sql
+\i ../src/main/resources/db/migration/V1_3__createDemoGroups.sql
+\i ../src/main/resources/db/migration/V1_4__createDemoTeachers.sql
+\i ../src/main/resources/db/migration/V1_5__createDemoLectures.sql
 COMMIT;

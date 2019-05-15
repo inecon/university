@@ -3,10 +3,7 @@ package ua.com.foxminded.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -29,6 +26,6 @@ public class Group implements Comparable<Group>, Serializable {
 
     @Override
     public int compareTo(Group anotherGroup) {
-        return (this.id.compareTo(anotherGroup.id));
+        return (this.title.compareTo(anotherGroup.title));
     }
 }

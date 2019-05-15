@@ -27,8 +27,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class StudentRestController {
     @Inject
     private StudentDao studentDao;
+
     /**
      * This method is used to get student by ID.
+     *
      * @param studentId This is the student ID to find student in DB
      */
     @GetMapping(value = "{id}")
@@ -40,19 +42,24 @@ public class StudentRestController {
         }
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
+
     /**
      * This method is used to write student to DB.
+     *
      * @param student This is the student to add to DB
      */
     @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
-        this.studentDao.save(student);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/api/students/" + student.getId()));
-        return new ResponseEntity<>(student, headers, HttpStatus.CREATED);
+        Student validatedStudent = validateStudentID(student);
+        this.studentDao.save(validatedStudent);
+        headers.setLocation(URI.create("/api/students/" + validatedStudent.getId()));
+        return new ResponseEntity<>(validatedStudent, headers, HttpStatus.CREATED);
     }
+
     /**
      * This method is used to UPDATE student in DB.
+     *
      * @param student This is the student to UPDATE in DB
      */
     @PutMapping
@@ -62,8 +69,10 @@ public class StudentRestController {
         this.studentDao.save(student);
         return new ResponseEntity<>(student, headers, HttpStatus.OK);
     }
+
     /**
      * This method is used to DELETE student from DB.
+     *
      * @param id This is ID of the student which will be DELETE from DB
      */
     @DeleteMapping(value = "{id}")
@@ -76,6 +85,7 @@ public class StudentRestController {
         this.studentDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     /**
      * This method is used to get all students from DB.
      */
@@ -91,5 +101,20 @@ public class StudentRestController {
 
     private Sort sortByIdAsc() {
         return new Sort(Sort.Direction.ASC, "id");
+    }
+
+    /*
+    *
+    This method checks Student ID, if he/she no ID -> add last ID from Students list from DB to Student
+     */
+    private Student validateStudentID(Student student) {
+        Student validatedStudent = new Student();
+        if (student.getId() == null) {
+            validatedStudent = student;
+            List<Student> students = (List<Student>) this.studentDao.findAll(sortByIdAsc());
+            //getting last Student ID and increase it
+            validatedStudent.setId(students.get(students.size() - 1).getId() + 1);
+        }
+        return validatedStudent;
     }
 }

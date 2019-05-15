@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0840ec00-c41c-4b2f-a70c-4d5443d41f74",
+		"_postman_id": "a425d7ff-872e-4415-9202-d710ad7ed139",
 		"name": "university groups requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,6 +20,21 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -46,6 +61,21 @@
 		{
 			"name": "View all  groups",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -72,6 +102,21 @@
 		{
 			"name": "Add  Group",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -105,6 +150,21 @@
 		{
 			"name": "Update Group",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -138,6 +198,21 @@
 		{
 			"name": "Delete Group",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -164,6 +239,21 @@
 		{
 			"name": "Throw exception - wrong type of ID",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -190,6 +280,21 @@
 		{
 			"name": "Throw exception - wrong type of request body",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -216,6 +321,21 @@
 		{
 			"name": "Throw exception - out of DELETE request parameter",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -242,6 +362,21 @@
 		{
 			"name": "Throw exception -PUT method, request with wrong body",
 			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTU1OTY0Njc0LCJhdXRob3JpdGllcyI6WyJjYW5fcmVhZF91c2VyIiwicm9sZV91c2VyIl0sImp0aSI6ImUxOGNmYmYwLTY5MjMtNDk5My1iM2MyLWRkMmRhNjY5MzFlYiIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJjbGllbnRfaWQiOiJVU0VSX0NMSUVOVF9BUFAifQ.MqAF4puFVmL6EsUfErOVyXQ4lwHjUBT8sOuAccEkAhD_4ptaRwZWKb6PFzPOSZh3wOKmdAcdNbETIhyWWi71yvYEvCOpDQJvCBhSKFipdt0-2Z4dBIUwHUJYsMSeKqfiiL7_Fv2EIIeM755OyCZLR3oGs5cyL5iSrZBR-Fw9CyKLGneXYfuxFfgopdKPftDuh_4rD1HdDxZxy74sRA5iV4ELvTIAS41aiSVA24CSTBGxfo5O2StsW09gFJRRkG-im9A6PMYxGdA287tMMwgSttuyX1MGOiqS8NGOvi3sQZKp213QFoKjmjf6sLkZRHZadE2--urUChfclodPeuRSuw\"",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{

@@ -33,5 +33,5 @@ public class SpringConfig {
     @Bean
     public Schedule schedule() {
         return new Schedule();
-    }
+        }
 }
